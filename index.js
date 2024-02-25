@@ -4,7 +4,7 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 // Create SQLite database connection
 const db = new sqlite3.Database('sfi-dataBase.db');
@@ -206,14 +206,12 @@ app.get('/addnotification',(req,res)=>{
 app.post('/addnotification',(req,res)=>{
     const title=req.body.title;
     const content=req.body.content;
-    console.log(title,content)
     db.run('INSERT INTO notifications (title, content) VALUES ( ?, ?)',
         [title, content], (err) => {
             if (err) {
                 console.error('Database error:', err.message);
                 return res.status(500).send('Internal Server Error');
             }
-
             res.redirect('/admin');
         });
 });
@@ -242,7 +240,8 @@ app.get('/notification', (req, res) => {
 });
 app.get('/notification-Details/:id', (req, res) => {
     const notification_id =req.params.id;
-  document.write(notification_id)
+
+  res.render('notificationDetails.ejs');
 });
 
 app.get('/News',(req,res)=>{
