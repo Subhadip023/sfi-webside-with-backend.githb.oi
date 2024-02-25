@@ -40,6 +40,7 @@ db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS notifications (
         id INTEGER PRIMARY KEY,
         title TEXT NOT NULL,
+        content TEXT NOT NULL,
         date DATE DEFAULT CURRENT_DATE
     )`, (err) => {
         if (err) {
@@ -110,23 +111,32 @@ app.post('/login', (req, res) => {
 });
 // Protected route - Admin
 app.get('/admin', (req, res) => {
-//   if (!req.session.isAuthenticated) {
-//     return res.redirect('/login');
-// }
+    // if (!req.session.isAuthenticated) {
+    //     return res.redirect('/login');
+    // }
 
-// Query to fetch user data from the database
-const sql = 'SELECT * FROM users';
+    // Query to fetch user data from the database
+    const userSql = 'SELECT * FROM users';
+    const notificationSql = 'SELECT * FROM notifications';
 
-// Execute the query
-db.all(sql, (err, rows) => {
-    if (err) {
-        console.error('Database error:', err.message);
-        return res.status(500).send('Internal Server Error');
-    }
+    // Execute the user query
+    db.all(userSql, (err, userRows) => {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).send('Internal Server Error');
+        }
 
-    // Render the user-data.ejs template and pass the fetched user data
-    res.render('admin.ejs', { users: rows });
-});
+        // Execute the notification query
+        db.all(notificationSql, (err, notificationRows) => {
+            if (err) {
+                console.error('Database error:', err.message);
+                return res.status(500).send('Internal Server Error');
+            }
+
+            // Render the admin.ejs template and pass the fetched data
+            res.render('admin.ejs', { users: userRows, notifications: notificationRows });
+        });
+    });
 });
 
 // Route to display update form
@@ -190,16 +200,51 @@ app.post('/delete', (req, res) => {
       res.redirect('/admin');
   });
 });
+app.get('/addnotification',(req,res)=>{
+    res.render('addnotification.ejs');
+});
+app.post('/addnotification',(req,res)=>{
+    const title=req.body.title;
+    const content=req.body.content;
+    console.log(title,content)
+    db.run('INSERT INTO notifications (title, content) VALUES ( ?, ?)',
+        [title, content], (err) => {
+            if (err) {
+                console.error('Database error:', err.message);
+                return res.status(500).send('Internal Server Error');
+            }
 
+            res.redirect('/admin');
+        });
+});
 
 
 // Routes to render different pages
 app.get('/',(req,res)=>{
     res.render("index.ejs",{Notification:9});
 });
-app.get('/notification',(req,res)=>{
-    res.render("notification.ejs");
+
+
+app.get('/notification', (req, res) => {
+    // Query to fetch notifications from the database
+    const notificationSql = 'SELECT * FROM notifications';
+
+    // Execute the query
+    db.all(notificationSql, (err, notificationRows) => {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        // Render the notification.ejs template and pass the fetched notifications
+        res.render('notification.ejs', { notifications: notificationRows });
+    });
 });
+app.get('/notification-Details/:id', (req, res) => {
+    const notification_id =req.params.id;
+  document.write(notification_id)
+});
+
 app.get('/News',(req,res)=>{
     res.render("News.ejs");
 });
