@@ -15,15 +15,14 @@ window.onload = function () {
     document.querySelector('.kalr_quote ').style.opacity = '1';
     document.querySelector('.quotes img').style.opacity = '1';
     document.querySelector('.quotes img').style.boxShadow = ' 5px 10px 28px red';
-    let i = 1;
+    let i = 0;
 const intervalId = setInterval(function() {
-    showNotification(`Notifications Title ${i}`);
-    if (i === notificationCount) {
+    showNotification(notificationTitle[i]);
+    if (i === notificationCount-1) {
         clearInterval(intervalId);
-        console.log(`Interval stopped at i = ${notificationCount}`);
     }
     i++;
-}, 1000);
+}, 2000);
 
     
   };

@@ -4,7 +4,7 @@
     </div>
     <div class="contaner">
       <div class="notification_home">
-   
+  
       </div>
       <div class="quotes">
         <img class="" src="./images/karlmarks.jpg" alt="marks images" />
@@ -21,10 +21,17 @@
           ideas. <span class="karl_qoration">"</span
           ><span class="Karl">― Karl Marx,</span>
         </p>
-      </div>
-    </div>
+
+      </div>    </div>
     <script>
-      const notificationCount = <%= Notification %>;
-  </script>
+const notificationCount = <%=Notification.length%>;
+let notificationTitle=[]
+<% Notification.forEach((title) => { %>
+notificationTitle.push("<%= title %>")
+  <% });%>
+
+console.log(notificationTitle)
+</script>
+ 
     <%- include("partials/footer.ejs") %>
  

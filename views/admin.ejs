@@ -146,7 +146,7 @@
                         <%= notification.date %>
                     </td>
                     <td>
-                        <form action="/delete" method="post">
+                        <form action="/delete-notification" method="post">
                             <input type="hidden" name="id" value="<%= notification.id %>" />
                             <button type="submit" class="delete-btn">Delete</button>
                         </form>

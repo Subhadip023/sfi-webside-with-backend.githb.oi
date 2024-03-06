@@ -219,8 +219,21 @@ app.post('/addnotification',(req,res)=>{
 
 // Routes to render different pages
 app.get('/',(req,res)=>{
-    res.render("index.ejs",{Notification:9});
+    const notificationSql = 'SELECT title FROM notifications'; // Select only the title column
+    db.all(notificationSql, (err, notificationRows) => {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        // Extract titles from notificationRows and push them into an array
+        const notificationTitles = notificationRows.map(row => row.title);
+
+        // Render the notification.ejs template and pass the array of titles
+        res.render("index.ejs",{ Notification: notificationTitles });
+    });
 });
+
 
 
 app.get('/notification', (req, res) => {
