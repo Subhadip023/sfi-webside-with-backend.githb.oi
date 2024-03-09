@@ -249,3 +249,22 @@ align-items: center;
   box-shadow: 10px 10px 20px;
   border-radius: 20px;
 }
+
+/* style for about */
+.about{
+  margin: 10vh auto;
+height: 70vh;
+width: 80vw;
+/* background: #9671d1; */
+}
+.about-content h2{
+font-size: 2rem;
+margin: 20px 0;
+color: rgb(85, 1, 1);
+
+}
+.about-content h3{
+font-size: 1.5rem;
+color: rgb(148, 0, 0);
+text-align: center;
+}
