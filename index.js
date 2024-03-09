@@ -100,7 +100,7 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   // Check username and password (replace with your authentication logic)
-  if (username === 'user' && password === 'password') {
+  if (username === 'sfdiaulc' && password === 'joybangla') {
       // Authentication successful, set session flag
       req.session.isAuthenticated = true;
       res.redirect('/admin');
@@ -111,9 +111,9 @@ app.post('/login', (req, res) => {
 });
 // Protected route - Admin
 app.get('/admin', (req, res) => {
-    // if (!req.session.isAuthenticated) {
-    //     return res.redirect('/login');
-    // }
+    if (!req.session.isAuthenticated) {
+        return res.redirect('/login');
+    }
 
     // Query to fetch user data from the database
     const userSql = 'SELECT * FROM users';
@@ -141,10 +141,10 @@ app.get('/admin', (req, res) => {
 
 // Route to display update form
 app.get('/update/:id', (req, res) => {
-  // Check if user is authenticated before accessing update form
-  // if (!req.session.isAuthenticated) {
-  //     return res.redirect('/login');
-  // }
+//   Check if user is authenticated before accessing update form
+  if (!req.session.isAuthenticated) {
+      return res.redirect('/login');
+  }
 
   const userId = req.params.id;
 
@@ -214,6 +214,24 @@ app.post('/addnotification',(req,res)=>{
             }
             res.redirect('/admin');
         });
+});
+
+app.post('/delete-notification',(req,res)=>{
+    const userId = req.body.id;
+
+    // SQL query to delete the user with the specified ID
+    const sql = 'DELETE FROM notifications WHERE id = ?';
+  
+    // Execute the query with the provided user ID
+    db.run(sql, [userId], (err) => {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).send('Internal Server Error');
+        }
+  
+        // Redirect back to the admin page after successful deletion
+        res.redirect('/admin');
+    });
 });
 
 
