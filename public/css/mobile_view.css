@@ -215,7 +215,6 @@
     width: 100%;
     height: fit-content;
     margin-bottom: 10px;
-    /* background: aqua; */
     font-size: 35px;
   text-decoration: solid;
   text-align: center;
@@ -233,7 +232,6 @@
     width: 100%;
     min-height: 70%;
     max-height: fit-content;
-    /* background: green; */
     min-height: 10px;
     max-height: fit-content;
     font-size: 25px;
@@ -245,18 +243,10 @@
   justify-content: flex-end;
   align-items: center;
     width: 100%;
-    /* background: blue; */
   }
   
-  
   .notification{
-    width: 100%;
-    min-height: 17vh;
-    max-height: fit-content;
-    margin: 10px;
-    padding: 10px;
-    box-shadow: 10px 10px 20px;
-    border-radius: 20px;
+    height: fit-content;
   }
     
     }      

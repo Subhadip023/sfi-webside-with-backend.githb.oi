@@ -272,7 +272,7 @@ app.get('/notification', (req, res) => {
 app.get('/notification-Details/:id', (req, res) => {
     const notification_id =req.params.id;
 
-  res.render('notificationDetails.ejs');
+  res.render('notificationDetails.ejs',{nid:notification_id});
 });
 
 app.get('/News',(req,res)=>{
