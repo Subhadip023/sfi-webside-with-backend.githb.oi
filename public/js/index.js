@@ -4,7 +4,6 @@ const links=document.querySelector('.navbar ul li');
 // const hn=document.querySelector('.hn');
 const notification_home=document.querySelector('.notification_home');
 
-
 dropdrowen.addEventListener('click',function(){
     navbar.style.display = navbar.style.display === "none" ? "block" : "none";
     
@@ -15,7 +14,6 @@ window.onload = function () {
     document.querySelector('.kalr_quote ').style.opacity = '1';
     document.querySelector('.quotes img').style.opacity = '1';
     document.querySelector('.quotes img').style.boxShadow = ' 5px 10px 28px red';
-   console.log(notificationCount)
    if (notificationCount!=0) {
     let i = 0;
     const intervalId = setInterval(function() {
@@ -66,6 +64,6 @@ setTimeout(() => {
   setTimeout(() => {
       hn.remove(); // Remove the element after the animation completes
   }, 500); // Adjust the timeout to match the duration of the animation
-}, 6000);
+}, 5000);
 }
 
