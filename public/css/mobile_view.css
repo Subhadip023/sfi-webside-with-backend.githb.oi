@@ -36,10 +36,11 @@
         background: black;
         opacity: 70%;
         height: fit-content;
-        width: 42vw;
+        max-width:  42vw;
+        min-width: fit-content;
         position: fixed;
         top: 18.3vw;
-        right: 30px;
+        right: 5vw;
         border-radius: 20px;
         z-index: 9999;
         }
@@ -195,6 +196,67 @@
 
   .hn.remove {
     animation: fadeOut 0.5s ease forwards;
+  }
+
+
+/* For notification tab */
+.Notificationcontaner {
+    margin: 0 auto;
+    margin-top: 100px;
+    min-height: 75vh;
+    width: 90vw;
+    display: flex;
+    flex-wrap: wrap;
+    /* background: #000; */
+    /* text-align: justify; */
+    overflow: auto;
+  }
+  .notificationTitle {
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 10px;
+    /* background: aqua; */
+    font-size: 35px;
+  text-decoration: solid;
+  text-align: center;
+  overflow: hidden;
+  }
+  .notificationTitle a{
+    text-decoration: none;
+    color: red;
+  }
+  .notificationTitle a:hover{
+  text-decoration: none;
+    color: rgb(245, 73, 73);
+  }
+  .notificationContent {
+    width: 100%;
+    min-height: 70%;
+    max-height: fit-content;
+    /* background: green; */
+    min-height: 10px;
+    max-height: fit-content;
+    font-size: 25px;
+  }
+  .notificationDate {
+    height: 10%;
+    font-size: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+    width: 100%;
+    /* background: blue; */
+  }
+  
+  
+  .notification{
+    width: 100%;
+    min-height: 17vh;
+    max-height: fit-content;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 10px 10px 20px;
+    border-radius: 20px;
   }
     
     }      

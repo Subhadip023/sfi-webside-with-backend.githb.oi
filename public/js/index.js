@@ -15,15 +15,18 @@ window.onload = function () {
     document.querySelector('.kalr_quote ').style.opacity = '1';
     document.querySelector('.quotes img').style.opacity = '1';
     document.querySelector('.quotes img').style.boxShadow = ' 5px 10px 28px red';
+   console.log(notificationCount)
+   if (notificationCount!=0) {
     let i = 0;
-const intervalId = setInterval(function() {
-    showNotification(notificationTitle[i]);
-    if (i === notificationCount-1) {
-        clearInterval(intervalId);
-    }
-    i++;
-}, 2000);
-
+    const intervalId = setInterval(function() {
+        showNotification(notificationTitle[i]);
+        if (i === notificationCount-1) {
+            clearInterval(intervalId);
+        }
+        i++;
+    }, 2000);
+    
+   }
     
   };
 
