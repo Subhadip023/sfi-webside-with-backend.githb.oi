@@ -158,8 +158,42 @@
 
     <section>
         <h1> Gallery </h1>
-
+        <form action="/profile" method="post" enctype="multipart/form-data">
+            <input type="file" name="avatar" />
+            <input type="text" name="title"  placeholder="title"/>
+            <button type="submit">add</button>
+          </form>
+          
     </section>
+
+    <h2>Images</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Filename</th>
+                <th>Path</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% images.forEach(image => { %>
+                <tr>
+                    <td><%= image.id %></td>
+                    <td><%= image.title %></td>
+                    <td><%= image.filename %></td>
+                    <td><%= image.path %></td>
+                    <td>
+                        <form action="/delete-images" method="post">
+                            <input type="hidden" name="id" value="<%= image.id %>" />
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
 </body>
 
 </html>

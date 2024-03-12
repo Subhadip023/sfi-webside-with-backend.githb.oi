@@ -1,15 +1,27 @@
-import express from "express";
-import sqlite3 from "sqlite3";
-import session from "express-session";
-import bodyParser from "body-parser";
+import express from 'express';
+import sqlite3 from 'sqlite3';
+import session from 'express-session';
+import bodyParser from 'body-parser';
+import multer from 'multer';
+import path from 'path';
 
 const app = express();
 const port = 3000;
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images/uploads');
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + '.jpg'); // Append '.jpg' to the filename
+  }
+});
+
 
 // Create SQLite database connection
 const db = new sqlite3.Database("sfi-dataBase.db");
+const upload = multer({ storage: storage })
 
-// Middleware to parse incoming JSON payloads
 app.use(bodyParser.urlencoded({ extended: true }));
 // Middleware to serve static files
 app.use(express.static("public"));
@@ -38,6 +50,22 @@ db.serialize(() => {
         console.error("Error creating users table:", err.message);
       } else {
         console.log("Users table created successfully");
+      }
+    }
+  );
+
+  db.run(
+    `CREATE TABLE IF NOT EXISTS images (
+        id INTEGER PRIMARY KEY,
+        filename TEXT NOT NULL,
+        title TEXT,
+        path TEXT NOT NULL
+    )`,
+    (err) => {
+      if (err) {
+        console.error("Error creating images table:", err.message);
+      } else {
+        console.log("Images table created successfully");
       }
     }
   );
@@ -120,7 +148,8 @@ app.post("/login", (req, res) => {
     res.redirect("/login");
   }
 });
-// Protected route - Admin
+
+
 app.get("/admin", (req, res) => {
   if (!req.session.isAuthenticated) {
     return res.redirect("/login");
@@ -129,29 +158,52 @@ app.get("/admin", (req, res) => {
   // Query to fetch user data from the database
   const userSql = "SELECT * FROM users";
   const notificationSql = "SELECT * FROM notifications";
+  const imageSql = "SELECT * FROM images";
 
-  // Execute the user query
-  db.all(userSql, (err, userRows) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      return res.status(500).send("Internal Server Error");
-    }
-
-    // Execute the notification query
-    db.all(notificationSql, (err, notificationRows) => {
-      if (err) {
-        console.error("Database error:", err.message);
-        return res.status(500).send("Internal Server Error");
-      }
-
-      // Render the admin.ejs template and pass the fetched data
-      res.render("admin.ejs", {
-        users: userRows,
-        notifications: notificationRows,
+  // Execute all queries in parallel using Promise.all
+  Promise.all([
+    new Promise((resolve, reject) => {
+      db.all(userSql, (err, userRows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(userRows);
+        }
       });
+    }),
+    new Promise((resolve, reject) => {
+      db.all(notificationSql, (err, notificationRows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(notificationRows);
+        }
+      });
+    }),
+    new Promise((resolve, reject) => {
+      db.all(imageSql, (err, imageRows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(imageRows);
+        }
+      });
+    })
+  ])
+  .then(([userRows, notificationRows, imageRows]) => {
+    // Render the admin.ejs template and pass the fetched data
+    res.render("admin.ejs", {
+      users: userRows,
+      notifications: notificationRows,
+      images: imageRows
     });
+  })
+  .catch(err => {
+    console.error("Database error:", err.message);
+    return res.status(500).send("Internal Server Error");
   });
 });
+
 
 // Route to display update form
 app.get("/update/:id", (req, res) => {
@@ -251,6 +303,25 @@ app.post("/delete-notification", (req, res) => {
     res.redirect("/admin");
   });
 });
+app.post("/delete-images", (req, res) => {
+  const userId = req.body.id;
+
+
+
+  // SQL query to delete the user with the specified ID
+  const sql = "DELETE FROM images WHERE id = ?";
+
+  // Execute the query with the provided user ID
+  db.run(sql, [userId], (err) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    // Redirect back to the admin page after successful deletion
+    res.redirect("/admin");
+  });
+});
 
 // Routes to render different pages
 app.get("/", (req, res) => {
@@ -300,6 +371,9 @@ db.get(sql,[notification_id],(err,row)=>{
 });
 });
 
+
+
+
 app.get("/News", (req, res) => {
   res.render("News.ejs");
 });
@@ -310,10 +384,52 @@ app.get("/joinUs", (req, res) => {
   res.render("joinUs.ejs");
 });
 app.get("/Gallery", (req, res) => {
-  res.render("Gallery.ejs");
+  // Query to fetch image data from the database
+// Query to fetch image data from the database, ordered by ID in descending order
+const sql = "SELECT * FROM images ORDER BY id DESC";
+
+  // Execute the query
+  db.all(sql, (err, imageRows) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    // Render the Gallery.ejs template and pass the fetched image data
+    res.render("Gallery.ejs", { images: imageRows });
+  });
 });
+
 app.get("/About", (req, res) => {
   res.render("About.ejs");
+});
+
+// Modify your file upload route to insert file information into the database
+app.post('/profile', upload.single('avatar'), function (req, res, next) {
+  // Check if file exists
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  // Extract title from request body
+  const title = req.body.title;
+
+  // Get file information
+  const filename = req.file.filename;
+  const path = req.file.path;
+
+  // Insert file information into the images table
+  db.run(
+    'INSERT INTO images (filename, title, path) VALUES (?, ?, ?)',
+    [filename, title, path],
+    (err) => {
+      if (err) {
+        console.error("Error inserting image into database:", err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect('/admin')
+    }
+  );
 });
 
 // Start the server
