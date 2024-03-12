@@ -5,8 +5,10 @@
     </div>
 
    <% images.forEach(image => {%>
-     <div class="imges" style="background-image: url('/images/sfigaleery1.jpeg');">
+     <div class="imges" style="background-image: url('/images/uploads/<%= image.filename %>');">
     <p><%= image.title %></p>
+ 
+
    </div>
   <% }); %>   
    <!-- <div class="imges" style="background-image: url('/images/sfigaleery1.jpeg');"">
