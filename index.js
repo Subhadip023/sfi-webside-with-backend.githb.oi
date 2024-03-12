@@ -4,7 +4,7 @@ import session from "express-session";
 import bodyParser from "body-parser";
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
 // Create SQLite database connection
 const db = new sqlite3.Database("sfi-dataBase.db");
