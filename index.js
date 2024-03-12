@@ -4,6 +4,7 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 
 const app = express();
 const port = 3000;
@@ -303,23 +304,45 @@ app.post("/delete-notification", (req, res) => {
     res.redirect("/admin");
   });
 });
+
 app.post("/delete-images", (req, res) => {
-  const userId = req.body.id;
+  const imageId = req.body.id;
 
-
-
-  // SQL query to delete the user with the specified ID
-  const sql = "DELETE FROM images WHERE id = ?";
-
-  // Execute the query with the provided user ID
-  db.run(sql, [userId], (err) => {
+  // Fetch the file path from the database
+  db.get("SELECT path FROM images WHERE id = ?", [imageId], (err, row) => {
     if (err) {
       console.error("Database error:", err.message);
       return res.status(500).send("Internal Server Error");
     }
 
-    // Redirect back to the admin page after successful deletion
-    res.redirect("/admin");
+    // If the row exists, delete the file from the folder
+    if (row) {
+      const imagePath = row.path;
+
+      // Delete the file using fs.unlink
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error("Error deleting image file:", err.message);
+          return res.status(500).send("Internal Server Error");
+        }
+
+        // Now, delete the entry from the database
+        const sql = "DELETE FROM images WHERE id = ?";
+        db.run(sql, [imageId], (err) => {
+          if (err) {
+            console.error("Database error:", err.message);
+            return res.status(500).send("Internal Server Error");
+          }
+
+          // Redirect back to the admin page after successful deletion
+          res.redirect("/admin");
+        });
+      });
+    } else {
+      // If the row doesn't exist, return an error
+      console.error("Image not found in the database");
+      return res.status(404).send("Image not found in the database");
+    }
   });
 });
 
