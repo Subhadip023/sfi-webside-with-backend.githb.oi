@@ -39,8 +39,9 @@
         max-width:  42vw;
         min-width: fit-content;
         position: fixed;
-        top: 18.3vw;
-        right: 5vw;
+        top: 16vw;
+        right: 1vw;
+        border: 1px solid rgba(255, 255, 255, 0.592);
         border-radius: 20px;
         z-index: 9999;
         }
@@ -249,4 +250,36 @@
     height: fit-content;
   }
     
+  .gallery{
+    margin: 100px auto;
+    min-height: 50vh;
+    max-height: fit-content;
+    width: 95vw;
+    background: green;
+  }
+
+
+.gallery img {
+  height: 100%;
+  width: 100%;
+}
+.gbaner {
+  height: 30vh;
+}
+.gbaner img {
+  height: 10vh;
+  width: 10vh;
+  border: 1px solid red;
+  border-radius: 50%;
+}
+
+.imges{
+  height:20vh;
+    background-size: cover;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  }
+  
+
     }      

@@ -25,6 +25,7 @@ header {
   display: flex;
   align-items: center;
   letter-spacing: 1px;
+  transition: all linear 5ms;
 }
 
 .navbar ul {
@@ -38,9 +39,10 @@ header {
   text-decoration: none;
 }
 
-.navbar a:hover {
+.navbar a:hover{
   color: red;
 }
+
 
 .banner img {
   width: 100vw;
@@ -208,16 +210,16 @@ input[type="submit"] {
   margin-bottom: 10px;
   /* background: aqua; */
   font-size: 35px;
-text-decoration: solid;
-text-align: center;
-overflow: hidden;
+  text-decoration: solid;
+  text-align: center;
+  overflow: hidden;
 }
-.notificationTitle a{
+.notificationTitle a {
   text-decoration: none;
   color: red;
 }
-.notificationTitle a:hover{
-text-decoration: none;
+.notificationTitle a:hover {
+  text-decoration: none;
   color: rgb(245, 73, 73);
 }
 .notificationContent {
@@ -232,16 +234,15 @@ text-decoration: none;
 .notificationDate {
   height: 10%;
   font-size: 15px;
-display: flex;
-justify-content: flex-end;
-align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   width: 100%;
   /* background: blue; */
   margin: 20px 0;
 }
 
-
-.notification{
+.notification {
   width: 100%;
   height: 20vh;
   margin: 10px;
@@ -251,20 +252,76 @@ align-items: center;
 }
 
 /* style for about */
-.about{
+.about {
   margin: 10vh auto;
-height: 70vh;
-width: 80vw;
-/* background: #9671d1; */
+  height: 70vh;
+  width: 80vw;
+  /* background: #9671d1; */
 }
-.about-content h2{
-font-size: 2rem;
-margin: 20px 0;
-color: rgb(85, 1, 1);
+.about-content h2 {
+  font-size: 2rem;
+  margin: 20px 0;
+  color: rgb(85, 1, 1);
+}
+.about-content h3 {
+  font-size: 1.5rem;
+  color: rgb(148, 0, 0);
+  text-align: center;
+}
 
+/* Join us style ----*/
+
+.joinus {
+  margin: 100px auto;
+  height: 70vh;
+  width: 80vw;
 }
-.about-content h3{
-font-size: 1.5rem;
-color: rgb(148, 0, 0);
-text-align: center;
+
+.gallery {
+  margin: 15px auto;
+  /* min-height: 70vh; */
+  height: fit-content;
+  width: 50vw;
+  background: green;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1f auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  padding: 5px;
 }
+.gallery  img{
+  height: 100%;
+  width: 100%;
+}
+.gbaner {
+  grid-column: span 2;
+  height: 45vh;
+  background-image: url("/images/gallery_banner.jpg");
+  background-size: cover;
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+}
+.gbaner img {
+  height: 20vh;
+  width: 20vh;
+  border: 1px solid red;
+  border-radius: 50%;
+}
+.imges{
+height:40vh;
+  background-size: cover;
+display: flex;
+align-items: end;
+justify-content: center;
+}
+
+.imges p{
+  padding: 2px 10px;
+  margin-bottom: 10px;
+  background: black;
+  color: red;
+  font-size: 2rem;
+}
+
