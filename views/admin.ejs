@@ -69,6 +69,10 @@
             cursor: pointer;
             border-radius: 4px;
         }
+        img{
+            height: 100px;
+            width: 200px;
+        }
     </style>
 </head>
 
@@ -172,8 +176,7 @@
             <tr>
                 <th>ID</th>
                 <th>Title</th>
-                <th>Filename</th>
-                <th>Path</th>
+<th>img</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -182,8 +185,7 @@
                 <tr>
                     <td><%= image.id %></td>
                     <td><%= image.title %></td>
-                    <td><%= image.filename %></td>
-                    <td><%= image.path %></td>
+                   <td><img src="/images/uploads/<%= image.filename %>" alt=""></td>
                     <td>
                         <form action="/delete-images" method="post">
                             <input type="hidden" name="id" value="<%= image.id %>" />

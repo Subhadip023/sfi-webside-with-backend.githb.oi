@@ -20,6 +20,7 @@
         <label for="position">Position:</label>
         <select name="position" id="position">
             <option value="member" <%= user.position === 'member' ? 'selected' : '' %>>Member</option>
+            <option value="Admin" <%= user.position === 'Admin' ? 'selected' : '' %>>Admin</option>
             <option value="donator" <%= user.position === 'donator' ? 'selected' : '' %>>Donator</option>
             <option value="board member" <%= user.position === 'board member' ? 'selected' : '' %>>Board Member</option>
             <option value="other" <%= user.position === 'other' ? 'selected' : '' %>>Other</option>

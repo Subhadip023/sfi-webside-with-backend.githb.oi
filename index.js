@@ -1,3 +1,5 @@
+import authRoutes from './routes/authRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 import express from 'express';
 import sqlite3 from 'sqlite3';
 import session from 'express-session';
@@ -5,6 +7,8 @@ import bodyParser from 'body-parser';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import passport from "passport";
+import { Strategy as LocalStrategy } from 'passport-local';
 
 const app = express();
 const port = 3000;
@@ -26,14 +30,17 @@ const upload = multer({ storage: storage })
 app.use(bodyParser.urlencoded({ extended: true }));
 // Middleware to serve static files
 app.use(express.static("public"));
-// Session middleware
-app.use(
-  session({
-    secret: "secret-key", // Change this to a long, random string in production
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+app.use(session({
+  secret:'sfi-aliah',
+  resave:false,
+  saveUninitialized: false
+
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 // Create tables if they don't exist
 db.serialize(() => {
@@ -124,92 +131,11 @@ app.post("/register", (req, res) => {
   });
 });
 
-// Route to render login form
-app.get("/login", (req, res) => {
-  res.send(`
-      <form method="post" action="/login">
-          <input type="text" name="username" placeholder="Username">
-          <input type="password" name="password" placeholder="Password">
-          <button type="submit">Login</button>
-      </form>
-  `);
-});
-
-// Route to handle login
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-
-  // Check username and password (replace with your authentication logic)
-  if (username === "sfdiaulc" && password === "joybangla") {
-    // Authentication successful, set session flag
-    req.session.isAuthenticated = true;
-    res.redirect("/admin");
-  } else {
-    // Authentication failed, redirect back to login page
-    res.redirect("/login");
-  }
-});
-
-
-app.get("/admin", (req, res) => {
-  if (!req.session.isAuthenticated) {
-    return res.redirect("/login");
-  }
-
-  // Query to fetch user data from the database
-  const userSql = "SELECT * FROM users";
-  const notificationSql = "SELECT * FROM notifications";
-  const imageSql = "SELECT * FROM images";
-
-  // Execute all queries in parallel using Promise.all
-  Promise.all([
-    new Promise((resolve, reject) => {
-      db.all(userSql, (err, userRows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(userRows);
-        }
-      });
-    }),
-    new Promise((resolve, reject) => {
-      db.all(notificationSql, (err, notificationRows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(notificationRows);
-        }
-      });
-    }),
-    new Promise((resolve, reject) => {
-      db.all(imageSql, (err, imageRows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(imageRows);
-        }
-      });
-    })
-  ])
-  .then(([userRows, notificationRows, imageRows]) => {
-    // Render the admin.ejs template and pass the fetched data
-    res.render("admin.ejs", {
-      users: userRows,
-      notifications: notificationRows,
-      images: imageRows
-    });
-  })
-  .catch(err => {
-    console.error("Database error:", err.message);
-    return res.status(500).send("Internal Server Error");
-  });
-});
-
 
 // Route to display update form
 app.get("/update/:id", (req, res) => {
   //   Check if user is authenticated before accessing update form
-  if (!req.session.isAuthenticated) {
+  if (!req.isAuthenticated()) {
     return res.redirect("/login");
   }
 
@@ -453,6 +379,56 @@ app.post('/profile', upload.single('avatar'), function (req, res, next) {
       res.redirect('/admin')
     }
   );
+});
+
+app.use(authRoutes);
+app.use(adminRoutes);
+
+
+passport.use(new LocalStrategy(
+  (username, password, done) => {
+    console.log(username,password)
+    // Query to fetch user from the database based on the username
+    const sql = "SELECT * FROM users WHERE username = ?";
+    db.get(sql, [username], (err, user) => {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        // User not found in the database
+        return done(null, false);
+      }
+      // Check if the password matches
+      if (user.password !== password) {
+        // Password doesn't match
+        return done(null, false);
+      }
+      // Authentication successful, pass user object to the done callback
+      return done(null, user);
+    });
+  }
+));
+
+// Serialization function
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// Deserialization function
+// Deserialization function
+passport.deserializeUser((id, done) => {
+  // Fetch user data from the database based on the user id
+  const sql = "SELECT * FROM users WHERE id = ?";
+  db.get(sql, [id], (err, user) => {
+    if (err) {
+      return done(err);
+    }
+    if (!user) {
+      return done(null, false);
+    }
+    // Pass the user object to the done callback
+    done(null, user);
+  });
 });
 
 // Start the server
