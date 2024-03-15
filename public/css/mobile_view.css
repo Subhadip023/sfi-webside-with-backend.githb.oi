@@ -6,6 +6,7 @@
         display: block;
     }
 
+    
     .dropdowen svg {
         padding-top: 23px;
         width: 20vw;
@@ -140,13 +141,11 @@
   .hn {
     display: flex;
 
-    gap:20px;
     justify-content: center;
     align-items: center;
     margin: 20px auto;
     background: white;
-    height: 60px;
-    width: 350px;
+  
     font-size: 20px;
     color: red;
     position: relative;
@@ -204,7 +203,8 @@
 .Notificationcontaner {
     margin: 0 auto;
     margin-top: 100px;
-    min-height: 75vh;
+    min-height: 50vh;
+    height: fit-content;
     width: 90vw;
     display: flex;
     flex-wrap: wrap;
@@ -233,8 +233,7 @@
     width: 100%;
     min-height: 70%;
     max-height: fit-content;
-    min-height: 10px;
-    max-height: fit-content;
+
     font-size: 25px;
   }
   .notificationDate {
@@ -245,10 +244,8 @@
   align-items: center;
     width: 100%;
   }
-  
-  .notification{
-    height: fit-content;
-  }
+
+
     
   .gallery{
     margin: 100px auto;

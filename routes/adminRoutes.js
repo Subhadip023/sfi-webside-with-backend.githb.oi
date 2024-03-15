@@ -7,7 +7,7 @@ const db = new sqlite3.Database("sfi-dataBase.db");
 
  
 router.get("/admin", (req, res) => {
-  console.log(req.user)
+  // console.log(req.user)
   if (!req.isAuthenticated() || req.user.position !== 'Admin') {
     return res.redirect('/login');
   }
@@ -16,6 +16,7 @@ router.get("/admin", (req, res) => {
     const userSql = "SELECT * FROM users";
     const notificationSql = "SELECT * FROM notifications";
     const imageSql = "SELECT * FROM images";
+    const homeSql = "SELECT * FROM home";
   
     // Execute all queries in parallel using Promise.all
     Promise.all([
@@ -45,14 +46,24 @@ router.get("/admin", (req, res) => {
             resolve(imageRows);
           }
         });
+      }),
+      new Promise((resolve, reject) => {
+        db.all(homeSql, (err, homeRows) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(homeRows);
+          }
+        });
       })
     ])
-    .then(([userRows, notificationRows, imageRows]) => {
+    .then(([userRows, notificationRows, imageRows,homeRows]) => {
       // Render the admin.ejs template and pass the fetched data
       res.render("admin.ejs", {
         users: userRows,
         notifications: notificationRows,
-        images: imageRows
+        images: imageRows,
+        home:homeRows,
       });
     })
     .catch(err => {

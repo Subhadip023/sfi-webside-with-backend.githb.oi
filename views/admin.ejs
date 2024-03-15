@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin </title>
     <style>
+         * {
+            margin: 0;
+            padding: 0;
+            
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -51,12 +56,14 @@
             margin: 4px 2px;
             cursor: pointer;
             border-radius: 4px;
-           
+
         }
-        .m-auto{
+
+        .m-auto {
             margin: auto;
         }
-        .addn-btn{
+
+        .addn-btn {
             background-color: #4caf50;
             border: none;
             color: white;
@@ -69,106 +76,218 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        img{
+.container{
+    padding-top: 20vh;
+    height: 80vh;
+    width: 100vw;
+    margin: 2px;
+}
+        img {
             height: 100px;
             width: 200px;
         }
+
+        header {
+            z-index: 5;
+            padding:10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            height: 20vh;
+
+            width: 100%;
+            text-align: center;
+        }
+        nav{
+        }
+        nav ul{
+
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+        nav li{
+margin: auto;
+            padding: 0 10px;
+        }
+
     </style>
 </head>
 
 <body>
-    <h1>User Data</h1>
+    <header>
+        <h1>
+            🚩 Wellcome COMRED 🚩
+        </h1>
+        <nav>
+            <ul>
+                <a href="#Home">
+                    <li>Home</li>
+                </a>
+                <a href="#User">
+                    <li>User</li>
+                </a>
+                <a href="#Notifications">
+                    <li>Notifications</li>
+                </a>
+                <a href="#Gallery">
+                    <li>Gallery</li>
+                </a>
+            </ul>
+        </nav>
+    </header>
+    <section id="Home" class="container">
+
+           <h1>Home-Data</h1>
     <table>
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Position</th>
-                <th>Update</th>
-            </tr>
+            <th>Id</th>
+            <th>Image</th>
+            <th>Contentd</th>
+            <th>Name</th>
+            <th>Edit</th>
         </thead>
         <tbody>
-            <% users.forEach(user=> { %>
+            <% home.forEach((element ,index)=> {%>
                 <tr>
                     <td>
-                        <%= user.id %>
+                        <%= index + 1 %>
                     </td>
                     <td>
-                        <%= user.username %>
+                        <img height="30px" width="70px" src="/images/home/<%=element.filename %>" alt="">
                     </td>
                     <td>
-                        <%= user.email %>
+                        <%= element.content %>
                     </td>
                     <td>
-                        <%= user.phone %>
+                        <%= element.title %>
                     </td>
                     <td>
-                        <%= user.position %>
-                    </td>
-                    <td>
-                        <a href="/update/<%= user.id %>"><button class="update-btn">Update</button></a>
-                        <form action="/delete" method="post">
-                            <input type="hidden" name="id" value="<%= user.id %>" />
-                            <button type="submit" class="delete-btn">Delete</button>
-                        </form>
+                        <a href="/delete-home/<%= element.id %>"><button class="delete-btn">Delete</button></a>
+
                     </td>
                 </tr>
                 <% }); %>
         </tbody>
     </table>
+    <h2>
+        Add section below form
 
-    <h2>Notifications</h2>
-    <br />
-   <div style="width: 100vw ;display: flex;">
-    <a href="/addnotification" class="addn-btn m-auto">Add Notification</a>
-   </div>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Date</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% notifications.forEach(notification=> { %>
-                <tr>
-                    <td>
-                        <%= notification.id %>
-                    </td>
-                    <td>
-                        <%= notification.title %>
-                    </td>
-                    <td>
-                        <%= notification.content %>
-                    </td>
-                    <td>
-                        <%= notification.date %>
-                    </td>
-                    <td>
-                        <form action="/delete-notification" method="post">
-                            <input type="hidden" name="id" value="<%= notification.id %>" />
-                            <button type="submit" class="delete-btn">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                <% }); %>
-        </tbody>
-    </table>
-
-    <section>
-        <h1> Gallery </h1>
-        <form action="/profile" method="post" enctype="multipart/form-data">
-            <input type="file" name="avatar" />
-            <input type="text" name="title"  placeholder="title"/>
-            <button type="submit">add</button>
-          </form>
-          
+    </h2>
+    <form style="margin-left: 100px;" action="/" method="POST" enctype="multipart/form-data">
+        <div>
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image">
+        </div>
+        <div>
+            <label for="title">Name:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" rows="4" required></textarea>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
     </section>
+    <section id="User" class="container">   <h2>User Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Position</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                <% users.forEach(user=> { %>
+                    <tr>
+                        <td>
+                            <%= user.id %>
+                        </td>
+                        <td>
+                            <%= user.username %>
+                        </td>
+                        <td>
+                            <%= user.email %>
+                        </td>
+                        <td>
+                            <%= user.phone %>
+                        </td>
+                        <td>
+                            <%= user.position %>
+                        </td>
+                        <td>
+                            <a href="/update/<%= user.id %>"><button class="update-btn">Update</button></a>
+                            <form action="/delete" method="post">
+                                <input type="hidden" name="id" value="<%= user.id %>" />
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+    </section>
+    <section id="Notifications" class="container">
+        <h2>Notifications</h2>
+        <br />
+        <div style="width: 100vw ;display: flex;">
+            <a href="/addnotification" class="addn-btn m-auto">Add Notification</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Date</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% notifications.forEach(notification=> { %>
+                    <tr>
+                        <td>
+                            <%= notification.id %>
+                        </td>
+                        <td>
+                            <%= notification.title %>
+                        </td>
+                        <td>
+                            <%= notification.content %>
+                        </td>
+                        <td>
+                            <%= notification.date %>
+                        </td>
+                        <td>
+                            <form action="/delete-notification" method="post">
+                                <input type="hidden" name="id" value="<%= notification.id %>" />
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table></section>
+    <section id="Gallery" class="container">
+ 
+ 
+
+
+        <h2> Gallery </h2>
+        <form action="/gallery" method="post" enctype="multipart/form-data">
+            <input type="file" name="avatar" />
+            <input type="text" name="title" placeholder="title" />
+            <button type="submit">add</button>
+        </form>
+
+
 
     <h2>Images</h2>
     <table border="1">
@@ -176,16 +295,20 @@
             <tr>
                 <th>ID</th>
                 <th>Title</th>
-<th>img</th>
+                <th>img</th>
                 <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            <% images.forEach(image => { %>
+            <% images.forEach(image=> { %>
                 <tr>
-                    <td><%= image.id %></td>
-                    <td><%= image.title %></td>
-                   <td><img src="/images/uploads/<%= image.filename %>" alt=""></td>
+                    <td>
+                        <%= image.id %>
+                    </td>
+                    <td>
+                        <%= image.title %>
+                    </td>
+                    <td><img src="/images/gallery/<%= image.filename %>" alt=""></td>
                     <td>
                         <form action="/delete-images" method="post">
                             <input type="hidden" name="id" value="<%= image.id %>" />
@@ -193,9 +316,9 @@
                         </form>
                     </td>
                 </tr>
-            <% }); %>
+                <% }); %>
         </tbody>
-    </table>
+    </table>    </section>
 </body>
 
 </html>

@@ -1,37 +1,34 @@
 <%- include("partials/header.ejs") %>
-    <div class="banner">
-      <img src="./images/banner01.jpg" alt="" />
+  <div class="banner">
+    <img src="./images/banner01.jpg" alt="" />
+  </div>
+  <div class="contaner">
+    <div class="notification_home">
+
     </div>
-    <div class="contaner">
-      <div class="notification_home">
-  
-      </div>
-      <div class="quotes">
-        <img class="" src="./images/karlmarks.jpg" alt="marks images" />
-        <p class="kalr_quote">
-          <span class="karl_qoration">"</span>The ideas of the ruling class are
-          in every epoch the ruling ideas, i.e. the class which is the ruling
-          material force of society, is at the same time its ruling intellectual
-          force. The class which has the means of material production at its
-          disposal, has control at the same time over the means of mental
-          production, so that thereby, generally speaking, the ideas of those
-          who lack the means of mental production are subject to it. The ruling
-          ideas are nothing more than the ideal expression of the dominant
-          material relationships, the dominant material relationships grasped as
-          ideas. <span class="karl_qoration">"</span
-          ><span class="Karl">― Karl Marx,</span>
-        </p>
+    <% HomeData.forEach(element => {%>
 
-      </div>    </div>
-    <script>
-const notificationCount = <%=Notification.length%>;
-let notificationTitle=[]
-<% Notification.forEach((title) => { %>
-notificationTitle.push("<%= title %>")
-  <% });%>
+    <div class="quotes">
+      <img class="" src="./images/home/<%= element.filename %>" alt="marks images" />
+      <p class="kalr_quote">
+        <span class="karl_qoration">"</span><%= element.content %>
+        <span class="karl_qoration">"</span>
+        <span class="Karl">- <%= element.title %></span>
+      </p>
+    </div>
+ <% }); %>
 
-console.log(notificationTitle)
-</script>
- 
-    <%- include("partials/footer.ejs") %>
- 
+   
+
+  </div>
+  <script>
+    const notificationCount = <%=Notification.length%>;
+    let notificationTitle = []
+      <% Notification.forEach((title) => { %>
+        notificationTitle.push("<%= title %>")
+        <% });%>
+
+    // console.log(notificationTitle)
+  </script>
+
+  <%- include("partials/footer.ejs") %>

@@ -4,6 +4,10 @@ const navbar = document.querySelector('.navbar');
 const dropdowenSvg = document.querySelector('.dropdowen ul li');
 // const hn=document.querySelector('.hn');
 const notification_home = document.querySelector('.notification_home');
+const elements = document.querySelectorAll('.kalr_quote');
+const quoteElements = document.querySelectorAll('.kalr_quote');
+const imgElements = document.querySelectorAll('.quotes img');
+
 
 dropdrowen.addEventListener('click', function () {
   navbar.style.display = navbar.style.display === "none" ? "block" : "none";
@@ -55,9 +59,20 @@ dropdrowen.addEventListener('click', function () {
 window.onload = function () {
 
   document.querySelector('.banner img').style.opacity = '1';
-  document.querySelector('.kalr_quote ').style.opacity = '1';
-  document.querySelector('.quotes img').style.opacity = '1';
-  document.querySelector('.quotes img').style.boxShadow = ' 5px 10px 28px red';
+// Apply styles to each img element
+imgElements.forEach(element => {
+  element.style.opacity = '1';
+  element.style.boxShadow = '5px 10px 28px red';
+});
+quoteElements.forEach(element => {
+  element.style.opacity = '1';
+});
+
+// Iterate over each element and set their opacity to 1
+elements.forEach(element => {
+  element.style.opacity = '1';
+});
+
   if (notificationCount != 0) {
     let i = 0;
     const intervalId = setInterval(function () {
@@ -72,15 +87,16 @@ window.onload = function () {
 
 };
 
+{/* <svg class='cross' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <line x1="10" y1="10" x2="90" y2="90" stroke="red" stroke-width="10"/>
+  <line x1="90" y1="10" x2="10" y2="90" stroke="red" stroke-width="10"/>
+</svg> */}
 
 function showNotification(Notification_title) {
   let hn = document.createElement('div');
   hn.classList.add('hn');
   hn.innerHTML = ` 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <line x1="10" y1="10" x2="90" y2="90" stroke="red" stroke-width="10"/>
-  <line x1="90" y1="10" x2="10" y2="90" stroke="red" stroke-width="10"/>
-</svg>
+
 
 ${Notification_title}
 <a href="/notification"><svg
@@ -109,4 +125,6 @@ ${Notification_title}
       hn.remove(); // Remove the element after the animation completes
     }, 500); // Adjust the timeout to match the duration of the animation
   }, 5000);
+
 }
+

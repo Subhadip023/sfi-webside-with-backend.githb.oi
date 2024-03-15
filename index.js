@@ -1,5 +1,8 @@
 import authRoutes from './routes/authRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
+import newsRoute from './routes/newsRoute.js'
+import registerRoute from './routes/registerRoute.js'
+import galleryRoute from './routes/galleryRoute.js'
 import express from 'express';
 import sqlite3 from 'sqlite3';
 import session from 'express-session';
@@ -11,10 +14,20 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
 
 const app = express();
-const port = 3000;
+const port = 5000;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/images/uploads');
+    let destinationDirectory = '';
+
+    if (req.originalUrl === '/gallery') {
+      destinationDirectory = 'public/images/gallery';
+    } else if (req.originalUrl === '/') {
+      destinationDirectory = 'public/images/home';
+    } else {
+      // Default directory or error handling
+      destinationDirectory = 'public/images';
+    }
+    cb(null, destinationDirectory);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -93,43 +106,30 @@ db.serialize(() => {
       }
     }
   );
-});
 
-// Register route
-app.post("/register", (req, res) => {
-  const { username, password, email, phone } = req.body;
+  db.run(
+    `CREATE TABLE IF NOT EXISTS home (
+    id INTEGER PRIMARY KEY,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    filename TEXT NOT NULL
+);
 
-  // Validate input fields
-  if (!username || !password || !email) {
-    return res.status(400).send("Username, password, and email are required");
-  }
-
-  // Check if username already exists
-  db.get("SELECT id FROM users WHERE username = ?", [username], (err, row) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      return res.status(500).send("Internal Server Error");
-    }
-
-    if (row) {
-      return res.status(400).send("Username already exists");
-    }
-
-    // Insert new user into the database
-    db.run(
-      "INSERT INTO users (username, password, email, phone) VALUES (?, ?, ?, ?)",
-      [username, password, email, phone],
-      (err) => {
-        if (err) {
-          console.error("Database error:", err.message);
-          return res.status(500).send("Internal Server Error");
-        }
-
-        res.redirect("/");
+    )`,
+    (err) => {
+      if (err) {
+        console.error("Error creating notifications table:", err.message);
+      } else {
+        console.log("Home table created successfully");
       }
-    );
-  });
+    }
+  );
 });
+app.use(authRoutes);
+app.use(adminRoutes);
+app.use(newsRoute);
+app.use(registerRoute);
+
 
 
 // Route to display update form
@@ -155,6 +155,9 @@ app.get("/update/:id", (req, res) => {
     res.render("update-user.ejs", { user: row });
   });
 });
+
+
+
 // Route to handle updating user data
 app.post("/update", (req, res) => {
   // Extract user data from the request body
@@ -175,6 +178,7 @@ app.post("/update", (req, res) => {
     res.redirect("/admin");
   });
 });
+
 // Route to handle deleting user data
 app.post("/delete", (req, res) => {
   // Extract the user ID from the request parameters
@@ -194,6 +198,7 @@ app.post("/delete", (req, res) => {
     res.redirect("/admin");
   });
 });
+
 app.get("/addnotification", (req, res) => {
   res.render("addnotification.ejs");
 });
@@ -221,6 +226,25 @@ app.post("/delete-notification", (req, res) => {
 
   // Execute the query with the provided user ID
   db.run(sql, [userId], (err) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    // Redirect back to the admin page after successful deletion
+    res.redirect("/admin");
+  });
+});
+
+
+app.get("/delete-home/:id", (req, res) => {
+  const deleteId = req.params.id;
+
+  // SQL query to delete the user with the specified ID
+  const sql = "DELETE FROM home WHERE id = ?";
+
+  // Execute the query with the provided user ID
+  db.run(sql, [deleteId], (err) => {
     if (err) {
       console.error("Database error:", err.message);
       return res.status(500).send("Internal Server Error");
@@ -272,22 +296,56 @@ app.post("/delete-images", (req, res) => {
   });
 });
 
-// Routes to render different pages
 app.get("/", (req, res) => {
-  const notificationSql = "SELECT title FROM notifications"; // Select only the title column
-  db.all(notificationSql, (err, notificationRows) => {
-    if (err) {
-      console.error("Database error:", err.message);
+  const homeSql = "SELECT * FROM home"; // Select all columns from 'home' table
+  const notificationSql = "SELECT title FROM notifications"; // Select only the title column from 'notifications' table
+
+  // Execute the queries in parallel
+  db.all(homeSql, (homeErr, homeRows) => {
+    if (homeErr) {
+      console.error("Home table database error:", homeErr.message);
       return res.status(500).send("Internal Server Error");
     }
 
     // Extract titles from notificationRows and push them into an array
-    const notificationTitles = notificationRows.map((row) => row.title);
+    const homeData = homeRows; // You can modify this as per your data structure needs
 
-    // Render the notification.ejs template and pass the array of titles
-    res.render("index.ejs", { Notification: notificationTitles });
+    db.all(notificationSql, (notificationErr, notificationRows) => {
+      if (notificationErr) {
+        console.error("Notifications table database error:", notificationErr.message);
+        return res.status(500).send("Internal Server Error");
+      }
+
+      // Extract titles from notificationRows and push them into an array
+      const notificationTitles = notificationRows.map((row) => row.title);
+
+      // Render the index.ejs template and pass both sets of data
+      res.render("index.ejs", { HomeData: homeData, Notification: notificationTitles });
+    });
   });
 });
+
+
+app.post('/', upload.single('image'), (req, res) => {
+  const title = req.body.title;
+  const content = req.body.content;
+  const filename = req.file.filename;
+
+  // Log the title, content, and filename to the console
+  console.log(title, content, filename);
+
+  // Insert the data into the SQLite database
+  const sql = "INSERT INTO home (title, content, filename) VALUES (?, ?, ?)";
+  db.run(sql, [title, content, filename], (err) => {
+    if (err) {
+      console.error("Error inserting data into database:", err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+    // Redirect the user to the admin page after successful insertion
+    res.redirect('/admin');
+  });
+});
+
 
 app.get("/notification", (req, res) => {
   // Query to fetch notifications from the database
@@ -323,15 +381,13 @@ db.get(sql,[notification_id],(err,row)=>{
 
 
 
-app.get("/News", (req, res) => {
-  res.render("News.ejs");
-});
 app.get("/Events", (req, res) => {
   res.render("Events.ejs");
 });
 app.get("/joinUs", (req, res) => {
   res.render("joinUs.ejs");
 });
+
 app.get("/Gallery", (req, res) => {
   // Query to fetch image data from the database
 // Query to fetch image data from the database, ordered by ID in descending order
@@ -354,7 +410,7 @@ app.get("/About", (req, res) => {
 });
 
 // Modify your file upload route to insert file information into the database
-app.post('/profile', upload.single('avatar'), function (req, res, next) {
+app.post('/gallery', upload.single('avatar'), function (req, res, next) {
   // Check if file exists
   if (!req.file) {
     return res.status(400).send('No file uploaded.');
@@ -381,13 +437,12 @@ app.post('/profile', upload.single('avatar'), function (req, res, next) {
   );
 });
 
-app.use(authRoutes);
-app.use(adminRoutes);
+
 
 
 passport.use(new LocalStrategy(
   (username, password, done) => {
-    console.log(username,password)
+    // console.log(username,password)
     // Query to fetch user from the database based on the username
     const sql = "SELECT * FROM users WHERE username = ?";
     db.get(sql, [username], (err, user) => {

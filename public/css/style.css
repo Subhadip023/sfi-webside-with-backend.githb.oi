@@ -45,11 +45,12 @@ header {
 
 
 .banner img {
-  width: 100vw;
+  width: 98vw;
 }
 .contaner {
   display: flex;
-  width: 100vw;
+  width: 99vw;
+  flex-direction: column;
 }
 .quotes {
   margin: 50px auto;
@@ -114,13 +115,13 @@ h2 {
 
 .hn {
   display: flex;
-
-  gap: 20px;
-  justify-content: center;
+  gap: 5px;
+  justify-content: space-evenly;
   align-items: center;
-  margin: 20px auto;
+  margin:10px auto;
   background: white;
-  height: 60px;
+  min-height: 60px;
+  height: fit-content;
   width: 350px;
   font-size: 20px;
   color: red;
@@ -129,6 +130,8 @@ h2 {
   transform: scale(0.5); /* Start with smaller size */
   animation: popup 0.5s ease forwards;
   box-shadow: 10px 10px 30px red;
+  overflow: auto;
+  padding:  5px;
 }
 
 .hn svg {
@@ -196,7 +199,8 @@ input[type="submit"] {
 .Notificationcontaner {
   margin: 0 auto;
   margin-top: 50px;
-  min-height: 75vh;
+  min-height: 50vh;
+  height: fit-content;
   width: 55vw;
   display: flex;
   flex-wrap: wrap;
@@ -244,7 +248,8 @@ input[type="submit"] {
 
 .notification {
   width: 100%;
-  height: 20vh;
+  min-height: 20vh;
+  height: fit-content;
   margin: 10px;
   padding: 10px;
   box-shadow: 10px 10px 20px;
