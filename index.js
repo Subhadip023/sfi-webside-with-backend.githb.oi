@@ -97,6 +97,7 @@ db.serialize(() => {
     `CREATE TABLE IF NOT EXISTS notifications (
         id INTEGER PRIMARY KEY,
         title TEXT NOT NULL,
+        filename TEXT NOT NULL,
         content TEXT NOT NULL,
         date DATE DEFAULT CURRENT_DATE
     )`,
@@ -470,9 +471,6 @@ app.post('/gallery', upload.single('avatar'), function (req, res, next) {
     }
   );
 });
-
-
-
 
 
 passport.use(new LocalStrategy(

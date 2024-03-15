@@ -97,6 +97,7 @@ function showNotification(Notification_title) {
   hn.classList.add('hn');
   hn.innerHTML = ` 
 
+  <img src="/images/sfi-aliah-log.jpg" alt="">
 
 ${Notification_title}
 <a href="/notification"><svg

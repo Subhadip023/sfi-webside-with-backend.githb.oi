@@ -15,8 +15,17 @@
         .container {
             margin: 11vh auto;
             height: 80vh;
+            width: 60vw;
+            
+        }
+        @media (max-width: 700px) {
+
+            .container {
+            margin: 11vh auto;
+            height: 80vh;
             width: 80vw;
             
+        }
         }
 
         nav {
@@ -31,6 +40,7 @@
             top: 0;
             left: 0;
             right: 0;
+            z-index: 5;
         }
 
         nav ul {
@@ -53,7 +63,7 @@
         .title {
             width: 100%;
             height: fit-content;
-            margin-bottom: 10px;
+            margin: 10px 0;
             /* background: aqua; */
             font-size: 35px;
             text-decoration: solid;
@@ -62,7 +72,6 @@
         }
 
         .content {
-
             width: 100%;
             min-height: 70%;
             max-height: fit-content;
@@ -71,7 +80,9 @@
             max-height: fit-content;
             font-size: 25px;
             text-align:justify ;
+            position: relative;
         }
+
 
         .date {
             height: 10%;
@@ -82,6 +93,21 @@
             width: 100%;
             /* background: blue; */
             margin: 20px 0;
+        }
+        .notification-img img{
+            height: 33%;
+            width: 100%;
+        }
+        .sfi-logo{
+            height: 0;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .sfi-logo img{
+            height: 80vh;
+            width: 100%;
+            opacity: 0.3;
         }
     </style>
 </head>
@@ -99,7 +125,13 @@
         <div class="title">
             <%= Notification.title %><br>
         </div>
-        <div class="content">
+        <div class="notification-img">
+            <img src="/images/gallery/avatar-1710483225516-839593503.jpg" alt="">
+        </div>
+        <div class="sfi-logo">
+            <img src="/images/sfi-aliah-log.jpg" alt="">
+        </div>
+        <div class=" content">
             <%= Notification.content %>
         </div>
         <div class="date">

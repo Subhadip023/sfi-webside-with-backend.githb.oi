@@ -122,7 +122,7 @@ h2 {
   background: white;
   min-height: 60px;
   height: fit-content;
-  width: 350px;
+  width: 300px;
   font-size: 20px;
   color: red;
   position: relative;
@@ -133,7 +133,10 @@ h2 {
   overflow: auto;
   padding:  5px;
 }
-
+.hn img{
+  height:100%;
+  width: 20%;
+}
 .hn svg {
   border: 2px solid red;
   border-radius: 505%;
