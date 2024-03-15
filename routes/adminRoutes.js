@@ -1,12 +1,14 @@
 import express from 'express'
 import passport from 'passport'
 import sqlite3 from 'sqlite3';
+import { about_data } from '../index.js';
 
 const router = express.Router();
 const db = new sqlite3.Database("sfi-dataBase.db");
 
  
 router.get("/admin", (req, res) => {
+  console.log(about_data.lcp)
   // console.log(req.user)
   if (!req.isAuthenticated() || req.user.position !== 'Admin') {
     return res.redirect('/login');
@@ -64,6 +66,7 @@ router.get("/admin", (req, res) => {
         notifications: notificationRows,
         images: imageRows,
         home:homeRows,
+        about_data:about_data,
       });
     })
     .catch(err => {

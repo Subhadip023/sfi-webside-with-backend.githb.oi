@@ -12,6 +12,8 @@ import path from 'path';
 import fs from 'fs';
 import passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
+import bcrypt from 'bcrypt';
+
 
 const app = express();
 const port = 5000;
@@ -125,6 +127,13 @@ db.serialize(() => {
     }
   );
 });
+
+
+
+// Use the middleware function in your adminRoutes
+// app.use(adminRoutes);
+
+
 app.use(authRoutes);
 app.use(adminRoutes);
 app.use(newsRoute);
@@ -330,10 +339,6 @@ app.post('/', upload.single('image'), (req, res) => {
   const title = req.body.title;
   const content = req.body.content;
   const filename = req.file.filename;
-
-  // Log the title, content, and filename to the console
-  console.log(title, content, filename);
-
   // Insert the data into the SQLite database
   const sql = "INSERT INTO home (title, content, filename) VALUES (?, ?, ?)";
   db.run(sql, [title, content, filename], (err) => {
@@ -384,9 +389,12 @@ db.get(sql,[notification_id],(err,row)=>{
 app.get("/Events", (req, res) => {
   res.render("Events.ejs");
 });
+
 app.get("/joinUs", (req, res) => {
-  res.render("joinUs.ejs");
+  const message = req.query.message || ""; // Retrieve the message from the query parameter
+  res.render("joinUs.ejs", { message: message });
 });
+
 
 app.get("/Gallery", (req, res) => {
   // Query to fetch image data from the database
@@ -404,10 +412,36 @@ const sql = "SELECT * FROM images ORDER BY id DESC";
     res.render("Gallery.ejs", { images: imageRows });
   });
 });
+let about_data=
+  {
+    lcp: 'Kiron Anjar',
+    lcs: 'Miladun Nabi',
+    tmp: 'Arian Sarkar',
+    tms: 'Sunirnay Chatterjee',
+    sup: 'Tuhina Parvin',
+    sus: 'Wahid'
+  }
 
 app.get("/About", (req, res) => {
-  res.render("About.ejs");
+  res.render("About.ejs",{about:about_data});
 });
+app.post('/about',(req,res)=>{
+  
+
+   about_data = {
+    lcp: req.body.lcp,
+    lcs: req.body.lcs,
+    tmp: req.body.tmp,
+    tms: req.body.tms,
+    sup: req.body.sup,
+    sus: req.body.sus
+  };
+// console.log(about_data)
+res.redirect('/admin')
+
+})
+export { about_data };
+
 
 // Modify your file upload route to insert file information into the database
 app.post('/gallery', upload.single('avatar'), function (req, res, next) {
@@ -440,12 +474,12 @@ app.post('/gallery', upload.single('avatar'), function (req, res, next) {
 
 
 
+
 passport.use(new LocalStrategy(
   (username, password, done) => {
-    // console.log(username,password)
     // Query to fetch user from the database based on the username
     const sql = "SELECT * FROM users WHERE username = ?";
-    db.get(sql, [username], (err, user) => {
+    db.get(sql, [username], async (err, user) => {
       if (err) {
         return done(err);
       }
@@ -453,16 +487,25 @@ passport.use(new LocalStrategy(
         // User not found in the database
         return done(null, false);
       }
-      // Check if the password matches
-      if (user.password !== password) {
-        // Password doesn't match
-        return done(null, false);
+      
+      // Compare the hashed password with the provided password
+      try {
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+          // Password doesn't match
+          return done(null, false);
+        }
+        
+        // Authentication successful, pass user object to the done callback
+        return done(null, user);
+      } catch (error) {
+        console.error("Error comparing passwords:", error.message);
+        return done(error);
       }
-      // Authentication successful, pass user object to the done callback
-      return done(null, user);
     });
   }
 ));
+
 
 // Serialization function
 passport.serializeUser((user, done) => {

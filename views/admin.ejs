@@ -134,6 +134,9 @@ margin: auto;
                 <a href="#Gallery">
                     <li>Gallery</li>
                 </a>
+                <a href="#about">
+                    <li>About</li>
+                </a>
             </ul>
         </nav>
     </header>
@@ -319,6 +322,32 @@ margin: auto;
                 <% }); %>
         </tbody>
     </table>    </section>
+
+
+    <section id="about" class="container">
+        this is about make change 
+        <form action="/about" method="post">
+            <h3>Local Committee</h3>
+            <label for="lcp">Local Committee President</label>
+            <input id="lcp" name="lcp" type="text" placeholder="" value="<%= about_data.lcp %>">
+            <label for="lcs">Local Committee Secretary</label>
+            <input id="lcs" name="lcs" type="text" placeholder=""  value="<%= about_data.lcs %>">
+            
+            <h3>Technology & Management Unit</h3>
+            <label for="tmp">SFI Technology & Management Unit President</label>
+            <input id="tmp" name="tmp" type="text" placeholder="" value="<%= about_data.tmp %>">
+            <label for="tms">SFI Technology & Management Unit Secretary</label>
+            <input id="tms" name="tms" type="text" placeholder="" value="<%= about_data.tms %>">
+            
+            <h3>Science unit</h3>
+            <label for="sup">SFI Aliah University Science unit President</label>
+            <input id="sup" name="sup" type="text" placeholder="" value="<%= about_data.sup %>">
+            <label for="sus">SFI Aliah University Science unit Secretary</label>
+            <input id="sus" name="sus" type="text" placeholder="" value="<%= about_data.sus %>">
+            
+            <button type="submit">Save Changes</button>
+        </form>
+    </section>
 </body>
 
 </html>
