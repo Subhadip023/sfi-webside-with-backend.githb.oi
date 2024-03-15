@@ -8,7 +8,7 @@ const db = new sqlite3.Database("sfi-dataBase.db");
 
  
 router.get("/admin", (req, res) => {
-  console.log(about_data.lcp)
+  // console.log(about_data.lcp)
   // console.log(req.user)
   if (!req.isAuthenticated() || req.user.position !== 'Admin') {
     return res.redirect('/login');
