@@ -253,6 +253,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Image</th>
+
                     <th>Title</th>
                     <th>Content</th>
                     <th>Date</th>
@@ -264,6 +266,8 @@
                     <tr>
                         <td>
                             <%= notification.id %>
+                        </td>
+                        <td>            <img src="/images/notification/<%= notification.imgfilename %>" alt="">
                         </td>
                         <td>
                             <%= notification.title %>
