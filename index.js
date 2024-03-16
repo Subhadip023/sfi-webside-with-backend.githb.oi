@@ -389,7 +389,7 @@ app.get("/notification", (req, res) => {
       console.error("Database error:", err.message);
       return res.status(500).send("Internal Server Error");
     }
-console.log(notificationRows)
+// console.log(notificationRows)
     // Render the notification.ejs template and pass the fetched notifications
     res.render("notification.ejs", { notifications: notificationRows });
   });
