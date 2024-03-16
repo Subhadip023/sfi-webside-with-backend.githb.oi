@@ -203,7 +203,6 @@
 .Notificationcontaner {
     margin: 0 auto;
     margin-top: 100px;
-    min-height: 50vh;
     height: fit-content;
     width: 90vw;
     display: flex;

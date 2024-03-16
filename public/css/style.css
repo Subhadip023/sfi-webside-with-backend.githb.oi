@@ -45,7 +45,7 @@ header {
 
 
 .banner img {
-  width: 98vw;
+  width: 99vw;
 }
 .contaner {
   display: flex;
@@ -202,7 +202,7 @@ input[type="submit"] {
 .Notificationcontaner {
   margin: 0 auto;
   margin-top: 50px;
-  min-height: 50vh;
+  min-height: 100vh;
   height: fit-content;
   width: 55vw;
   display: flex;

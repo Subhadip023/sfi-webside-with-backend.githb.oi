@@ -29,7 +29,7 @@ router.post("/register", async (req, res) => {
   
 
     // Redirect with success message
-    const message = `Welcome to the COMRED World ${username}`;
+    const message = `Welcome to the COMRED's World ${username}`;
     res.redirect("/joinUs?message=" + encodeURIComponent(message));
     } catch (error) {
       console.error("Error:", error.message);
