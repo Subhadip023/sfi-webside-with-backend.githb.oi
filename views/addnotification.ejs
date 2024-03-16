@@ -1,19 +1,20 @@
-
-<form action="/addnotification" method="POST">
+<form action="/addnotification" method="POST" enctype="multipart/form-data">
   <div>
     <label for="title">Title</label>
     <input type="text" id="title" name="title" required />
   </div>
-  <!-- <div>
-            <label for="content">Content </label>
-            <input type="texta" id="content" name="content" required>
-        </div> -->
+ 
   <div>
     <label for="content">Content:</label>
-
     <textarea id="content" name="content" rows="40" cols="100"></textarea>
   </div>
+
   <div>
-    <input type="submit" value="add" />
+    <label for="notificationImage">notificationImage:</label>
+    <input type="file" id="notificationImage" name="notificationImage" accept="notificationImage/*" />
+  </div>
+
+  <div>
+    <input type="submit" value="Add" />
   </div>
 </form>

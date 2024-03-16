@@ -23,9 +23,16 @@ const storage = multer.diskStorage({
 
     if (req.originalUrl === '/gallery') {
       destinationDirectory = 'public/images/gallery';
-    } else if (req.originalUrl === '/') {
+    }
+     else if (req.originalUrl === '/') {
       destinationDirectory = 'public/images/home';
-    } else {
+    }
+    else if(req.originalUrl==='/addnotification'){
+      destinationDirectory = 'public/images/notification';
+
+    }
+
+     else {
       // Default directory or error handling
       destinationDirectory = 'public/images';
     }
@@ -109,6 +116,7 @@ db.serialize(() => {
       }
     }
   );
+  
 
   db.run(
     `CREATE TABLE IF NOT EXISTS home (
@@ -209,33 +217,22 @@ app.post("/delete", (req, res) => {
   });
 });
 
-app.get("/addnotification", (req, res) => {
-  res.render("addnotification.ejs");
-});
-app.post("/addnotification", (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  db.run(
-    "INSERT INTO notifications (title, content) VALUES ( ?, ?)",
-    [title, content],
-    (err) => {
-      if (err) {
-        console.error("Database error:", err.message);
-        return res.status(500).send("Internal Server Error");
-      }
-      res.redirect("/admin");
-    }
-  );
-});
+
 
 app.post("/delete-notification", (req, res) => {
-  const userId = req.body.id;
-
+  const notificationId = req.body.id;
+db.get('SELECT imgfilename FROM notifications WHERE id = ?',[notificationId],(err,row)=>{
+  const filename='public/images/notification/'+row.imgfilename;
+  fs.unlink(filename,(err)=>{
+    if (err) {
+      console.error("Error deleting image file:", err.message);
+      return res.status(500).send("Internal Server Error");
+    }
   // SQL query to delete the user with the specified ID
   const sql = "DELETE FROM notifications WHERE id = ?";
 
   // Execute the query with the provided user ID
-  db.run(sql, [userId], (err) => {
+  db.run(sql, [notificationId], (err) => {
     if (err) {
       console.error("Database error:", err.message);
       return res.status(500).send("Internal Server Error");
@@ -244,25 +241,35 @@ app.post("/delete-notification", (req, res) => {
     // Redirect back to the admin page after successful deletion
     res.redirect("/admin");
   });
+  })
+})
+
 });
 
 
 app.get("/delete-home/:id", (req, res) => {
   const deleteId = req.params.id;
-
-  // SQL query to delete the user with the specified ID
-  const sql = "DELETE FROM home WHERE id = ?";
-
-  // Execute the query with the provided user ID
-  db.run(sql, [deleteId], (err) => {
+db.get('SELECT filename FROM home WHERE id=?',[deleteId],(err,row)=>{
+  
+const filename='public/images/home/'+row.filename;
+if(row){
+  fs.unlink(filename,(err) => {
     if (err) {
-      console.error("Database error:", err.message);
+      console.error("Error deleting image file:", err.message);
       return res.status(500).send("Internal Server Error");
-    }
+    }}
+    );
+    const sql= "DELETE FROM home WHERE id = ?";
+    db.run(sql,[deleteId],(err)=>{
+      if (err) {
+        console.error("Database error:", err.message);
+        return res.status(500).send("Internal Server Error");        
+      }
+      res.redirect("/admin");
 
-    // Redirect back to the admin page after successful deletion
-    res.redirect("/admin");
-  });
+    })
+}
+})
 });
 
 app.post("/delete-images", (req, res) => {
@@ -278,7 +285,6 @@ app.post("/delete-images", (req, res) => {
     // If the row exists, delete the file from the folder
     if (row) {
       const imagePath = row.path;
-
       // Delete the file using fs.unlink
       fs.unlink(imagePath, (err) => {
         if (err) {
@@ -351,7 +357,27 @@ app.post('/', upload.single('image'), (req, res) => {
     res.redirect('/admin');
   });
 });
+app.get("/addnotification", (req, res) => {
+  res.render("addnotification.ejs");
+});
 
+app.post("/addnotification", upload.single('notificationImage') ,(req, res) => {
+  const title = req.body.title;
+  const content = req.body.content;
+  const filename = req.file.filename;
+
+  db.run(
+    "INSERT INTO notifications (title, content,imgfilename) VALUES ( ?, ?,?)",
+    [title, content,filename],
+    (err) => {
+      if (err) {
+        console.error("Database error:", err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/admin");
+    }
+  );
+});
 
 app.get("/notification", (req, res) => {
   // Query to fetch notifications from the database
@@ -363,7 +389,7 @@ app.get("/notification", (req, res) => {
       console.error("Database error:", err.message);
       return res.status(500).send("Internal Server Error");
     }
-
+console.log(notificationRows)
     // Render the notification.ejs template and pass the fetched notifications
     res.render("notification.ejs", { notifications: notificationRows });
   });

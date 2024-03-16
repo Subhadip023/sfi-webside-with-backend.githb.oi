@@ -238,6 +238,10 @@ input[type="submit"] {
   max-height: fit-content;
   font-size: 25px;
 }
+.notificationContent img{
+  width: 100%;
+  height: auto;
+}
 .notificationDate {
   height: 10%;
   font-size: 15px;
