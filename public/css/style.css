@@ -85,7 +85,7 @@ header {
   color: red;
 }
 
-h2 {
+h2 { 
   width: 100%;
   text-align: center;
   align-items: center;
@@ -280,7 +280,14 @@ input[type="submit"] {
   color: rgb(148, 0, 0);
   text-align: center;
 }
-
+.about-content a{
+  text-decoration: none;
+  color: rgb(148, 0, 0);
+}
+.about-content a:hover{
+  text-decoration: underline;
+  color: rgb(105, 3, 3);
+}
 /* Join us style ----*/
 
 .joinus {
@@ -351,4 +358,25 @@ border-radius: 10px;
   color: red;
 font-weight: 900;
 font-size: 2.5rem;
+}
+
+footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  width: 100%;
+  background: #000;
+  color: rgb(221, 214, 214);
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+footer p{
+  width: 100vw;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+footer svg{
+  height: 3.5vh;
 }
