@@ -385,3 +385,23 @@ footer svg:hover{
   height: 3.55vh;
   fill:  rgb(251, 118, 118);;
 }
+
+/* Scrollbar style */
+::-webkit-scrollbar {
+display: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(96, 0, 0);
+}
