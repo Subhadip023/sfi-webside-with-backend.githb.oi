@@ -275,7 +275,7 @@
     background: #000;
     color: rgb(221, 214, 214);
     flex-wrap: wrap;
-    padding: 10px 0;
+    padding: 10px ;
   }
   footer p {
     width: 100vw;
@@ -284,9 +284,13 @@
   }
 
   footer svg {
-    height: 3.5vh;
+    height: 3vh;
+    width:  3vh;
+    margin: 10px;
   }
   footer svg:hover {
-    height: 3.6vh;
+    height: 3.1vh;
+    width:  3.1vh;
+
   }
 }
