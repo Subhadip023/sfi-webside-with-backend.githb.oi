@@ -133,8 +133,10 @@
     /* background: green; */
     height: 500px;
     width: 400px;
-    top: 46vh;
+    top: 30vh;
     left: 20px;
+    bottom:10vh;
+
   }
 
   
@@ -282,5 +284,31 @@
     color: red;
     font-size: 1rem;
   }
+
+
+footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  width: 100%;
+  background: #000;
+  color: rgb(221, 214, 214);
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+footer p{
+  width: 100vw;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+footer svg{
+  height: 3.5vh;
+}
+footer svg:hover{
+  height: 3.6vh;
+}
+
 
     }      

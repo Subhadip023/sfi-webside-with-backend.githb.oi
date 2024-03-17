@@ -49,7 +49,7 @@ header {
 }
 .contaner {
   display: flex;
-  width: 99vw;
+  width: 100%vw;
   flex-direction: column;
 }
 .quotes {
@@ -379,4 +379,8 @@ footer p{
 
 footer svg{
   height: 3.5vh;
+}
+footer svg:hover{
+  height: 3.6vh;
+  fill: #fff;
 }
