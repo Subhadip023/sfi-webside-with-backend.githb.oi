@@ -266,7 +266,8 @@ input[type="submit"] {
 /* style for about */
 .about {
   margin: 10vh auto;
-  height: 70vh;
+  min-height: 70vh;
+  height: fit-content;
   width: 80vw;
   /* background: #9671d1; */
 }
@@ -381,6 +382,6 @@ footer svg{
   height: 3.5vh;
 }
 footer svg:hover{
-  height: 3.6vh;
-  fill: #fff;
+  height: 3.55vh;
+  fill:  rgb(251, 118, 118);;
 }
