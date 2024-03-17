@@ -281,6 +281,7 @@
     width: 100vw;
     text-align: center;
     font-size: 1.3rem;
+    
   }
 
   footer svg {
@@ -289,8 +290,8 @@
     margin: 10px;
   }
   footer svg:hover {
-    height: 3.1vh;
-    width:  3.1vh;
+    height: 3.2vh;
+    width:  3.2vh;
 
   }
 }

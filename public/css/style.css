@@ -39,10 +39,9 @@ header {
   text-decoration: none;
 }
 
-.navbar a:hover{
+.navbar a:hover {
   color: red;
 }
-
 
 .banner img {
   width: 99vw;
@@ -85,7 +84,7 @@ header {
   color: red;
 }
 
-h2 { 
+h2 {
   width: 100%;
   text-align: center;
   align-items: center;
@@ -118,7 +117,7 @@ h2 {
   gap: 5px;
   justify-content: space-evenly;
   align-items: center;
-  margin:10px auto;
+  margin: 10px auto;
   background: white;
   min-height: 60px;
   height: fit-content;
@@ -131,10 +130,10 @@ h2 {
   animation: popup 0.5s ease forwards;
   box-shadow: 10px 10px 30px red;
   overflow: auto;
-  padding:  5px;
+  padding: 5px;
 }
-.hn img{
-  height:100%;
+.hn img {
+  height: 100%;
   width: 20%;
 }
 .hn svg {
@@ -238,7 +237,7 @@ input[type="submit"] {
   max-height: fit-content;
   font-size: 25px;
 }
-.notificationContent img{
+.notificationContent img {
   width: 100%;
   height: auto;
 }
@@ -281,11 +280,11 @@ input[type="submit"] {
   color: rgb(148, 0, 0);
   text-align: center;
 }
-.about-content a{
+.about-content a {
   text-decoration: none;
   color: rgb(148, 0, 0);
 }
-.about-content a:hover{
+.about-content a:hover {
   text-decoration: underline;
   color: rgb(105, 3, 3);
 }
@@ -310,7 +309,7 @@ input[type="submit"] {
   grid-row-gap: 10px;
   padding: 5px;
 }
-.gallery  img{
+.gallery img {
   height: 100%;
   width: 100%;
 }
@@ -329,17 +328,16 @@ input[type="submit"] {
   border: 1px solid red;
   border-radius: 50%;
 }
-.imges{
-height:40vh;
+.imges {
+  height: 40vh;
   background-size: cover;
-display: flex;
-align-items: end;
-justify-content: center;
-/* border: 1px solid red; */
-border-radius: 10px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  border-radius: 10px;
 }
 
-.imges p{
+.imges p {
   padding: 2px 10px;
   margin-bottom: 10px;
   background: rgba(0, 0, 0, 0.483);
@@ -347,7 +345,7 @@ border-radius: 10px;
   font-size: 2rem;
 }
 
-.message{
+.message {
   padding: 10px;
   display: flex;
   align-items: center;
@@ -355,13 +353,12 @@ border-radius: 10px;
   margin: 200px auto;
   height: fit-content;
   width: 80vw;
-  /* background: greenyellow; */
   color: red;
-font-weight: 900;
-font-size: 2.5rem;
+  font-weight: 900;
+  font-size: 2.5rem;
 }
 
-footer{
+footer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -372,23 +369,23 @@ footer{
   flex-wrap: wrap;
   padding: 10px 0;
 }
-footer p{
+footer p {
   width: 100vw;
   text-align: center;
   font-size: 1.3rem;
 }
 
-footer svg{
+footer svg {
   height: 3.5vh;
 }
-footer svg:hover{
+footer svg:hover {
   height: 3.55vh;
-  fill:  rgb(251, 118, 118);;
+  fill: rgb(251, 118, 118);
 }
 
 /* Scrollbar style */
 ::-webkit-scrollbar {
-display: none;
+  display: none;
 }
 
 /* Track */
