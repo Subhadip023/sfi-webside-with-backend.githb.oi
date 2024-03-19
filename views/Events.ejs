@@ -1,7 +1,30 @@
 <%- include("partials/header.ejs") %>
 
-<div style="height: 60vh;  margin: 30vh auto;font-size: 3rem; color: red;text-align: center;">
-    No Event Avalable...
+
+<div class="Notificationcontaner">
+    <% if (notifications && notifications.length > 0) { %>
+
+
+    <% notifications.forEach(notification => { %>
+        <div class="notification">
+        <div class="notificationTitle"><a href="/notification-Details/<%=notification.id%>"><%= notification.title %></a></div>
+        <div class="notificationContent">
+            <img src="/images/event/<%= notification.filename %>" alt="">
+
+            <%= notification.content.substring(0, 100) %></div>
+
+        <div class="notificationDate"><%= notification.date %></div>
+    </div>
+    <% }); %>
+
+       
+
+<% } else { %>
+    <div style='margin-top: 200px;'>
+        <p style="font-size: 2.2rem; color: red;">No Event available</p>
+
+    </div>
+<% } %>
 
 </div>
 

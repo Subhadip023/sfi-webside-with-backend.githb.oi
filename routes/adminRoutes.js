@@ -17,6 +17,7 @@ router.get("/admin", (req, res) => {
     // Query to fetch user data from the database
     const userSql = "SELECT * FROM users";
     const notificationSql = "SELECT * FROM notifications";
+    const eventSql = "SELECT * FROM event";
     const imageSql = "SELECT * FROM images";
     const homeSql = "SELECT * FROM home";
   
@@ -41,6 +42,15 @@ router.get("/admin", (req, res) => {
         });
       }),
       new Promise((resolve, reject) => {
+        db.all(eventSql, (err, eventRows) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(eventRows);
+          }
+        });
+      }),
+      new Promise((resolve, reject) => {
         db.all(imageSql, (err, imageRows) => {
           if (err) {
             reject(err);
@@ -59,11 +69,12 @@ router.get("/admin", (req, res) => {
         });
       })
     ])
-    .then(([userRows, notificationRows, imageRows,homeRows]) => {
+    .then(([userRows, notificationRows,eventRows, imageRows,homeRows]) => {
       // Render the admin.ejs template and pass the fetched data
       res.render("admin.ejs", {
         users: userRows,
         notifications: notificationRows,
+        events:eventRows,
         images: imageRows,
         home:homeRows,
         about_data:about_data,
