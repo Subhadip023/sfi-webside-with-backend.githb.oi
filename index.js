@@ -493,6 +493,19 @@ app.get("/notification-Details/:id", (req, res) => {
     res.render("notificationDetails.ejs", { Notification: row });
   });
 });
+app.get("/event-Details/:id", (req, res) => {
+  const notification_id = req.params.id;
+  const sql = "SELECT * FROM event WHERE id = ?";
+  db.get(sql, [notification_id], (err, row) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+    res.render("eventDetails.ejs", { Notification: row });
+  });
+});
+
+
 
 app.get("/joinUs", (req, res) => {
   const message = req.query.message || ""; // Retrieve the message from the query parameter

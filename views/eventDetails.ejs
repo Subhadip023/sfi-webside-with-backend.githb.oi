@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sfi-aliah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        .container {
+            margin: 11vh auto;
+            height: 80vh;
+            width: 60vw;
+            
+        }
+        @media (max-width: 700px) {
+
+            .container {
+            margin: 11vh auto;
+            height: 80vh;
+            width: 80vw;
+            
+        }
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            color: red;
+            height: 10vh;
+            margin-bottom: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 5;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+
+        }
+
+        nav ul li {
+            padding: 0 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: red;
+            font-size: 1.5rem;
+
+        }
+
+        .title {
+            width: 100%;
+            height: fit-content;
+            margin: 10px 0;
+            /* background: aqua; */
+            font-size: 35px;
+            text-decoration: solid;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .content {
+            width: 100%;
+            min-height: 70%;
+            max-height: fit-content;
+            /* background: green; */
+            min-height: 10px;
+            max-height: fit-content;
+            font-size: 25px;
+            text-align:justify ;
+            position: relative;
+        }
+
+
+        .date {
+            height: 10%;
+            font-size: 15px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+            /* background: blue; */
+            margin: 20px 0;
+        }
+        .notification-img img{
+            height: 33%;
+            width: 100%;
+        }
+        .sfi-logo{
+            height: 0;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .sfi-logo img{
+            height: 80vh;
+            width: 100%;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Back to Home</a></li>
+                <li><a href="/Events">Events</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="title">
+            <%= Notification.title %><br>
+        </div>
+        <div class="notification-img">
+            <img src="/images/event/<%= Notification.filename %>" alt="">
+        </div>
+        <div class="sfi-logo">
+            <img src="/images/sfi-aliah-log.jpg" alt="">
+        </div>
+        <div class=" content">
+            <%= Notification.content %>
+        </div>
+        <div class="date">
+            <%= Notification.date %>
+
+        </div>
+    </div>
+</body>
+
+</html>

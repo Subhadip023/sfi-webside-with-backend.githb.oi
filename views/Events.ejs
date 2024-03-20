@@ -7,7 +7,7 @@
 
     <% notifications.forEach(notification => { %>
         <div class="notification">
-        <div class="notificationTitle"><a href="/notification-Details/<%=notification.id%>"><%= notification.title %></a></div>
+        <div class="notificationTitle"><a href="/event-Details/<%=notification.id%>"><%= notification.title %></a></div>
         <div class="notificationContent">
             <img src="/images/event/<%= notification.filename %>" alt="">
 
