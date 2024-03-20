@@ -109,6 +109,9 @@
             width: 100%;
             opacity: 0.3;
         }
+        .content p{
+            margin: 1rem 0;
+        }
     </style>
 </head>
 
@@ -132,7 +135,9 @@
             <img src="/images/sfi-aliah-log.jpg" alt="">
         </div>
         <div class=" content">
-            <%= Notification.content %>
+            <% Notification.content.split('\n').forEach(function(paragraph) { %>
+                <p><%= paragraph %></p>
+            <% }); %>    
         </div>
         <div class="date">
             <%= Notification.date %>
