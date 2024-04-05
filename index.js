@@ -561,6 +561,8 @@ app.post("/gallery", upload.single("avatar"), function (req, res, next) {
     return res.status(400).send("No file uploaded.");
   }
 
+
+
   // Extract title from request body
   const title = req.body.title;
 
@@ -580,6 +582,11 @@ app.post("/gallery", upload.single("avatar"), function (req, res, next) {
       res.redirect("/admin");
     }
   );
+});
+
+app.get('/donate',(req,res)=>{
+  res.render('donate.ejs');
+
 });
 
 passport.use(
