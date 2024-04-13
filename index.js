@@ -2,6 +2,7 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import newsRoute from "./routes/newsRoute.js";
 import registerRoute from "./routes/registerRoute.js";
+import donateRoute from "./routes/donateRoute.js";
 import eventRoute from "./routes/eventRoute.js";
 import galleryRoute from "./routes/galleryRoute.js";
 import express from "express";
@@ -14,8 +15,12 @@ import fs from "fs";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
+import cors from "cors";
+
 
 const app = express();
+app.use(cors()); // Enable CORS for all routes
+
 const port = 5000;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -46,6 +51,8 @@ const db = new sqlite3.Database("sfi-dataBase.db");
 const upload = multer({ storage: storage });
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Middleware to serve static files
 app.use(express.static("public"));
 app.use(
@@ -155,6 +162,7 @@ app.use(authRoutes);
 app.use(adminRoutes);
 app.use(newsRoute);
 app.use(registerRoute);
+app.use(donateRoute);
 // app.use(eventRoute);
 
 // Route to display update form
@@ -584,10 +592,6 @@ app.post("/gallery", upload.single("avatar"), function (req, res, next) {
   );
 });
 
-app.get('/donate',(req,res)=>{
-  res.render('donate.ejs');
-
-});
 
 passport.use(
   new LocalStrategy((username, password, done) => {

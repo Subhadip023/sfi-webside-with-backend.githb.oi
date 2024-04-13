@@ -1,11 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DonateUS</title>
-</head>
-<body>
-    This is Donate Us page
-</body>
-</html>
+
+    <!-- Header -->
+    <%- include("partials/header.ejs") %>
+    
+    <!-- Main Content -->
+    <div style="height: 71.5vh;">
+        <h1>This is Donate page</h1>
+        <form id="payment-form">
+            <input type="number" placeholder="Enter Amount" name="amount" id="amount"> 
+            <button type="submit" id="pay-btn">Pay</button>
+        </form>
+    </div>
+
+ 
+
+    <!-- Script to Handle Payment -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var amount = document.getElementById('amount').value;
+            // Call your backend to create an order
+            fetch('/payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount: amount }),
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.success) {
+                    // Initiate Razorpay payment
+                    var options = {
+                        key: 'rzp_test_Xr8guRilIwRzAE',
+                        amount: data.order.amount,
+                        currency: 'INR',
+                        name: 'Sfi Aliah Local Committee',
+
+                        description: 'Donation for Sfi Aliah',
+                        order_id: data.order.id,
+                        handler: function(response) {
+                            // Handle payment success
+                            alert('Payment successful!');
+                            console.log(response);
+                            // Redirect or do something else after successful payment
+                        },
+                        theme: {
+                            color: '#3399cc'
+                        }
+                    };
+                    var rzp = new Razorpay(options);
+                    rzp.open();
+                } else {
+                    // Handle error from backend
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+        });
+    </script>
+<%- include("partials/footer.ejs") %>
