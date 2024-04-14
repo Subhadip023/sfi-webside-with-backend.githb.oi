@@ -7,7 +7,13 @@
         </div>
     <% } else{ %>
      <h2>Join SFI and Make a Difference </h2>
-    <form action="/register" method="POST">
+    <form action="/joinUs" method="POST">
+        <% if (error_message) { %>
+      
+            <div class="error_message">  <%= error_message %>  
+            </div>
+        <% }  %>
+        
         <div>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
@@ -15,6 +21,10 @@
         <div>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
         </div>
         <div>
             <label for="email">Email:</label>

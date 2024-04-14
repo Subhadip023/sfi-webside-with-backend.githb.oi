@@ -357,6 +357,10 @@ input[type="submit"] {
   font-weight: 900;
   font-size: 2.5rem;
 }
+.error_message{
+  color: red;
+  margin: 20px;
+}
 
 footer {
   display: flex;

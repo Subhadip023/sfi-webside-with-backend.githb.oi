@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <style>
+        body{
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            margin: auto;
+        }
+        .otp{
+            margin: auto;
+            height: 30vh;
+            width: 50vw;
+            background: rgb(204, 201, 201);
+            border-radius: 30px;
+        }
+        
+form {
+  max-width: 300px;
+  margin:100px auto;
+}
+input[type="text"]
+ {padding: 10px;
+    margin: auto;
+ 
+  box-sizing: border-box;
+  border-radius: 10px;
+
+}
+button[type="submit"] {
+  width: 20%;
+  border-radius: 10px;
+
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.error_message{
+    color: red;
+    padding-left: 10px;
+    font-size: 20px;
+}
+.error_message a{
+    color: blue;
+    padding-left: 10px;
+}
+        
+    </style>
+</head>
+<body>
+    <div class="otp">
+        <form action="/joinUs/verify" method="post">
+<% if(error_message) {%>
+    
+    
+            <p class="error_message">
+                <%= error_message %>
+                <a  href="/joinUs">Register again</a>
+            </p><% }  %>
+             
+            <input type="text" name="otp" placeholder="Enter OTP" required>
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+</body>
+</html>

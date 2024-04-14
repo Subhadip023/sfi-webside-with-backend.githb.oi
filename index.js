@@ -2,8 +2,6 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import newsRoute from "./routes/newsRoute.js";
 import registerRoute from "./routes/registerRoute.js";
-import eventRoute from "./routes/eventRoute.js";
-import galleryRoute from "./routes/galleryRoute.js";
 import express from "express";
 import sqlite3 from "sqlite3";
 import session from "express-session";
@@ -14,6 +12,16 @@ import fs from "fs";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
+import joinUsRoute from './routes/joinUsRoute.js'
+import dotenv from 'dotenv';
+import { connect } from 'mongoose';
+
+
+
+
+
+dotenv.config();
+
 
 const app = express();
 const port = 5000;
@@ -155,6 +163,7 @@ app.use(authRoutes);
 app.use(adminRoutes);
 app.use(newsRoute);
 app.use(registerRoute);
+app.use('/joinUs',joinUsRoute)
 // app.use(eventRoute);
 
 // Route to display update form
@@ -507,10 +516,6 @@ app.get("/event-Details/:id", (req, res) => {
 
 
 
-app.get("/joinUs", (req, res) => {
-  const message = req.query.message || ""; // Retrieve the message from the query parameter
-  res.render("joinUs.ejs", { message: message });
-});
 
 app.get("/Gallery", (req, res) => {
   // Query to fetch image data from the database
@@ -642,7 +647,13 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(process.env.PORT || 5000, () => {
+      console.log(`Server running on  http://localhost:${process.env.PORT || 5000}`);
+  console.log('Connected to MongoDB');
+    });
+  })
+  .catch(error => {
+    console.error("Failed to connect to MongoDB:", error);
+  });
