@@ -1,6 +1,7 @@
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import newsRoute from "./routes/newsRoute.js";
+import User from './models/usersModel.js'; 
 import registerRoute from "./routes/registerRoute.js";
 import express from "express";
 import sqlite3 from "sqlite3";
@@ -506,23 +507,18 @@ app.get('/donate',(req,res)=>{
 
 });
 
-import User from './models/usersModel.js'; // Import your User model
 
 passport.use(new LocalStrategy(
-  async (username, password, done) => {
+  async function(username, password, done) {
     try {
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ name: username });
       if (!user) {
-        // User not found in the database
-        return done(null, false);
+        return done(null, false, { message: 'Incorrect username.' });
       }
-      // Compare the hashed password with the provided password
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
-        // Password doesn't match
-        return done(null, false);
+        return done(null, false, { message: 'Incorrect password.' });
       }
-      // Authentication successful, pass user object to the done callback
       return done(null, user);
     } catch (error) {
       return done(error);
@@ -530,23 +526,19 @@ passport.use(new LocalStrategy(
   }
 ));
 
-
 // Serialization function
 passport.serializeUser((user, done) => {
-  console.log(user)
+  console.log(user);
+  // Assuming user.id exists, you can directly serialize the user ID
   done(null, user.id);
 });
 
 // Deserialization function
-// Deserialization function
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
-    if (!user) {
-      return done(null, false);
-    }
-    // Pass the user object to the done callback
-    done(null, user);
+    // If user is not found, pass null as the user object
+    done(null, user || null);
   } catch (error) {
     done(error);
   }

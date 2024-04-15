@@ -49,7 +49,9 @@ header {
 .contaner {
   display: flex;
   width: 100%vw;
+  height: 70vh;
   flex-direction: column;
+  
 }
 .quotes {
   margin: 50px auto;
@@ -188,13 +190,16 @@ input[type="tel"] {
   margin-bottom: 10px;
   box-sizing: border-box;
 }
-input[type="submit"] {
+input[type="submit"],button[type='submit'] {
   width: 100%;
   padding: 10px;
   background-color: #007bff;
   color: #fff;
   border: none;
   cursor: pointer;
+}
+.login_form{
+  margin: auto;
 }
 
 /* For notification tab */

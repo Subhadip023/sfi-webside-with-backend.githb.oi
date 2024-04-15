@@ -3,15 +3,14 @@ import passport from 'passport'
 import sqlite3 from 'sqlite3';
 import { about_data } from '../index.js';
 import usersModel from '../models/usersModel.js';
+import isAuthenticated from '../midelwire/authMiddleware.js'
 
 const router = express.Router();
 const db = new sqlite3.Database("sfi-dataBase.db");
 
  
-router.get("/admin", (req, res) => {
-  if (!req.isAuthenticated()) {
-      return res.redirect("/login");
-    }
+router.get("/admin", isAuthenticated,(req, res) => {
+ 
     
     // Query to fetch user data from the database
     const userSql = "SELECT * FROM users";
