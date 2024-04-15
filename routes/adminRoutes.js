@@ -2,17 +2,16 @@ import express from 'express'
 import passport from 'passport'
 import sqlite3 from 'sqlite3';
 import { about_data } from '../index.js';
+import usersModel from '../models/usersModel.js';
 
 const router = express.Router();
 const db = new sqlite3.Database("sfi-dataBase.db");
 
  
 router.get("/admin", (req, res) => {
-  // console.log(about_data.lcp)
-  // console.log(req.user)
-  if (!req.isAuthenticated() || req.user.position !== 'Admin') {
-    return res.redirect('/login');
-  }
+  if (!req.isAuthenticated()) {
+      return res.redirect("/login");
+    }
     
     // Query to fetch user data from the database
     const userSql = "SELECT * FROM users";
@@ -24,14 +23,15 @@ router.get("/admin", (req, res) => {
     // Execute all queries in parallel using Promise.all
     Promise.all([
       new Promise((resolve, reject) => {
-        db.all(userSql, (err, userRows) => {
-          if (err) {
-            reject(err);
-          } else {
+        usersModel.find()
+          .then(userRows => {
             resolve(userRows);
-          }
-        });
-      }),
+          })
+          .catch(error => {
+            reject(error); // Reject the promise if an error occurs
+          });
+      })
+      ,
       new Promise((resolve, reject) => {
         db.all(notificationSql, (err, notificationRows) => {
           if (err) {

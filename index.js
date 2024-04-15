@@ -68,110 +68,22 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Create tables if they don't exist
-db.serialize(() => {
-  db.run(
-    `CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY,
-        username TEXT NOT NULL,
-        password TEXT NOT NULL,
-        email TEXT NOT NULL,
-        phone TEXT,
-        position TEXT DEFAULT 'member'
-    )`,
-    (err) => {
-      if (err) {
-        console.error("Error creating users table:", err.message);
-      } else {
-        console.log("Users table created successfully");
-      }
-    }
-  );
 
-  db.run(
-    `CREATE TABLE IF NOT EXISTS images (
-        id INTEGER PRIMARY KEY,
-        filename TEXT NOT NULL,
-        title TEXT,
-        path TEXT NOT NULL
-    )`,
-    (err) => {
-      if (err) {
-        console.error("Error creating images table:", err.message);
-      } else {
-        console.log("Images table created successfully");
-      }
-    }
-  );
-
-  db.run(
-    `CREATE TABLE IF NOT EXISTS notifications (
-        id INTEGER PRIMARY KEY,
-        title TEXT NOT NULL,
-        filename TEXT NOT NULL,
-        content TEXT NOT NULL,
-        date DATE DEFAULT CURRENT_DATE
-    )`,
-    (err) => {
-      if (err) {
-        console.error("Error creating notifications table:", err.message);
-      } else {
-        console.log("Notifications table created successfully");
-      }
-    }
-  );
-  db.run(
-    `CREATE TABLE IF NOT EXISTS event (
-    id INTEGER PRIMARY KEY,
-    title TEXT NOT NULL,
-    filename TEXT NOT NULL,
-    content TEXT NOT NULL,
-    date DATE DEFAULT CURRENT_DATE
-);
-
-    )`,
-    (err) => {
-      if (err) {
-        console.error("Error creating notifications table:", err.message);
-      } else {
-        console.log("event table created successfully");
-      }
-    }
-  );
-
-  db.run(
-    `CREATE TABLE IF NOT EXISTS home (
-    id INTEGER PRIMARY KEY,
-    title TEXT NOT NULL,
-    content TEXT NOT NULL,
-    filename TEXT NOT NULL
-);
-
-    )`,
-    (err) => {
-      if (err) {
-        console.error("Error creating notifications table:", err.message);
-      } else {
-        console.log("Home table created successfully");
-      }
-    }
-  );
-});
 
 // Use the middleware function in your adminRoutes
 
 app.use(authRoutes);
 app.use(adminRoutes);
 app.use(newsRoute);
-app.use(registerRoute);
 app.use('/joinUs',joinUsRoute)
 // app.use(eventRoute);
 
 // Route to display update form
 app.get("/update/:id", (req, res) => {
   //   Check if user is authenticated before accessing update form
-  if (!req.isAuthenticated()) {
-    return res.redirect("/login");
-  }
+  // if (!req.isAuthenticated()) {
+  //   return res.redirect("/login");
+  // }
 
   const userId = req.params.id;
 
@@ -594,58 +506,52 @@ app.get('/donate',(req,res)=>{
 
 });
 
-passport.use(
-  new LocalStrategy((username, password, done) => {
-    // Query to fetch user from the database based on the username
-    const sql = "SELECT * FROM users WHERE username = ?";
-    db.get(sql, [username], async (err, user) => {
-      if (err) {
-        return done(err);
-      }
+import User from './models/usersModel.js'; // Import your User model
+
+passport.use(new LocalStrategy(
+  async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username });
       if (!user) {
         // User not found in the database
         return done(null, false);
       }
-
       // Compare the hashed password with the provided password
-      try {
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        if (!passwordMatch) {
-          // Password doesn't match
-          return done(null, false);
-        }
-
-        // Authentication successful, pass user object to the done callback
-        return done(null, user);
-      } catch (error) {
-        console.error("Error comparing passwords:", error.message);
-        return done(error);
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
+        // Password doesn't match
+        return done(null, false);
       }
-    });
-  })
-);
+      // Authentication successful, pass user object to the done callback
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  }
+));
+
 
 // Serialization function
 passport.serializeUser((user, done) => {
+  console.log(user)
   done(null, user.id);
 });
 
 // Deserialization function
 // Deserialization function
-passport.deserializeUser((id, done) => {
-  // Fetch user data from the database based on the user id
-  const sql = "SELECT * FROM users WHERE id = ?";
-  db.get(sql, [id], (err, user) => {
-    if (err) {
-      return done(err);
-    }
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
     if (!user) {
       return done(null, false);
     }
     // Pass the user object to the done callback
     done(null, user);
-  });
+  } catch (error) {
+    done(error);
+  }
 });
+
 
 connect(process.env.MONGO_URI)
   .then(() => {
