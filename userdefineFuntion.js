@@ -55,7 +55,5 @@ export function generateOTP(length) {
     return  otp;
 }
 
-// Example usage:
-const otp = generateOTP(4); // Generates a 6-digit OTP
-console.log("Generated OTP:", typeof(otp));
+
 

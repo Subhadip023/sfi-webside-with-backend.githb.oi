@@ -81,11 +81,9 @@ router.post("/verify", async (req, res) => {
   try {
     count++;
     const { otp } = req.body;
-    console.log(req.body);
-    console.log(userdata);
+ 
     if (otp == genOtp) {
       // Compare OTP
-      console.log("otp matched", "and count " + count);
       //   const new_password = await convert_to_hash_s10(password);
         const newUser = await User.create(userdata);
         if (!newUser) {

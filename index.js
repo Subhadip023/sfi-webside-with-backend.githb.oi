@@ -80,69 +80,7 @@ app.use('/joinUs',joinUsRoute)
 // app.use(eventRoute);
 
 // Route to display update form
-app.get("/update/:id", (req, res) => {
-  //   Check if user is authenticated before accessing update form
-  // if (!req.isAuthenticated()) {
-  //   return res.redirect("/login");
-  // }
 
-  const userId = req.params.id;
-
-  // Query to fetch user data from the database for the specified user id
-  const sql = "SELECT * FROM users WHERE id = ?";
-
-  // Execute the query
-  db.get(sql, [userId], (err, row) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      return res.status(500).send("Internal Server Error");
-    }
-
-    // Render the update-form.ejs template and pass the fetched user data
-    res.render("update-user.ejs", { user: row });
-  });
-});
-
-// Route to handle updating user data
-app.post("/update", (req, res) => {
-  // Extract user data from the request body
-  const { id, username, email, phone, position } = req.body;
-
-  // SQL query to update user data
-  const sql =
-    "UPDATE users SET username = ?, email = ?, phone = ?, position = ? WHERE id = ?";
-
-  // Execute the query with the provided data
-  db.run(sql, [username, email, phone, position, id], (err) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      return res.status(500).send("Internal Server Error");
-    }
-
-    // Redirect back to the admin page after successful update
-    res.redirect("/admin");
-  });
-});
-
-// Route to handle deleting user data
-app.post("/delete", (req, res) => {
-  // Extract the user ID from the request parameters
-  const userId = req.body.id;
-
-  // SQL query to delete the user with the specified ID
-  const sql = "DELETE FROM users WHERE id = ?";
-
-  // Execute the query with the provided user ID
-  db.run(sql, [userId], (err) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      return res.status(500).send("Internal Server Error");
-    }
-
-    // Redirect back to the admin page after successful deletion
-    res.redirect("/admin");
-  });
-});
 
 app.post("/delete-notification", (req, res) => {
   const notificationId = req.body.id;
@@ -528,7 +466,7 @@ passport.use(new LocalStrategy(
 
 // Serialization function
 passport.serializeUser((user, done) => {
-  console.log(user);
+  // console.log(user); //This is for testing perpuse
   // Assuming user.id exists, you can directly serialize the user ID
   done(null, user.id);
 });
