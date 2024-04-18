@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
+import env from'dotenv';
+env.config()
 
 export async function convert_to_hash_s10(password) {
     const hashedPassword = await bcrypt.hash(password, 10); // 10 is the saltRounds parameter
@@ -39,7 +41,7 @@ export let transporter = nodemailer.createTransport({
     service: 'Gmail', // you can replace this with your email service
     auth: {
         user: 'gyaanhub8@gmail.com', // your email address
-        pass: 'raat wrnu vxix pgff' // your email password
+        pass: process.env.EMAIL_APP_PASSWORD // your email password
     }
 });
 
