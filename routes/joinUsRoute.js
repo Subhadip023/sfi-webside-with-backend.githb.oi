@@ -22,7 +22,6 @@ router.get("/", (req, res) => {
 
   res.render("joinUs.ejs", { message: message, error_message: null });
 });
-
 router.post("/", async (req, res) => {
   try {
     const { username, password, confirm_password, email, phone } = req.body;
@@ -52,16 +51,14 @@ router.post("/", async (req, res) => {
       from: "gyaanhub8@gmail.com",
       to: email,
       subject: "OTP verification | SFI Aliah ",
-      text: `Hello,
+      text: `Hello, ${username} 
 
-      Thank you for using SFI Aliah. Please use the following OTP to verify your account:
-      
-      ${genOtp}
-      
+      Thank you for using SFI Aliah. Please use the following OTP to verify your account:  ${genOtp}
+           
       If you didn't request this OTP, please ignore this email.
       
       Best regards,
-      SFI Aliah Team
+      SFI Aliah Team 
       `,
     };
 
@@ -75,7 +72,6 @@ router.post("/", async (req, res) => {
     console.log(error);
   }
 });
-
 router.post("/verify", async (req, res) => {
   // console.log(req.session.userdata)
   try {
@@ -104,7 +100,6 @@ router.post("/verify", async (req, res) => {
     console.log(error);
   }
 });
-
 router.get("/verify", (req, res) => {
   count = 0;
   res.render("verify_otp.ejs", { error_message: null });
