@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
     // Define email content
     const mailOptions = {
       from: "gyaanhub8@gmail.com",
-      to: "subhadip240420@gmail.com",
+      to: email,
       subject: "OTP verification | SFI Aliah ",
       text: `Hello,
 
