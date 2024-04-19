@@ -1,0 +1,152 @@
+       
+* {
+    margin: 0;
+    padding: 0;
+
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.update-btn {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.delete-btn {
+    width: 80px;
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+
+}
+
+.m-auto {
+    margin: auto;
+}
+
+.addn-btn {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    /* margin: 4px 2px; */
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.container {
+    padding-top: 20vh;
+    min-height: 80vh;
+    max-height: fit-content;
+    width: 100vw;
+    margin: 2px;
+}
+
+img {
+    height: 100px;
+    width: 200px;
+}
+
+header {
+    z-index: 5;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    height: fit-content;
+
+    width: 100%;
+    text-align: center;
+    background: var(255, 0, 0, 0.5);
+
+    backdrop-filter: blur(20px);
+
+}
+
+nav ul {
+
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin: auto;
+    padding: 0 10px;
+}
+
+nav ul a {
+    text-decoration: none;
+    color: red;
+}
+
+nav ul a:hover {
+    text-decoration: underline;
+    color: rgb(106, 1, 1);
+}
+
+
+form {
+    max-width: 60vw;
+    margin: 0 auto;
+  }
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  input[type="submit"],button[type='submit'] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  .login_form{
+    margin: auto;
+  }
+
+  #editor{
+height: 30vh;
+  }

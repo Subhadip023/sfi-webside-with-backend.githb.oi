@@ -111,7 +111,6 @@ router.get("/admin", isAuthenticated,(req, res) => {
         });
 });
 
-  
   // Route to handle updating user data
   router.post("/admin/user-data/update",isAuthenticated, async (req, res) => {
     // Extract user data from the request body
@@ -130,7 +129,7 @@ router.get("/admin", isAuthenticated,(req, res) => {
         res.status(400).send("Internal server error");
     }
 });
-
+// Router to delete user 
 router.post("/admin/user-data/delete", isAuthenticated,(req, res) => {
   // Extract the user ID from the request parameters
   const userId = req.body.id;
@@ -153,6 +152,18 @@ router.post("/admin/user-data/delete", isAuthenticated,(req, res) => {
       });
 });
 
+
+// 
+router.get('/admin/add-home-data',isAuthenticated,(req,res)=>{
+res.render('add-home-data.ejs')
+});
+router.post('/admin/add-home-data',isAuthenticated,(req,res)=>{
+console.log(req.body)
+});
+
+router.get('/admin/home-data/update/:id',isAuthenticated,(req,res)=>{
+res.render('update-home-data.ejs')
+})
 
 
   

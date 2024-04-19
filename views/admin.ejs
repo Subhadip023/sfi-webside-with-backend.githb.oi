@@ -7,130 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin </title>
-    <style>
-       
-        * {
-            margin: 0;
-            padding: 0;
-
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .update-btn {
-            background-color: #4caf50;
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .delete-btn {
-            width: 80px;
-            background-color: red;
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-
-        }
-
-        .m-auto {
-            margin: auto;
-        }
-
-        .addn-btn {
-            background-color: #4caf50;
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 24px;
-            /* margin: 4px 2px; */
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .container {
-            padding-top: 20vh;
-            min-height: 80vh;
-            max-height: fit-content;
-            width: 100vw;
-            margin: 2px;
-        }
-
-        img {
-            height: 100px;
-            width: 200px;
-        }
-
-        header {
-            z-index: 5;
-            padding: 10px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-
-            height: fit-content;
-
-            width: 100%;
-            text-align: center;
-            background: var(255, 0, 0, 0.5);
-
-            backdrop-filter: blur(20px);
-
-        }
-
-        nav ul {
-
-            list-style: none;
-            display: flex;
-            justify-content: center;
-        }
-
-        nav li {
-            margin: auto;
-            padding: 0 10px;
-        }
-
-        nav ul a {
-            text-decoration: none;
-            color: red;
-        }
-
-        nav ul a:hover {
-            text-decoration: underline;
-            color: rgb(106, 1, 1);
-        }
-    </style>
+  <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
@@ -162,7 +39,9 @@
         </nav>
     </header>
     <section id="Home" class="container">
-
+        <div style="width: 100vw ;display: flex;">
+            <a href="/admin/add-home-data" class="addn-btn m-auto">Add Data</a>
+        </div>
         <h1>Home-Data</h1>
         <table>
             <thead>
@@ -188,6 +67,7 @@
                             <%= element.title %>
                         </td>
                         <td>
+                            <a href="/admin/home-data/update/<%= element.id %>"><button class="update-btn">Update</button></a>
                             <a href="/delete-home/<%= element.id %>"><button class="delete-btn">Delete</button></a>
 
                         </td>
@@ -195,25 +75,7 @@
                     <% }); %>
             </tbody>
         </table>
-        <h2>
-            Add section below form
-
-        </h2>
-        <form style="margin-left: 100px;" action="/" method="POST" enctype="multipart/form-data">
-            <div>
-                <label for="image">Image:</label>
-                <input type="file" id="image" name="image">
-            </div>
-            <div>
-                <label for="title">Name:</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-            <div>
-                <label for="content">Content:</label>
-                <textarea id="content" name="content" rows="4" required></textarea>
-            </div>
-            <button type="submit">Upload</button>
-        </form>
+        
     </section>
     <section id="User" class="container">
         <h2>User Data</h2>
@@ -259,7 +121,7 @@
             </tbody>
         </table>
     </section>
-    <section id="Notifications" class="container">
+    <!-- <section id="Notifications" class="container">
         <h2>Notifications</h2>
         <br />
         <div style="width: 100vw ;display: flex;">
@@ -395,7 +257,7 @@
                     <% }); %>
             </tbody>
         </table>
-    </section>
+    </section> -->
 
     <section id="about" class="container">
         this is about make change
@@ -421,32 +283,31 @@
             <button type="submit">Save Changes</button>
         </form>
     </section>
+    <script>
+// admin.js
+
+// Function to check if the screen width corresponds to a desktop view
+function isDesktop() {
+    return window.innerWidth >= 800;
+}
+
+// Function to hide/show the body content based on the device type
+function handleDeviceView() {
+    if (isDesktop()) {
+
+        document.body.style.display = 'block'; // Show body content
+        
+    } else {
+        document.body.style.display = 'none'; // Hide body content
+    }
+}
+
+// Call the function initially to set the view based on the screen width
+handleDeviceView();
+
+// Listen for window resize events to adjust the view dynamically
+window.addEventListener('resize', handleDeviceView);
+    </script>
 </body>
 
 </html>
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit laboriosam quo reprehenderit soluta vitae esse assumenda
-ea repellendus quas cum adipisci itaque, fuga minima expedita mollitia temporibus tempora autem, atque voluptate a
-architecto commodi, corporis officia? Excepturi deleniti reprehenderit quibusdam cupiditate dicta officiis aliquid quas
-cumque! Inventore expedita possimus ea magni numquam accusantium rerum dolor culpa iusto pariatur, in sint facilis quod
-dolorem porro fuga minima voluptatibus ipsam autem eius. Dolor aut delectus ab, suscipit laboriosam quis magnam nobis,
-inventore esse illo impedit ipsam rem quas nisi, ad voluptas iure sint illum quae accusamus incidunt quaerat maiores
-praesentium tenetur. Veritatis totam exercitationem, fugit dolorum officiis accusantium quo atque explicabo beatae nulla
-ratione assumenda maxime ut amet reiciendis eos cupiditate ab eum in, rem doloribus voluptatibus vel deserunt! Maiores
-ullam soluta error rerum dolorem tenetur? Praesentium deserunt dolorum, aspernatur inventore nobis architecto ut
-consequuntur! Voluptatem vel maiores nihil ducimus. Assumenda unde sit obcaecati, eum animi exercitationem reprehenderit
-minima sequi saepe quisquam eos labore amet cumque laudantium, rem ipsa eligendi repellendus ratione aut at vitae
-consectetur error architecto inventore. Qui asperiores a excepturi ullam facilis doloremque, dolore cum voluptates
-facere eos nihil dolorum, explicabo earum labore odio optio quasi officiis fugiat ut nisi in distinctio! Quod expedita
-quo et dolor sunt eveniet repellat. Accusamus veritatis error eius sequi mollitia reiciendis necessitatibus ullam
-placeat consequuntur tenetur perspiciatis debitis rem asperiores, obcaecati cupiditate ab, reprehenderit atque nihil
-eveniet at, fugiat rerum laboriosam hic! Facere ex deleniti ducimus ab nemo fuga, vitae libero voluptas! Necessitatibus,
-cum ipsam. Fugiat iure minus aut recusandae accusantium, modi consectetur molestias dolorum? Sed, neque illo. Ex eum ad
-asperiores nam necessitatibus, ducimus quod labore maiores et neque sequi hic aperiam praesentium numquam ipsum
-blanditiis incidunt! Quae fuga corrupti facilis reiciendis delectus explicabo commodi esse repellendus odio earum veniam
-fugiat vero natus voluptate iure officiis dolorum minima animi modi beatae, praesentium totam alias? Laboriosam
-voluptate recusandae voluptatum animi, impedit pariatur consectetur a sed eum. Illo libero enim temporibus molestiae,
-reiciendis quae et mollitia tempora nulla officiis ipsa saepe eligendi unde ratione neque repellat at corrupti
-necessitatibus quia beatae. Aut dolore sapiente illum laboriosam quam magni dolor nesciunt illo maiores velit atque
-cumque vel eos optio vero blanditiis eius, officia ad repellat perspiciatis nihil impedit quis mollitia aliquid. Nobis
-quidem, impedit ipsa deserunt praesentium enim accusantium? Laborum similique porro non minus mollitia natus illum
-veritatis, corporis quas temporibus autem distinctio possimus. Tempora?

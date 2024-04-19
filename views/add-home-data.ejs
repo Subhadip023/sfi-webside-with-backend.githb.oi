@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.js"></script>
+    <link rel="stylesheet" href="/css/admin.css">
+
+    <title>Add Home Data</title>
+</head>
+<body>
+    <h2>
+        Add Home Data Here
+
+    </h2>
+    <form style="margin-left: 100px;" action="/admin/add-home-data" method="POST" >
+        <div>
+            <label for="image">Image:   </label>
+            <input type="file" id="image" name="image">
+        </div>
+        <div>
+            <label for="title">Name:</label> <br><br>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="content">Content:</label><br><br>
+            <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css" rel="stylesheet">
+
+            <div id="editor">
+                
+              </div>        </div><br>
+        <button type="submit">Upload</button>
+    </form>
+
+
+    <script>
+        const quill = new Quill('#editor', {
+          theme: 'snow'
+        });
+      </script>
+</body>
+</html>
+
+
+
