@@ -3,92 +3,46 @@ import passport from 'passport'
 import sqlite3 from 'sqlite3';
 import { about_data } from '../index.js';
 import User from '../models/usersModel.js';
+import Home from '../models/homeDataModel.js'
 import isAuthenticated from '../midelwire/authMiddleware.js'
+import { compressImageToTargetSize } from '../userdefineFuntion.js';
+import {Buffer} from 'buffer';
+import multer from "multer";
+
+
+
 
 const router = express.Router();
 const db = new sqlite3.Database("sfi-dataBase.db");
+const upload = multer({ storage: multer.memoryStorage() }); // Use memory storage
 
  
-router.get("/admin", isAuthenticated,(req, res) => {
+router.get("/admin", isAuthenticated, async (req, res) => {
+  // Check if the user is an admin
+  if (req.user.position !== 'Admin') {
+      const message = "Sorry, you don't have permission to see the admin route!";
+      return res.redirect(`/login?message=${encodeURIComponent(message)}`);
+  }
 
- if (req.user.position!=='Admin'){
-  // res.redirect("/login", { message: "Sorry You don't have permission to see the admin route!!" }); // Pass an empty message initially
-  res.redirect(`/login?message=${encodeURIComponent("Sorry You don't have permission to see the admin route!!")}`);
+  try {
+      // Fetch data from the database
+      const [userRows, homeRows] = await Promise.all([
+          User.find(),
+          Home.find(),
+      ]);
 
-}
-
-    // Query to fetch user data from the database
-    const userSql = "SELECT * FROM users";
-    const notificationSql = "SELECT * FROM notifications";
-    const eventSql = "SELECT * FROM event";
-    const imageSql = "SELECT * FROM images";
-    const homeSql = "SELECT * FROM home";
-  
-    // Execute all queries in parallel using Promise.all
-    Promise.all([
-      new Promise((resolve, reject) => {
-        User.find()
-          .then(userRows => {
-            resolve(userRows);
-          })
-          .catch(error => {
-            reject(error); // Reject the promise if an error occurs
-          });
-      })
-      ,
-      new Promise((resolve, reject) => {
-        db.all(notificationSql, (err, notificationRows) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(notificationRows);
-          }
-        });
-      }),
-      new Promise((resolve, reject) => {
-        db.all(eventSql, (err, eventRows) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(eventRows);
-          }
-        });
-      }),
-      new Promise((resolve, reject) => {
-        db.all(imageSql, (err, imageRows) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(imageRows);
-          }
-        });
-      }),
-      new Promise((resolve, reject) => {
-        db.all(homeSql, (err, homeRows) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(homeRows);
-          }
-        });
-      })
-    ])
-    .then(([userRows, notificationRows,eventRows, imageRows,homeRows]) => {
-      // Render the admin.ejs template and pass the fetched data
+      // Render the admin.ejs template with the fetched data
       res.render("admin.ejs", {
-        users: userRows,
-        notifications: notificationRows,
-        events:eventRows,
-        images: imageRows,
-        home:homeRows,
-        about_data:about_data,
+          users: userRows,
+          home: homeRows,
+          about_data: about_data,
       });
-    })
-    .catch(err => {
+  } catch (err) {
       console.error("Database error:", err.message);
-      return res.status(500).send("Internal Server Error");
-    });
-  });
+      res.status(500).send("Internal Server Error");
+  }
+});
+
   
   
   router.get("/admin/user-data/update/:id",isAuthenticated, (req, res) => {
@@ -157,8 +111,34 @@ router.post("/admin/user-data/delete", isAuthenticated,(req, res) => {
 router.get('/admin/add-home-data',isAuthenticated,(req,res)=>{
 res.render('add-home-data.ejs')
 });
-router.post('/admin/add-home-data',isAuthenticated,(req,res)=>{
-console.log(req.body)
+
+router.post('/admin/add-home-data',isAuthenticated, upload.single('image'), async (req, res) => {
+  try {
+      // Check if a file was uploaded
+      if (!req.file) {
+          return res.status(400).json({ error: 'No file uploaded' });
+      }
+
+      // Compress the image using the provided function
+      const compressedImageBuffer = await compressImageToTargetSize(req.file.buffer, 100);
+
+      // Convert the compressed image buffer to Base64 format
+      const base64Image = compressedImageBuffer.toString('base64');
+      const base64ImageUri = `data:image/jpeg;base64,${base64Image}`;
+      const { name, content } = req.body;
+
+      // Store the data in your database (not shown in the code)
+      const home=await Home.create({name,content,image:base64ImageUri});
+      if(!home){
+        res.status(400).json({ message: 'Data Not added to the Data Base'});
+
+      }
+      res.redirect('/admin');
+      // Respond with a success message and the Base64 image URI
+  } catch (error) {
+      console.error('Error handling form submission:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 router.get('/admin/home-data/update/:id',isAuthenticated,(req,res)=>{

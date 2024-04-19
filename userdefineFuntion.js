@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
+import sharp from 'sharp';
+
 import env from'dotenv';
 env.config()
 
@@ -56,6 +58,36 @@ export function generateOTP(length) {
 
     return  otp;
 }
+
+
+export const compressImageToTargetSize = async (imageBuffer, targetSizeKb) => {
+    const targetSizeBytes = targetSizeKb * 1024; // Convert KB to bytes
+    let quality = 100; // Start with the highest quality
+    let compressedImageBuffer;
+    let fileSize;
+
+    // Loop to reduce quality gradually until the target file size is reached
+    while (quality > 0) {
+        compressedImageBuffer = await sharp(imageBuffer)
+            .resize({ width: 500 }) // Resize image to a maximum width of 500 pixels
+            .jpeg({ quality }) // Convert image to JPEG format with current quality setting
+            .toBuffer();
+
+        fileSize = compressedImageBuffer.length;
+
+        // Check if the current file size is less than or equal to the target size
+        if (fileSize <= targetSizeBytes) {
+            break; // Stop if the target size is achieved
+        }
+
+        // Reduce quality and try again
+        quality -= 5; // Decrease quality in steps of 5
+    }
+
+    // Return the compressed image buffer
+    return compressedImageBuffer;
+};
+
 
 
 

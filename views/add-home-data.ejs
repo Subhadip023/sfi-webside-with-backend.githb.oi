@@ -13,18 +13,19 @@
         Add Home Data Here
 
     </h2>
-    <form style="margin-left: 100px;" action="/admin/add-home-data" method="POST" >
+    <form style="margin-left: 100px;" action="/admin/add-home-data" method="POST" enctype="multipart/form-data">
         <div>
             <label for="image">Image:   </label>
             <input type="file" id="image" name="image">
         </div>
         <div>
-            <label for="title">Name:</label> <br><br>
-            <input type="text" id="title" name="title" required>
+            <label for="name">Name:</label> <br><br>
+            <input type="text" id="name" name="name" required>
         </div>
         <div>
             <label for="content">Content:</label><br><br>
             <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css" rel="stylesheet">
+            <input type="hidden" id="content" name="content">
 
             <div id="editor">
                 
@@ -37,6 +38,16 @@
         const quill = new Quill('#editor', {
           theme: 'snow'
         });
+
+        const form = document.querySelector('form');
+form.addEventListener('submit', function(event) {
+    // Get content from the Quill editor
+    const quillContent = quill.root.innerHTML;
+
+    // Set the content in the hidden input field
+    const contentInput = document.querySelector('#content');
+    contentInput.value = quillContent;
+});
       </script>
 </body>
 </html>

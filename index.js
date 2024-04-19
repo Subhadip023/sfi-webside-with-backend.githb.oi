@@ -1,6 +1,7 @@
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import newsRoute from "./routes/newsRoute.js";
+import homeRoute from "./routes/homeRoute.js";
 import User from './models/usersModel.js'; 
 import registerRoute from "./routes/registerRoute.js";
 import express from "express";
@@ -26,33 +27,11 @@ dotenv.config();
 
 const app = express();
 const port = 5000;
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    let destinationDirectory = "";
 
-    if (req.originalUrl === "/gallery") {
-      destinationDirectory = "public/images/gallery";
-    } else if (req.originalUrl === "/") {
-      destinationDirectory = "public/images/home";
-    } else if (req.originalUrl === "/addnotification") {
-      destinationDirectory = "public/images/notification";
-    } else if (req.originalUrl === "/addevent") {
-      destinationDirectory = "public/images/event";
-    } else {
-      // Default directory or error handling
-      destinationDirectory = "public/images";
-    }
-    cb(null, destinationDirectory);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + "-" + uniqueSuffix + ".jpg"); // Append '.jpg' to the filename
-  },
-});
 
 // Create SQLite database connection
 const db = new sqlite3.Database("sfi-dataBase.db");
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 // Middleware to serve static files
@@ -77,6 +56,7 @@ app.use(authRoutes);
 app.use(adminRoutes);
 app.use(newsRoute);
 app.use('/joinUs',joinUsRoute)
+// app.use('/',homeRoute)
 // app.use(eventRoute);
 
 // Route to display update form
@@ -136,30 +116,30 @@ app.get('/addevent', (req, res) => {
   res.render('addevent.ejs');
 });
 
-app.post("/addevent", upload.single('eventImage'), (req, res) => {
-  const title = req.body.title;
-  const content = req.body.EventContent;
+// // app.post("/addevent", upload.single('eventImage'), (req, res) => {
+//   const title = req.body.title;
+//   const content = req.body.EventContent;
   
-  // Check if file was uploaded
-  if (!req.file) {
-      return res.status(400).send("No file uploaded.");
-  }
+//   // Check if file was uploaded
+//   if (!req.file) {
+//       return res.status(400).send("No file uploaded.");
+//   }
   
-  const filename = req.file.filename;
+//   const filename = req.file.filename;
 
-  // Insert data into the event table
-  db.run(
-      "INSERT INTO event (title, filename, content) VALUES (?, ?, ?)",
-      [title, filename, content],
-      (err) => {
-          if (err) {
-              console.error("Database error:", err.message);
-              return res.status(500).send("Internal Server Error");
-          }
-          res.redirect("/admin");
-      }
-  );
-});
+//   // Insert data into the event table
+//   db.run(
+//       "INSERT INTO event (title, filename, content) VALUES (?, ?, ?)",
+//       [title, filename, content],
+//       (err) => {
+//           if (err) {
+//               console.error("Database error:", err.message);
+//               return res.status(500).send("Internal Server Error");
+//           }
+//           res.redirect("/admin");
+//       }
+//   );
+// // });
 app.post("/delete-event", (req, res) => {
   const notificationId = req.body.id;
   db.get(
@@ -289,42 +269,42 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/", upload.single("image"), (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  const filename = req.file.filename;
-  // Insert the data into the SQLite database
-  const sql = "INSERT INTO home (title, content, filename) VALUES (?, ?, ?)";
-  db.run(sql, [title, content, filename], (err) => {
-    if (err) {
-      console.error("Error inserting data into database:", err.message);
-      return res.status(500).send("Internal Server Error");
-    }
-    // Redirect the user to the admin page after successful insertion
-    res.redirect("/admin");
-  });
-});
+// app.post("/", upload.single("image"), (req, res) => {
+//   const title = req.body.title;
+//   const content = req.body.content;
+//   const filename = req.file.filename;
+//   // Insert the data into the SQLite database
+//   const sql = "INSERT INTO home (title, content, filename) VALUES (?, ?, ?)";
+//   db.run(sql, [title, content, filename], (err) => {
+//     if (err) {
+//       console.error("Error inserting data into database:", err.message);
+//       return res.status(500).send("Internal Server Error");
+//     }
+//     // Redirect the user to the admin page after successful insertion
+//     res.redirect("/admin");
+//   });
+// });
 app.get("/addnotification", (req, res) => {
   res.render("addnotification.ejs");
 });
 
-app.post("/addnotification", upload.single("notificationImage"), (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  const filename = req.file.filename;
+// app.post("/addnotification", upload.single("notificationImage"), (req, res) => {
+//   const title = req.body.title;
+//   const content = req.body.content;
+//   const filename = req.file.filename;
 
-  db.run(
-    "INSERT INTO notifications (title, content,imgfilename) VALUES ( ?, ?,?)",
-    [title, content, filename],
-    (err) => {
-      if (err) {
-        console.error("Database error:", err.message);
-        return res.status(500).send("Internal Server Error");
-      }
-      res.redirect("/admin");
-    }
-  );
-});
+//   db.run(
+//     "INSERT INTO notifications (title, content,imgfilename) VALUES ( ?, ?,?)",
+//     [title, content, filename],
+//     (err) => {
+//       if (err) {
+//         console.error("Database error:", err.message);
+//         return res.status(500).send("Internal Server Error");
+//       }
+//       res.redirect("/admin");
+//     }
+//   );
+// });
 
 app.get("/notification", (req, res) => {
   // Query to fetch notifications from the database
@@ -411,34 +391,34 @@ app.post("/about", (req, res) => {
 export { about_data };
 
 // Modify your file upload route to insert file information into the database
-app.post("/gallery", upload.single("avatar"), function (req, res, next) {
-  // Check if file exists
-  if (!req.file) {
-    return res.status(400).send("No file uploaded.");
-  }
+// app.post("/gallery", upload.single("avatar"), function (req, res, next) {
+//   // Check if file exists
+//   if (!req.file) {
+//     return res.status(400).send("No file uploaded.");
+//   }
 
 
 
-  // Extract title from request body
-  const title = req.body.title;
+//   // Extract title from request body
+//   const title = req.body.title;
 
-  // Get file information
-  const filename = req.file.filename;
-  const path = req.file.path;
+//   // Get file information
+//   const filename = req.file.filename;
+//   const path = req.file.path;
 
-  // Insert file information into the images table
-  db.run(
-    "INSERT INTO images (filename, title, path) VALUES (?, ?, ?)",
-    [filename, title, path],
-    (err) => {
-      if (err) {
-        console.error("Error inserting image into database:", err.message);
-        return res.status(500).send("Internal Server Error");
-      }
-      res.redirect("/admin");
-    }
-  );
-});
+//   // Insert file information into the images table
+//   db.run(
+//     "INSERT INTO images (filename, title, path) VALUES (?, ?, ?)",
+//     [filename, title, path],
+//     (err) => {
+//       if (err) {
+//         console.error("Error inserting image into database:", err.message);
+//         return res.status(500).send("Internal Server Error");
+//       }
+//       res.redirect("/admin");
+//     }
+//   );
+// });
 
 app.get('/donate',(req,res)=>{
   res.render('donate.ejs');
