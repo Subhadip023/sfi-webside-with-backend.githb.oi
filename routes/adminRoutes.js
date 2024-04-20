@@ -223,4 +223,6 @@ router.post('/admin/home-data/delete',isAuthenticated,(req,res)=>{
       res.status(500).json({ message: "Internal server error" });
     });
 });
+
+
 export default router;

@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get("/", (req, res) => {
-Home.find().then(homedata=>{
+Home.find().sort({ position: 1 }).then(homedata=>{
   res.render("index.ejs",{HomeData:homedata});
 
 }) .catch((error) => {
