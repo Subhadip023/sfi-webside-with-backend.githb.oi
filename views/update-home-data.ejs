@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.js"></script>
+    <link rel="stylesheet" href="/css/admin.css">
+
+    <title>Update Home Data</title>
+</head>
+<body>
+    <h2>
+        Update Home Data Here
+
+    </h2>
+    <form action="/admin/home-data/update" method="POST" enctype="multipart/form-data">
+        <div>
+            <img src="<%= home.image %>" alt=""><br>
+            <label for="image">Image:   </label>
+            <input type="file" id="image" name="image">
+        </div>
+        <input type="hidden" name="id" value="<%= home.id %>">
+
+        <div>
+            <label for="name">Name:</label> <br><br>
+            <input type="text" id="name" name="name" value="<%= home.name %>" required>
+        </div>
+        <div>
+            <label for="content">Content:</label><br><br>
+           <textarea name="content" id="content" cols="70" rows="10" required><%= home.content %></textarea>
+              </div>        </div><br>
+              <button class="sub-btn" type="submit">Upload</button>
+    </form>
+
+
+</body>
+</html>
+
+
+

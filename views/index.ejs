@@ -9,7 +9,7 @@
     <% HomeData.forEach(element => {%>
 
     <div class="quotes">
-      <img class="" src="./images/home/<%= element.filename %>" alt="marks images" />
+      <img class="" src="<%= element.image %>" alt="marks images" />
       <p class="kalr_quote">
         <span class="karl_qoration">"</span><%= element.content %>
         <span class="karl_qoration">"</span>
@@ -21,14 +21,6 @@
    
 
   </div>
-  <script>
-    const notificationCount = <%=Notification.length%>;
-    let notificationTitle = []
-      <% Notification.forEach((title) => { %>
-        notificationTitle.push("<%= title %>")
-        <% });%>
-
-    // console.log(notificationTitle)
-  </script>
+ 
 
   <%- include("partials/footer.ejs") %>
