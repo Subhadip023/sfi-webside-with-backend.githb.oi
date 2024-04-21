@@ -4,6 +4,7 @@ import sqlite3 from "sqlite3";
 import { about_data } from "../index.js";
 import User from "../models/usersModel.js";
 import Home from "../models/homeDataModel.js";
+import nenModel from "../models/nenModel.js";
 import isAuthenticated from "../midelwire/authMiddleware.js";
 import { compressImageToTargetSize } from "../userdefineFuntion.js";
 import { Buffer } from "buffer";
@@ -22,12 +23,13 @@ router.get("/admin", isAuthenticated, async (req, res) => {
 
   try {
     // Fetch data from the database
-    const [userRows, homeRows] = await Promise.all([User.find(), Home.find()]);
+    const [userRows, homeRows,nenRows] = await Promise.all([User.find(), Home.find(),nenModel.find({type:'Notification'})]);
 
     // Render the admin.ejs template with the fetched data
     res.render("admin.ejs", {
       users: userRows,
       home: homeRows,
+      Notifications:nenRows,
       about_data: about_data,
     });
   } catch (err) {
@@ -224,5 +226,46 @@ router.post('/admin/home-data/delete',isAuthenticated,(req,res)=>{
     });
 });
 
+router.get('/admin/add-notification',(req,res)=>{
+  res.render('addnotification.ejs');
+})
+
+router.post('/admin/add-Notification',upload.single("notificationImage"),async(req,res)=>{
+  console.log(req.body)
+ try {
+   if(!req.file){
+     res.status(400).send({message:"Image Not Found"});
+   }
+     // Compress the image using the provided function
+     const compressedImageBuffer = await compressImageToTargetSize(
+      req.file.buffer,
+      100
+    );
+
+    // Convert the compressed image buffer to Base64 format
+    const base64Image = compressedImageBuffer.toString("base64");
+    const base64ImageUri = `data:image/jpeg;base64,${base64Image}`;
+
+   const {title,content,type}=req.body;
+   if(!title,!content,!type){
+     res.status(400).send({message:"Plz Fill The fields "});
+   }
+
+const response=await nenModel.create({title,content,type,thumbnail:base64ImageUri});
+if (!response) {
+  res.status(400).json({ message: "Data Not added to the Data Base" });
+
+}
+res.redirect('/admin')
+ } catch (error) {
+  console.error("Error handling form submission:", error);
+  res.status(500).json({ error: "Internal server error" });
+ }
+});
+
+router.post('/admin/nen-data/update/:id',isAuthenticated,async(req,res)=>{
+  const id=req.params;
+  console.log(id)
+})
 
 export default router;
