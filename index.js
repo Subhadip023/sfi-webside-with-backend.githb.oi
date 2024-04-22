@@ -3,6 +3,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import newsRoute from "./routes/newsRoute.js";
 import homeRoute from "./routes/homeRoute.js";
 import User from './models/usersModel.js'; 
+import galleryRoute from './routes/galleryRoute.js'
 import registerRoute from "./routes/registerRoute.js";
 import express from "express";
 import sqlite3 from "sqlite3";
@@ -56,6 +57,7 @@ app.use(passport.session());
 app.use(authRoutes);
 app.use(adminRoutes);
 app.use(newsRoute);
+app.use('/Gallery',galleryRoute);
 app.use('/joinUs',joinUsRoute)
 app.use('/',homeRoute)
 

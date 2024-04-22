@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/admin.css">
+    <title>Add Gallery Image</title>
+</head>
+<body>
+    <form action="/admin/add-gallery-image" class="gally-add-form" method="post" enctype="multipart/form-data">
+        <div><label for="title">Add Image Title Here
+        </label>
+             <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="gallary_image">Image:   </label>
+            <input type="file" id="gallary_image" name="gallary_image" required>
+                </div>
+        <div>
+            <label for="banner">Is this image For banner </label>
+            <select name="banner" id="banner">
+                <option value="yes">Yes</option>
+                <option value="no" selected>No</option>
+                
+            </select>
+        </div><br>
+        <button type="submit" class="sub-btn">Add Image</button>
+    </form>
+</body>
+</html>

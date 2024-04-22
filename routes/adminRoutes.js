@@ -4,6 +4,7 @@ import sqlite3 from "sqlite3";
 import { about_data } from "../index.js";
 import User from "../models/usersModel.js";
 import Home from "../models/homeDataModel.js";
+import Gallery from '../models/galleryModel.js'
 import nenModel from "../models/nenModel.js";
 import isAuthenticated from "../midelwire/authMiddleware.js";
 import { compressImageToTargetSize } from "../userdefineFuntion.js";
@@ -23,13 +24,14 @@ router.get("/admin", isAuthenticated, async (req, res) => {
 
   try {
     // Fetch data from the database
-    const [userRows, homeRows,nenRows] = await Promise.all([User.find(), Home.find(),nenModel.find({type:'Notification'})]);
+    const [userRows, homeRows,nenRows,galleryRows] = await Promise.all([User.find(), Home.find(),nenModel.find({type:'Notification'}),Gallery.find()]);
 
     // Render the admin.ejs template with the fetched data
     res.render("admin.ejs", {
       users: userRows,
       home: homeRows,
       Notifications:nenRows,
+      gallery: galleryRows,
       about_data: about_data,
     });
   } catch (err) {
@@ -123,7 +125,7 @@ router.post(
       const compressedImageBuffer = await compressImageToTargetSize(
         req.file.buffer,
         100
-      );
+      ); 
 
       // Convert the compressed image buffer to Base64 format
       const base64Image = compressedImageBuffer.toString("base64");
@@ -266,6 +268,59 @@ res.redirect('/admin')
 router.post('/admin/nen-data/update/:id',isAuthenticated,async(req,res)=>{
   const id=req.params;
   console.log(id)
+});
+
+router.get('/admin/add-gallery-image',isAuthenticated,(req,res)=>{
+  res.render('add-galery-image.ejs')
+})
+
+router.post('/admin/add-gallery-image',isAuthenticated,upload.single('gallary_image'),async(req,res)=>{
+  console.log(req.body);
+  try {
+    // Check if a file was uploaded
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    // Compress the image using the provided function
+    const compressedImageBuffer = await compressImageToTargetSize(
+      req.file.buffer,
+      100
+    ); 
+
+    // Convert the compressed image buffer to Base64 format
+    const base64Image = compressedImageBuffer.toString("base64");
+    const base64ImageUri = `data:image/jpeg;base64,${base64Image}`;
+    const { title, banner } = req.body;
+if(!banner=='yes'){
+banner=null;
+}
+    // Store the data in your database (not shown in the code)
+    const home = await Gallery.create({ title, image: base64ImageUri ,banner});
+    if (!home) {
+      res.status(400).json({ message: "Data Not added to the Data Base" });
+    }
+    res.redirect("/admin");
+    // Respond with a success message and the Base64 image URI
+  } catch (error) {
+    console.error("Error handling form submission:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+router.post('/admin/gallery/delete',isAuthenticated,async(req,res)=>{
+  const {id}=req.body;
+  // console.log(id);
+  try {
+    const gallery=await Gallery.findByIdAndDelete(id);
+    if (!gallery) {
+      res.status(400).json({error:"Can't delete the image now "})
+    }
+    res.redirect('/admin')
+  } catch (error) {
+    console.error("Error handling form submission:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+  
 })
 
 export default router;

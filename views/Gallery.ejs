@@ -6,7 +6,8 @@
 
    <% images.forEach(image => {%>
      <div class="imges" style="background-image: url('/images/gallery/<%= image.filename %>');">
-    <p><%= image.title %></p>
+        <img src="<%= image.image %>" alt="">
+    <p ><%= image.title %></p>
  
 
    </div>
