@@ -319,20 +319,17 @@ input[type="submit"],button[type='submit'] {
   width: 100%;
 }
 .gbaner {
+  background: #000;
   grid-column: span 2;
   height: 45vh;
-  background-image: url("/images/gallery_banner.jpg");
-  background-size: cover;
+ 
   display: flex;
   justify-content: flex-end;
   align-items: end;
+  overflow: hidden;
 }
-.gbaner img {
-  height: 20vh;
-  width: 20vh;
-  border: 1px solid red;
-  border-radius: 50%;
-}
+
+
 .imges {
   height: 40vh;
   background-size: cover;

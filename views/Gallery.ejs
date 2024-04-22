@@ -1,20 +1,31 @@
 <%- include("partials/header.ejs") %>
 <div class="gallery">
     <div class="gbaner">
-        <img src="./images/sfi-aliah-log.jpg" alt="">
+        <% images.forEach(image=>{ %>
+            <% if (image.banner=='yes') { %>
+
+                <img src="<%= image.image %>" alt="<%= image.title %>">
+                
+            <%} %>
+        <%  }) %>
+        
     </div>
 
    <% images.forEach(image => {%>
-     <div class="imges" style="background-image: url('/images/gallery/<%= image.filename %>');">
-        <img src="<%= image.image %>" alt="">
-    <p ><%= image.title %></p>
+    <% if (image.banner=='no') { %>
+     <div class="imges">
+
+            <img src="<%= image.image %>" alt="<%= image.title %>">
+          <p ><%= image.title %></p>
  
 
    </div>
+   <%} %> 
   <% }); %>   
  
    </div>
   
   
 </div>
+
 <%- include("partials/footer.ejs") %>
