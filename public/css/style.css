@@ -68,8 +68,11 @@ header {
   opacity: 0; /* Initially set opacity to 0 */
   /* transition: opacity 3s ease; */
   border-radius: 50px;
+  transition: box-shadow 1s linear, opacity 3s ease; /* Apply transition effect to box-shadow property */
+}
+.quotes img:hover{
   box-shadow: 5px 10px 28px transparent; /* Initial shadow with transparent color */
-  transition: box-shadow 6s linear, opacity 3s ease; /* Apply transition effect to box-shadow property */
+
 }
 
 .quotes p {
