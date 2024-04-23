@@ -1,4 +1,4 @@
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .dropdowen {
     display: flex;
 
@@ -30,7 +30,7 @@
   }
 
   .navbar {
-    display: none;
+    /* display: none; */
     background: black;
     opacity: 70%;
     height: fit-content;

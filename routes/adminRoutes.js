@@ -285,7 +285,7 @@ router.post('/admin/add-gallery-image',isAuthenticated,upload.single('gallary_im
     // Compress the image using the provided function
     const compressedImageBuffer = await compressImageToTargetSize(
       req.file.buffer,
-      100
+      300
     ); 
 
     // Convert the compressed image buffer to Base64 format
@@ -307,6 +307,8 @@ banner=null;
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
 router.post('/admin/gallery/delete',isAuthenticated,async(req,res)=>{
   const {id}=req.body;
   // console.log(id);
