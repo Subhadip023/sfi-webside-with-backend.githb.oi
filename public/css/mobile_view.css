@@ -246,12 +246,12 @@
   .gbaner {
     height: 30vh;
   }
-  .gbaner img {
+  /* .gbaner img {
     height: 10vh;
     width: 10vh;
     border: 1px solid red;
     border-radius: 50%;
-  }
+  } */
 
   .imges {
     height: 20vh;

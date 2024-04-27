@@ -2,18 +2,18 @@
 
 
 <div class="Notificationcontaner">
-    <% if (notifications && notifications.length > 0) { %>
+    <% if (events && events.length > 0) { %>
 
 
-    <% notifications.forEach(notification => { %>
+    <% events.forEach(event => { %>
         <div class="notification">
-        <div class="notificationTitle"><a href="/event-Details/<%=notification.id%>"><%= notification.title %></a></div>
+        <div class="notificationTitle"><a href="/event-Details/<%=event.id%>"><%= event.title %></a></div>
         <div class="notificationContent">
-            <img src="/images/event/<%= notification.filename %>" alt="">
+            <img src="<%= event.thumbnail %>" alt="">
 
-            <%= notification.content.substring(0, 100) %></div>
+            <%= event.content.substring(0, 100) %></div>
 
-        <div class="notificationDate"><%= notification.date %></div>
+        <div class="notificationDate"><%= event.date %></div>
     </div>
     <% }); %>
 

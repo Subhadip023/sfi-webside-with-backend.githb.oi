@@ -2,10 +2,13 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import newsRoute from "./routes/newsRoute.js";
 import homeRoute from "./routes/homeRoute.js";
-import User from './models/usersModel.js'; 
 import galleryRoute from './routes/galleryRoute.js'
 import notificationRouter from './routes/notificationRoute.js'
+import eventRoute from './routes/eventRoute.js'
 import registerRoute from "./routes/registerRoute.js";
+
+import User from './models/usersModel.js'; 
+
 import express from "express";
 import sqlite3 from "sqlite3";
 import session from "express-session";
@@ -57,6 +60,7 @@ app.use(passport.session());
 
 app.use(authRoutes);
 app.use(adminRoutes);
+app.use(eventRoute);
 app.use(newsRoute);
 app.use('/Gallery',galleryRoute);
 app.use('/joinUs',joinUsRoute)

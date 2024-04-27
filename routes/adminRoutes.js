@@ -24,13 +24,14 @@ router.get("/admin", isAuthenticated, async (req, res) => {
 
   try {
     // Fetch data from the database
-    const [userRows, homeRows,nenRows,galleryRows] = await Promise.all([User.find(), Home.find(),nenModel.find({type:'Notification'}),Gallery.find()]);
+    const [userRows, homeRows,nenRows,eventRows,galleryRows] = await Promise.all([User.find(), Home.find(),nenModel.find({type:'Notification'}),nenModel.find({type:'Event'}),Gallery.find()]);
 
     // Render the admin.ejs template with the fetched data
     res.render("admin.ejs", {
       users: userRows,
       home: homeRows,
       Notifications:nenRows,
+      Events:eventRows,
       gallery: galleryRows,
       about_data: about_data,
     });
@@ -232,6 +233,10 @@ router.get('/admin/add-notification',(req,res)=>{
   res.render('addnotification.ejs');
 })
 
+router.get('/admin/add-event',(req,res)=>{
+  res.render('addevent.ejs');
+})
+
 router.post('/admin/add-Notification',upload.single("notificationImage"),async(req,res)=>{
  try {
    if(!req.file){
@@ -336,20 +341,24 @@ router.post('/admin/add-gallery-image',isAuthenticated,upload.single('gallary_im
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-
-    // Compress the image using the provided function
-    const compressedImageBuffer = await compressImageToTargetSize(
-      req.file.buffer,
-      300
-    ); 
+    const { title, banner } = req.body;
+    let img_size;
+    if(!banner=='yes'){
+      banner=null;
+     img_size=300;
+      }else{
+ img_size=500;
+      }
+      // Compress the image using the provided function
+      const compressedImageBuffer = await compressImageToTargetSize(
+       req.file.buffer,
+       img_size
+     ); 
 
     // Convert the compressed image buffer to Base64 format
     const base64Image = compressedImageBuffer.toString("base64");
     const base64ImageUri = `data:image/jpeg;base64,${base64Image}`;
-    const { title, banner } = req.body;
-if(!banner=='yes'){
-banner=null;
-}
+
     // Store the data in your database (not shown in the code)
     const home = await Gallery.create({ title, image: base64ImageUri ,banner});
     if (!home) {
