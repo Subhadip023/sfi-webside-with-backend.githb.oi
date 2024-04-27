@@ -233,7 +233,6 @@ router.get('/admin/add-notification',(req,res)=>{
 })
 
 router.post('/admin/add-Notification',upload.single("notificationImage"),async(req,res)=>{
-  console.log(req.body)
  try {
    if(!req.file){
      res.status(400).send({message:"Image Not Found"});
@@ -241,9 +240,8 @@ router.post('/admin/add-Notification',upload.single("notificationImage"),async(r
      // Compress the image using the provided function
      const compressedImageBuffer = await compressImageToTargetSize(
       req.file.buffer,
-      100
+      300
     );
-
     // Convert the compressed image buffer to Base64 format
     const base64Image = compressedImageBuffer.toString("base64");
     const base64ImageUri = `data:image/jpeg;base64,${base64Image}`;
@@ -265,10 +263,67 @@ res.redirect('/admin')
  }
 });
 
-router.post('/admin/nen-data/update/:id',isAuthenticated,async(req,res)=>{
-  const id=req.params;
-  console.log(id)
+router.get('/admin/nen-data/update/:id',isAuthenticated,async(req,res)=>{
+  const {id}=req.params;
+  try {
+    const nen= await nenModel.findById(id);
+    if(!nen){
+      res.status(400).json({message:"Data not found in data base "})
+    }
+    res.render('update-nen-data.ejs',{nen:nen})
+    
+  } catch (error) {
+    console.error("Error handling form submission:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+
+router.post('/admin/update-nen-data',isAuthenticated,upload.single('notificationImage') ,async(req,res)=>{
+  const {id,title,content}=req.body;
+  try {
+    if(!req.file){
+      const nen = await nenModel.findByIdAndUpdate(id,{title,content});
+      if(!nen){
+        res.status(400).json({message:' Data Not updatedto the data base'})
+      }
+      res.redirect('/admin')
+    }
+
+    const compressedImageBuffer = await compressImageToTargetSize(
+      req.file.buffer,
+      300
+    );
+
+    // Convert the compressed image buffer to Base64 format
+    const base64Image = compressedImageBuffer.toString("base64");
+    const base64ImageUri = `data:image/jpeg;base64,${base64Image}`;
+    const nen = await nenModel.findByIdAndUpdate(id,{title,content,thumbnail:base64ImageUri});
+    if(!nen){
+      res.status(400).json({message:' Data Not updatedto the data base'})
+    }
+    res.redirect('/admin')
+
+  } catch (error) {
+    console.error( error);
+    res.status(500).json({ error: "Internal server error" });  }
 });
+
+router.post('/admin/nen-data/delete',isAuthenticated,async(req,res)=>{
+  console.log(req.body)
+  const {id}=req.body
+  try {
+    const nen=await nenModel.findByIdAndDelete(id);
+    if (!nen) {
+      res.status(500).json({message:"Can't delete from the data base"});
+
+    }
+    res.redirect('/admin')
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({message:"Can't delete from the data base"});
+  }
+})
+
 
 router.get('/admin/add-gallery-image',isAuthenticated,(req,res)=>{
   res.render('add-galery-image.ejs')

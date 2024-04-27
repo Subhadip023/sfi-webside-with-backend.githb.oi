@@ -3,12 +3,11 @@
 <div class="Notificationcontaner">
     <% if (notifications && notifications.length > 0) { %>
 
-
     <% notifications.forEach(notification => { %>
         <div class="notification">
         <div class="notificationTitle"><a href="/notification-Details/<%=notification.id%>"><%= notification.title %></a></div>
         <div class="notificationContent">
-            <img src="/images/notification/<%= notification.imgfilename %>" alt="">
+            <img src="<%= notification.thumbnail %>" alt="">
 
             <%= notification.content.substring(0, 100) %></div>
 
