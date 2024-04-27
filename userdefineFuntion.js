@@ -42,7 +42,7 @@ export async function convert_to_hash_s10(password) {
 export let transporter = nodemailer.createTransport({
     service: 'Gmail', // you can replace this with your email service
     auth: {
-        user: 'gyaanhub8@gmail.com', // your email address
+        user: 'studentsfederationofindiaau@gmail.com', // your email address
         pass: process.env.EMAIL_APP_PASSWORD // your email password
     }
 });
