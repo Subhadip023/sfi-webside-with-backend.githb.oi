@@ -47,8 +47,8 @@ router.post("/", async (req, res) => {
     const new_password = await convert_to_hash_s10(password);
     userdata = { name:username, password: new_password, email, phoneno: phone };
     // Define email content
-    const mailOptions = {
-      from: "gyaanhub8@gmail.com",
+    const mailOptions = { 
+      from: "studentsfederationofindiaau@gmail.com",
       to: email,
       subject: "OTP verification | SFI Aliah ",
       text: `Hello, ${username} 

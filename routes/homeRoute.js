@@ -1,18 +1,24 @@
 import express from 'express';
 import Home from '../models/homeDataModel.js';
+import Noti from '../models/nenModel.js'; // Renamed for consistency
 const router = express.Router();
 
-
-router.get("/", (req, res) => {
-Home.find().sort({ position: 1 }).then(homedata=>{
-  res.render("index.ejs",{HomeData:homedata});
-
-}) .catch((error) => {
-  // Handle error
-  console.error(error);
-  // Send an error response
-  res.status(500).json({ message: "Internal server error" });
+router.get('/', async (req, res) => {
+  try {
+    // Query Home data and notifications concurrently
+    const [homeData, notifications] = await Promise.all([
+      Home.find().sort({ position: -1 }),
+      Noti.find({ type: 'Notification' }).sort({createdAt:-1}).limit(10).select('title')
+    ]);
+    console.log(notifications)
+    res.render('index.ejs', {
+      homeData
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
-  });
-  export default router;
+export default router;
+

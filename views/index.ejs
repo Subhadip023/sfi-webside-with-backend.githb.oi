@@ -6,14 +6,14 @@
     <div class="notification_home">
 
     </div>
-    <% HomeData.forEach(element => {%>
+    <% homeData.forEach(element => {%>
 
     <div class="quotes">
       <img class="" src="<%= element.image %>" alt="marks images" />
       <p class="kalr_quote">
         <span class="karl_qoration">"</span><%= element.content %>
         <span class="karl_qoration">"</span>
-        <span class="Karl">- <%= element.title %></span>
+        <span class="Karl">- <%= element.name %></span>
       </p>
     </div>
  <% }); %>

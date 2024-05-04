@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+ <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sfi-aliah</title>
@@ -130,15 +130,16 @@
             <%= Notification.title %><br>
         </div>
         <div class="notification-img">
-            <img src="/images/event/<%= Notification.filename %>" alt="">
+            <img src="<%= Notification.thumbnail %>" alt="">
         </div>
         <div class="sfi-logo">
             <img src="/images/sfi-aliah-log.jpg" alt="">
         </div>
-        <div class="content">
+        <div class=" content">
             <% Notification.content.split('\n').forEach(function(paragraph) { %>
                 <p><%= paragraph %></p>
-            <% }); %>        </div>
+            <% }); %>    
+        </div>
         <div class="date">
             <%= Notification.date %>
 

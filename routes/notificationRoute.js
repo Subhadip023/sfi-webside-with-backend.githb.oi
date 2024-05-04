@@ -15,4 +15,10 @@ try {
 } catch (error) {
     console.log(error)
 }  });
+
+router.get('/Details/:id',async(req,res)=>{
+    const notificationId = req.params.id;
+    const notificationDetails=await nenModel.findById(notificationId);
+    res.render('notificationDetails.ejs',{Notification:notificationDetails})
+})
   export default router;

@@ -43,14 +43,12 @@
             <a href="/admin/add-home-data" class="add-btn">Add Data</a>
         </div>
         <h1>Home-Data</h1>
-        <form action="/admin/home-data/update-positions" method="post">
             <table>
                 <thead>
                     <th>Id</th>
                     <th>Image</th>
                     <th>Content</th>
                     <th>Name</th>
-                    <!-- <th>Position</th> -->
                     <th>Edit</th>
                 </thead>
                 <tbody>
@@ -68,13 +66,7 @@
                             <td>
                                 <%= element.name %>
                             </td>
-                            <!-- <td>
-                                <select name="position_<%= element.id %>">
-                                    <% for (let i = 0; i < home.length; i++) { %>
-                                        <option value="<%= i %>" <%= element.position === i ? 'selected' : '' %>><%= i %></option>
-                                    <% } %>
-                                </select>
-                            </td> -->
+                        
                             <td>
                                 <a href="/admin/home-data/update/<%= element.id %>"><button
                                         class="update-btn">Update</button></a>
@@ -87,7 +79,6 @@
                         <% }); %>
                 </tbody>
             </table>
-        </form>
     </section>
 
     <section id="User" class="container">
