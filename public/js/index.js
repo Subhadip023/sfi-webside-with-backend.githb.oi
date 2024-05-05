@@ -92,7 +92,7 @@ elements.forEach(element => {
   <line x1="90" y1="10" x2="10" y2="90" stroke="red" stroke-width="10"/>
 </svg> */}
 
-function showNotification(Notification_title) {
+function showNotification(Notification_title,id) {
   let hn = document.createElement('div');
   hn.classList.add('hn');
   hn.innerHTML = ` 
@@ -100,7 +100,7 @@ function showNotification(Notification_title) {
   <img src="/images/sfi-aliah-log.jpg" alt="">
 
 ${Notification_title}
-<a href="/notification"><svg
+<a href="/notification/Details/${id}"><svg
     fill="#000000"
     height="800px"
     width="800px"

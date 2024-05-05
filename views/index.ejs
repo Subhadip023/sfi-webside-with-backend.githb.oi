@@ -1,26 +1,36 @@
 <%- include("partials/header.ejs") %>
-  <div class="banner">
-    <img src="./images/banner01.jpg" alt="" />
-  </div>
-  <div class="contaner">
+
+<div class="banner">
+    <img src="./images/banner01.jpg" alt="Banner Image" />
+</div>
+
+<div class="container">
     <div class="notification_home">
-
+        <!-- Add notifications content here -->
     </div>
-    <% homeData.forEach(element => {%>
-
+    
+    <% homeData.forEach(element => { %>
     <div class="quotes">
-      <img class="" src="<%= element.image %>" alt="marks images" />
-      <p class="kalr_quote">
-        <span class="karl_qoration">"</span><%= element.content %>
-        <span class="karl_qoration">"</span>
-        <span class="Karl">- <%= element.name %></span>
-      </p>
+        <img class="marks-images" src="<%= element.image %>" alt="Marks Images" />
+        <p class="karl_quote">
+            <span class="karl_qoration">"</span><%= element.content %>
+            <span class="karl_qoration">"</span>
+            <span class="Karl">- <%= element.name %></span>
+        </p>
     </div>
- <% }); %>
+    <% }); %>
+</div>
 
-   
+<script>
+  const notificationCount = <%=notifications.length%>;
+  let notificationTitle = []
+    <% notifications.forEach((title) => { %>
+      notificationTitle.push("<%= title %>")
+      <% });%>
 
-  </div>
- 
+//   console.log(notificationTitle)
+</script>
 
-  <%- include("partials/footer.ejs") %>
+
+
+<%- include("partials/footer.ejs") %>

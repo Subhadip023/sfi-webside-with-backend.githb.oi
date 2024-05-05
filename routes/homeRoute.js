@@ -8,11 +8,19 @@ router.get('/', async (req, res) => {
     // Query Home data and notifications concurrently
     const [homeData, notifications] = await Promise.all([
       Home.find().sort({ position: -1 }),
-      Noti.find({ type: 'Notification' }).sort({createdAt:-1}).limit(10).select('title')
+      Noti.find({ type: 'Notification' }).sort({createdAt:-1}).select('title')
     ]);
-    console.log(notifications)
+    const notificationTitels=[];
+    const notificationIds=[];
+
+    notifications.forEach(Element=>{
+      notificationTitels.push(Element.title)
+      notificationIds.push(Element.id)
+    })
+
+    console.log(notificationIds)
     res.render('index.ejs', {
-      homeData
+      homeData,notifications:notificationTitels
     });
   } catch (error) {
     console.error(error);
