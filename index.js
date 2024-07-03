@@ -2,6 +2,7 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import newsRoute from "./routes/newsRoute.js";
 import homeRoute from "./routes/homeRoute.js";
+import donateRoute from "./routes/donateRoute.js";
 import galleryRoute from './routes/galleryRoute.js'
 import notificationRouter from './routes/notificationRoute.js'
 import eventRoute from './routes/eventRoute.js'
@@ -63,6 +64,7 @@ app.use(adminRoutes);
 app.use(eventRoute);
 app.use(newsRoute);
 app.use('/Gallery',galleryRoute);
+app.use('/donate',donateRoute);
 app.use('/joinUs',joinUsRoute)
 app.use('/',homeRoute)
 app.use('/notification',notificationRouter)

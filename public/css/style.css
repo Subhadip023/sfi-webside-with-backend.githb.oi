@@ -413,3 +413,21 @@ footer svg:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(96, 0, 0);
 }
+
+.donate-container{
+  padding: 20px 0;
+  width: 80vw;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-direction: column;
+}
+.qr-image{
+  background: #000;
+  height: 40vh;
+  width: 40vw;
+}
+.buttons{
+  
+}
