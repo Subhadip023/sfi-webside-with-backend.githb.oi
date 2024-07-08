@@ -12,7 +12,13 @@
                 <input type="text" name="name" placeholder="Name" required>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="number" name="phone" placeholder="Phone Number" required>
-            <% } %>
+            <% }else{ %>
+                
+            <input type="text" name="name" placeholder="Name" value="<%=user.name%>" hidden>
+            <input type="email" name="email" placeholder="Email" value="<%=user.email%>" hidden >
+            <input type="number" name="phone" placeholder="Phone Number" value="<%=user.phoneno%>" hidden >
+                <% } %>
+            
             <input type="number" name="amount" placeholder="Amount" required>
             <button type="submit">Donate</button>
         </form>
