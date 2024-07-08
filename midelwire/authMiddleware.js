@@ -1,12 +1,17 @@
 // middleware/authMiddleware.js
-const isAuthenticated = (req, res, next) => {
+import User from "../models/usersModel.js"; // Adjust the path as needed
+import passport from "passport";
 
-    if (req.isAuthenticated()) {
-      return next();
-    } else {
-      res.redirect("/login");
+const isAuthenticated = async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    const user = await User.findById(req.user.id);
+    if (user) {
+      req.user.isMember = true;
     }
-  };
-  
-  export default isAuthenticated;
-   
+    return next();
+  } else {
+    res.redirect("/login");
+  }
+};
+
+export default isAuthenticated;

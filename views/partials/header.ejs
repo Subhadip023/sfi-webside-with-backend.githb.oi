@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/mobile_view.css" />
+    <!-- <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/mobile_view.css" /> -->
+    
     <title>SFI Aliah</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9380375501771641"
     crossorigin="anonymous"></script>
@@ -22,6 +23,784 @@
         transition: opacity 3s ease;
         /* Apply transition effect to opacity property */
       }
+      * {
+  margin: 0;
+  padding: 0;
+  /* background: #000; */
+}
+
+header {
+  background-color: #000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 0 5vw;
+  justify-content: center;
+}
+
+.sfi-logo {
+  width: fit-content;
+}
+
+.dropdowen {
+  display: none;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  letter-spacing: 1px;
+  transition: all linear 5ms;
+}
+
+.navbar ul {
+  list-style: none;
+  display: inline-flex;
+  gap: 20px;
+}
+
+.navbar a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  color: red;
+}
+
+.banner img {
+  width: 100vw;
+}
+.contaner {
+  display: flex;
+  width: 100%vw;
+ min-height: 70vh;
+  height: fit-content;
+  flex-direction: column;
+  
+}
+.quotes {
+  margin: 50px auto;
+  gap: 10px;
+  width: 60vw;
+}
+
+.quotes img {
+  margin-right: 25px;
+  height: 300px;
+  /* width: 320px; */
+  float: left;
+  opacity: 0; /* Initially set opacity to 0 */
+  /* transition: opacity 3s ease; */
+  border-radius: 50px;
+  transition: box-shadow 1s linear, opacity 3s ease; /* Apply transition effect to box-shadow property */
+}
+.quotes img:hover{
+  box-shadow: 5px 10px 28px transparent; /* Initial shadow with transparent color */
+
+}
+
+.quotes p {
+  text-align: justify;
+  font-size: 30px;
+  font-family: "Playfair Display", serif;
+}
+.kalr_quote {
+  opacity: 0; /* Initially set opacity to 0 */
+  transition: opacity 7s ease;
+}
+
+.karl_qoration {
+  font-size: 30px;
+  color: red;
+}
+
+h2 {
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  text-decoration: underline red;
+}
+
+.Karl {
+  color: red;
+  font-family: "Cedarville Cursive", cursive;
+}
+
+.notification_home {
+  position: fixed;
+  /* display: flex; */
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  justify-content: flex-end;
+  z-index: 999;
+  /* background: green; */
+  height: 500px;
+  width: 400px;
+  top: 46vh;
+  left: 20px;
+}
+
+.hn {
+  display: flex;
+  gap: 5px;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 10px auto;
+  background: white;
+  min-height: 60px;
+  height: fit-content;
+  width: 300px;
+  font-size: 20px;
+  color: red;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.5); /* Start with smaller size */
+  animation: popup 0.5s ease forwards;
+  box-shadow: 10px 10px 30px red;
+  overflow: auto;
+  padding: 5px;
+}
+.hn img {
+  height: 100%;
+  width: 20%;
+}
+.hn svg {
+  border: 2px solid red;
+  border-radius: 505%;
+  padding: 5px;
+  fill: red;
+  height: 25px;
+  width: 25px;
+}
+.hn svg:hover {
+  fill: rgb(192, 4, 4);
+  border: 2px solid rgb(192, 4, 4);
+}
+
+@keyframes popup {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.hn.remove {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+input[type="submit"],button[type='submit'] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.login_form{
+  margin: auto;
+}
+
+/* For notification tab */
+.Notificationcontaner {
+  margin: 0 auto;
+  margin-top: 50px;
+  min-height: 100vh;
+  height: fit-content;
+  width: 55vw;
+  display: flex;
+  flex-wrap: wrap;
+  /* background: #000; */
+  text-align: justify;
+  overflow: auto;
+}
+.notificationTitle {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 10px;
+  /* background: aqua; */
+  font-size: 35px;
+  text-decoration: solid;
+  text-align: center;
+  overflow: hidden;
+}
+.notificationTitle a {
+  text-decoration: none;
+  color: red;
+}
+.notificationTitle a:hover {
+  text-decoration: none;
+  color: rgb(245, 73, 73);
+}
+.notificationContent {
+  width: 100%;
+  min-height: 70%;
+  max-height: fit-content;
+  /* background: green; */
+  min-height: 10px;
+  max-height: fit-content;
+  font-size: 25px;
+}
+.notificationContent img {
+  width: 100%;
+  height: auto;
+}
+.notificationDate {
+  height: 10%;
+  font-size: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  /* background: blue; */
+  margin: 20px 0;
+}
+
+.notification {
+  width: 100%;
+  min-height: 20vh;
+  height: fit-content;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 10px 10px 20px;
+  border-radius: 20px;
+}
+
+/* style for about */
+.about {
+  margin: 10vh auto;
+  min-height: 70vh;
+  height: fit-content;
+  width: 80vw;
+  /* background: #9671d1; */
+}
+.about-content h2 {
+  font-size: 2rem;
+  margin: 20px 0;
+  color: rgb(85, 1, 1);
+}
+.about-content h3 {
+  font-size: 1.5rem;
+  color: rgb(148, 0, 0);
+  text-align: center;
+}
+.about-content a {
+  text-decoration: none;
+  color: rgb(148, 0, 0);
+}
+.about-content a:hover {
+  text-decoration: underline;
+  color: rgb(105, 3, 3);
+}
+/* Join us style ----*/
+
+.joinus {
+  margin: 100px auto;
+  height: 70vh;
+  width: 80vw;
+}
+
+.gallery {
+  margin: 15px auto;
+  /* min-height: 70vh; */
+  height: fit-content;
+  width: 50vw;
+  /* background: green; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1f auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  padding: 5px;
+}
+.gallery img {
+  height: 100%;
+  width: 100%;
+}
+.gbaner {
+  /* background: #000; */
+  grid-column: span 2;
+  height: 45vh;
+ 
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+  overflow: hidden;
+}
+
+
+.imges {
+  height: 40vh;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.imges p {
+  padding: 2px 10px;
+  margin: 10px 0;
+  background: rgba(0, 0, 0, 0.483);
+  color: red;
+  font-size: 2rem;
+}
+
+.message {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 200px auto;
+  height: fit-content;
+  width: 80vw;
+  color: red;
+  font-weight: 900;
+  font-size: 2.5rem;
+}
+.error_message{
+  color: red;
+  margin: 20px;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  width: 100%;
+  background: #000;
+  color: rgb(221, 214, 214);
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+footer p {
+  width: 100vw;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+footer svg {
+  height: 3.5vh;
+}
+footer svg:hover {
+  height: 3.55vh;
+  fill: rgb(251, 118, 118);
+}
+
+/* Scrollbar style */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(96, 0, 0);
+}
+
+.donate-container{
+  /* background: grey; */
+  padding: 20px 0;
+  width: 80vw;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+background-repeat: no-repeat;
+}
+.donate-container h1{
+  width: 100vw;
+  text-align: center;
+}
+.qr-image{
+  /* background: #000; */
+  height: 80vh;
+  width: 35vw;
+}
+.donate-form{
+  /* background: blueviolet; */
+  height: 80vh;
+  width: 35vw;
+  display: flex;
+flex-direction: column;  align-items: center;
+justify-content: center;
+}
+.donate-form form{
+  margin-top:20px ;
+}
+.donate-form  h2{
+text-decoration: none ;
+}
+.donate-form p{
+  margin-top: 20px;
+}
+
+.donate-form button{
+  background: green;
+}
+.qr-form button {
+  width: 200px;
+}
+
+
+.donate-form button:hover{
+  background: rgb(83, 187, 83);
+  color: #7b7a7a;
+
+}
+
+
+
+
+
+
+
+/* For mobile view */
+
+@media (max-width: 800px) {
+  .dropdowen {
+    display: flex;
+
+    width: 10vw;
+    display: block;
+  }
+
+  .dropdowen svg {
+    padding-top: 23px;
+    width: 20vw;
+    height: 50px;
+  }
+
+  .sfi-logo img {
+    width: 70dvw;
+  }
+
+  header {
+    background-color: transparent;
+    padding: 0;
+    z-index: 99;
+  }
+
+  .logandsvg {
+    position: fixed;
+    display: flex;
+    gap: 30px;
+    background-color: black;
+    width: 100vw;
+  }
+
+  .navbar {
+    /* display: none; */
+    background: black;
+    opacity: 70%;
+    height: fit-content;
+    max-width: 42vw;
+    min-width: fit-content;
+    position: fixed;
+    top: 17vw;
+    right: 1vw;
+    border: 1px solid rgba(255, 255, 255, 0.592);
+    border-radius: 20px;
+    z-index: 9999;
+  }
+
+  .navbar ul {
+    list-style: none;
+    display: block;
+    padding: 20px;
+  }
+
+  .navbar ul li {
+    padding: 10px;
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .navbar li a {
+    color: #ccc;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  .navbar a:hover {
+    color: red;
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .navbar.show-navbar {
+    display: block;
+  }
+
+  .contaner {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+  }
+
+  .hn {
+    animation: none;
+  }
+
+  .banner {
+    margin-top: 10.7vh;
+  }
+
+  .quotes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+
+    gap: 10px;
+    width: 80vw;
+  }
+
+  .quotes img {
+    margin-right: 5px;
+    height: 250px;
+    width: 250px;
+    float: left;
+    border-radius: 50px;
+  }
+
+  .quotes p {
+    font-size: 20px;
+    text-align: justify;
+  }
+  .karl_qoration {
+    font-size: 20px;
+  }
+
+  .notification_home {
+    position: fixed;
+    /* display: flex; */
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    justify-content: flex-end;
+    z-index: 999;
+    /* background: green; */
+    height: 500px;
+    width: 350px;
+    top: 30vh;
+    left: 0px;
+    bottom: 10vh;
+  }
+
+  .hn {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    background: white;
+    width: 300px;
+
+    font-size: 20px;
+    color: red;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.5); /* Start with smaller size */
+    animation: popup 0.5s ease forwards;
+    box-shadow: 10px 10px 30px red;
+  }
+
+  .hn svg {
+    border: 2px solid red;
+    border-radius: 505%;
+    padding: 5px;
+    fill: red;
+    height: 25px;
+    width: 25px;
+  }
+  .hn svg:hover {
+    fill: rgb(192, 4, 4);
+    border: 2px solid rgb(192, 4, 4);
+  }
+
+  @keyframes popup {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+  }
+
+  .hn.remove {
+    animation: fadeOut 0.5s ease forwards;
+  }
+
+  /* For notification tab */
+  .Notificationcontaner {
+    margin: 0 auto;
+    margin-top: 100px;
+    height: fit-content;
+    width: 90vw;
+    display: flex;
+    flex-wrap: wrap;
+    /* background: #000; */
+    /* text-align: justify; */
+    overflow: auto;
+  }
+  .notificationTitle {
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 10px;
+    font-size: 35px;
+    text-decoration: solid;
+    text-align: center;
+    overflow: hidden;
+  }
+  .notificationTitle a {
+    text-decoration: none;
+    color: red;
+  }
+  .notificationTitle a:hover {
+    text-decoration: none;
+    color: rgb(245, 73, 73);
+  }
+  .notificationContent {
+    width: 100%;
+    min-height: 70%;
+    max-height: fit-content;
+
+    font-size: 25px;
+  }
+  .notificationDate {
+    height: 10%;
+    font-size: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+  }
+
+  .gallery {
+    margin: 100px auto;
+    min-height: 50vh;
+    max-height: fit-content;
+    width: 95vw;
+  }
+
+  .gallery img {
+    height: 100%;
+    width: 100%;
+  }
+  .gbaner {
+    height: 30vh;
+  }
+  /* .gbaner img {
+    height: 10vh;
+    width: 10vh;
+    border: 1px solid red;
+    border-radius: 50%;
+  } */
+
+  .imges {
+    height: 20vh;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .imges p {
+    padding: 2px 10px;
+    margin: 10px 0;
+    background: rgba(99, 88, 88, 0.483);
+    color: rgb(255, 0, 0);
+    font-size: 1.2rem;
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    width: 100%;
+    background: #000;
+    color: rgb(221, 214, 214);
+    flex-wrap: wrap;
+    padding: 10px 0 ;
+  }
+  footer p {
+    width: 100vw;
+    text-align: center;
+    font-size: 1.3rem;
+    
+  }
+
+  footer svg {
+    height: 3vh;
+    width:  3vh;
+    margin: 10px;
+  }
+  footer svg:hover {
+    height: 3.2vh;
+    width:  3.2vh;
+
+  }
+}
+
     </style>
     
  

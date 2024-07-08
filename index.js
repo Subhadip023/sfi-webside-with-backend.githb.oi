@@ -22,7 +22,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
 import joinUsRoute from './routes/joinUsRoute.js'
 import dotenv from 'dotenv';
-import { connect } from 'mongoose';
+import { mongoose,connect } from 'mongoose';
 
 
 
@@ -138,13 +138,13 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
-connect(process.env.MONGO_URI)
-  .then(() => {
-    app.listen(process.env.PORT || 5000, () => {
-      console.log(`Server running on  http://localhost:${process.env.PORT || 5000}`);
-  console.log('Connected to MongoDB');
-    });
-  })
-  .catch(error => {
-    console.error("Failed to connect to MongoDB:", error);
-  });
+// Connect to MongoDB Atlas
+const uri = process.env.MONGO_URI;
+mongoose.connect(uri)
+    .then(() => console.log('Connected to MongoDB Atlas'))
+    .catch(err => console.error('Could not connect to MongoDB Atlas', err));
+
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port http://localhost:${process.env.PORT}`);
+});

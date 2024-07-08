@@ -1,12 +1,35 @@
 <%- include("partials/header.ejs") %>
 
-<div class="contaner donate-container">
+<div class="container donate-container" style="background-image: url('/images/sfi-aliah-log.jpg');">
     <h1 class="m-auto"> Invest in Hope: Support SFI's Community Efforts </h1>
-<div class="qr-image">
+    <div class="qr-image"></div> 
+    <div class="donate-form">
+        <% if (!qrImage) { %>
+            <h2>Fill the form to Donate</h2>
 
+        <form action="/donate" method="POST">
+            <% if (!user.isMember) { %>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="number" name="phone" placeholder="Phone Number" required>
+            <% } %>
+            <input type="number" name="amount" placeholder="Amount" required>
+            <button type="submit">Donate</button>
+        </form>
+        <% if (!user.isMember) { %>
+            <p>Are you a member? <a href="/donate/login">Login</a></p>
+        <% } %>
+        <% }else{ %>
+            <h2>Scan the QR to pay</h2>
+
+            <img src=<%=qrImage%> alt="qr image for payment">
+            <form class="qr-form" action="/donate/thanks-donate" method="get">
+                <button type="submit" >Done</button>
+
+            </form>
+        <% } %>
+
+    </div>
 </div>
-<div class="buttons">
-<button class="green">UPI</button>
-</div>
-</div>
+
 <%- include("partials/footer.ejs") %>

@@ -1,0 +1,15 @@
+<%- include("partials/header.ejs") %>
+
+    <% if (message) { %>
+        <p class="message"><%= message %></p>
+    <% } %>
+    <div class="contaner">
+        <form class="login_form" method="post" action="/donate/login">
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>
+    </div>
+   
+    <%- include("partials/footer.ejs") %>
+

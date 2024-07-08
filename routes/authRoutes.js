@@ -1,10 +1,10 @@
 // authRoutes.js
 import express from "express";
 import passport from "passport";
-import User from "../models/usersModel.js";
-import bcrypt from 'bcrypt'
+
 
 const router = express.Router();
+
 
 router.get("/login", (req, res) => {
   // Render login form using a template engine (assuming you're using EJS)

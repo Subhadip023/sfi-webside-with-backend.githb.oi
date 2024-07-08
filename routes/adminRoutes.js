@@ -12,7 +12,6 @@ import { Buffer } from "buffer";
 import multer from "multer";
 
 const router = express.Router();
-const db = new sqlite3.Database("sfi-dataBase.db");
 const upload = multer({ storage: multer.memoryStorage() }); // Use memory storage
 
 router.get("/admin", isAuthenticated, async (req, res) => {
