@@ -8,13 +8,13 @@ import {
 
 const router = express.Router();
 
-const genOtp = generateOTP(4);
 let userdata = {
   name: null,
   password: null,
   email: null,
   phoneno: null,
 };
+
 let count = 0;
 
 router.get("/", (req, res) => {
@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
       subject: "OTP verification | SFI Aliah ",
       text: `Hello, ${username} 
 
-      Thank you for using SFI Aliah. Please use the following OTP to verify your account:  ${genOtp}
+      Thank you for using SFI Aliah. Please use the following OTP to verify your account:  ${currentOtp}
            
       If you didn't request this OTP, please ignore this email.
       
@@ -72,13 +72,25 @@ router.post("/", async (req, res) => {
     console.log(error);
   }
 });
+
+let currentOtp = generateOTP(4); // Initial OTP generation
+
+// Function to update OTP every 2 minutes
+const updateOtp = () => {
+  currentOtp = generateOTP(4);
+
+};
+
+// Start the OTP update interval
+setInterval(updateOtp, 2*60*1000); // Update OTP every 2 minutes
 router.post("/verify", async (req, res) => {
   // console.log(req.session.userdata)
+  // console.log(req.session.userdata)
+  
+  
   try {
-    count++;
     const { otp } = req.body;
- 
-    if (otp == genOtp) {
+    if (otp == currentOtp) {
       // Compare OTP
       //   const new_password = await convert_to_hash_s10(password);
         const newUser = await User.create(userdata);
@@ -87,21 +99,19 @@ router.post("/verify", async (req, res) => {
         }
         const message = `Welcome to the COMRED's World ${userdata.name}`;
         res.redirect(`/joinUs?message=${encodeURIComponent(message)}`);
-      } else {
-      if (count === 5) {
-        res.redirect('/joinUs')
+        
       } else {
         res.render("verify_otp.ejs", {
-          error_message: "OTP does not match " + (5 - count) + " try left",
+          error_message: "OTP does not match ",email:userdata.email,
         });
-      }
     }
   } catch (error) {
     console.log(error);
   }
 });
 router.get("/verify", (req, res) => {
+
   count = 0;
-  res.render("verify_otp.ejs", { error_message: null });
+  res.render("verify_otp.ejs", { error_message: null,email:userdata.email});
 });
 export default router;

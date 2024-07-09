@@ -1,79 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify OTP</title>
     <style>
-        body{
+        body {
             display: flex;
             height: 100vh;
             width: 100vw;
             margin: auto;
+            background-color: #f7f7f7;
+            font-family: Arial, sans-serif;
         }
-        .otp{
+
+        .otp {
             margin: auto;
             height: 30vh;
-            width: 50vw;
+            width: 60vw;
             background: rgb(204, 201, 201);
             border-radius: 30px;
+            padding: 20px;
+            text-align: center;
         }
-        
-form {
-  max-width: 300px;
-  margin:100px auto;
-}
-input[type="text"]
- {padding: 10px;
-    margin: auto;
- 
-  box-sizing: border-box;
-  border-radius: 10px;
 
-}
-button[type="submit"] {
-  width: 20%;
-  border-radius: 10px;
+        form {
+            max-width: 300px;
+            margin: 50px auto;
+        }
 
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-.error_message{
-    color: red;
-    padding-left: 10px;
-    font-size: 17px;
-}
-.error_message a{
-    font-size: 17px;
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
 
-    color: blue;
-    padding-left: 10px;
-}
-.error_message a:hover{
-font-weight: 500;
-    color: rgb(56, 56, 240);
-    padding-left: 10px;
-}
-        
+        button[type="submit"] {
+            width: 100%;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error_message {
+            color: red;
+            padding-left: 10px;
+            font-size: 17px;
+        }
+
+        .error_message a {
+            font-size: 17px;
+            color: blue;
+            padding-left: 10px;
+        }
+
+        .error_message a:hover {
+            font-weight: 500;
+            color: rgb(56, 56, 240);
+            padding-left: 10px;
+        }
+
+        .clock {
+            margin: 20px 0;
+            padding-bottom: 10px;
+            font-size: 14px;
+            color: #333;
+        }
     </style>
 </head>
+
 <body>
     <div class="otp">
         <form action="/joinUs/verify" method="post">
-<% if(error_message) {%>
-    
-    
-            <p class="error_message">
-                <%= error_message %>
-                <a  href="/joinUs">Register again</a>
-            </p><% }  %>
-             
+            <% if(error_message) { %>
+                <p class="error_message">
+                    <%= error_message %>
+                    <a href="/joinUs">Register again</a>
+                </p>
+            <% } %>
+            <p>Sending Mail to <%= email %></p>
             <input type="text" name="otp" placeholder="Enter OTP" required>
             <button type="submit">Verify</button>
         </form>
+        <div class="clock">
+          <span id="time"></span> 
+        </div>
     </div>
+
+    <script>
+        const timeElement = document.getElementById('time');
+        const initialTime = 120; // 2 minutes
+        let timeLeft = sessionStorage.getItem('timeLeft') || initialTime;
+
+        const countdown = () => {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                timeElement.innerHTML = 'OTP expired. Please request a new one.';
+                setTimeout(()=>{
+        window.location.href = '/joinUs'; 
+
+    },2000)
+                sessionStorage.removeItem('timeLeft');
+            } else {
+                timeElement.innerHTML = `            Time remaining: <span id="time">${timeLeft}</span> seconds
+`;
+                timeLeft--;
+
+                sessionStorage.setItem('timeLeft', timeLeft);
+            }
+        };
+
+        const timer = setInterval(countdown, 1000);
+
+       
+    </script>
 </body>
+
 </html>

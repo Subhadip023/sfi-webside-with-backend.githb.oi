@@ -4,6 +4,7 @@ import passport from "passport";
 import dotenv from 'dotenv';
  import qr from 'qrcode';
  import Donate from '../models/donateModel.js'
+import User from '../models/usersModel.js';
 dotenv.config();
 
 const router = express.Router(); 
@@ -21,13 +22,19 @@ router.get("/user",isAuthenticated,(req, res) => {
 
 router.post("/", async (req, res) => {
   let { name,email,phone,amount } = req.body;
-  // console.log(req.body)
+  console.log(email)
+  const findUser=await User.findOne({email:email})
+  if (findUser) {
+    console.log(`User found: ${findUser}`);
+  } else {
+    console.log('User not found');
+  }
+
   donateData={
     name,email,phone,amount
   }
   amount=Number(amount).toFixed(2)
-  // Assuming you have a UPI payment link format
-  // const upiPaymentLink = `upi://pay?pa=${encodeURIComponent(process.env.PAYMENT_UPI)}&pn=ReceiverName&am=${encodeURIComponent(amount)}&cu=INR`;
+  
   const upiPaymentLink = `upi://pay?pa=${process.env.PAYMENT_UPI}&pn=Subhadip%20Chakraborty&am=${amount}&cu=INR&aid=uGICAgID146_9bw`;
 
 
@@ -65,7 +72,7 @@ router.post("/login", passport.authenticate('local', {
 
 router.get('/thanks-donate', async (req, res) => {
   try {
-    // Assuming `donateData` is available and contains the email
+    
     const email = donateData.email;
 
     // Find the donation data using the email

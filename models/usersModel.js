@@ -4,6 +4,7 @@ const Usershema =new Schema({
     password :{type:String ,required:true},
     email:{type:String ,required:true},
     phoneno :{type:String,require:true},
+    Donate_Amount :{type:Number,default:0.00},
     avatar :{type:String},
     position:{type:String, default:"member"}
 })
