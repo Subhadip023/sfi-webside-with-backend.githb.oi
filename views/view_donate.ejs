@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Donation</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <style >
+         * {
+            margin: 0;
+            padding: 0;
+            background:black;
+            color:lightseagreen;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding-top: 200px;
+        }
+        p{
+            font-size: 30px;
+            margin: 20px 0;
+        }
+        h1{
+            font-size: 60px;
+        }
+
+        form{
+            /* background: #5c2424; */
+            font-size: 20px;
+            display: flex;
+flex-wrap: wrap;         
+   align-items: center;
+   justify-content: center;
+   gap: 20px;
+        }
+
+        label{
+            color: green;
+            font-size: 30px;
+        }
+        select{
+            font-size: 20px;
+            width: 100%;
+        }
+        button{
+            background: gray;
+            color: black;
+            font-size: 25px;
+            height: 50px;
+            width:fit-content;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        button:hover{
+            color: gray;
+            background: black;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Donation Details</h1>
+    <% if (donateData) { %>
+        <p>Amount: <%= donateData.amount %></p>
+        <p>Status: <%= donateData.isDone %></p>
+        <h2>User Details</h2>
+        <% if (donateData.user) { %>
+            <p>Name: <%= donateData.user.name %></p>
+            <p>Email: <%= donateData.user.email %></p>
+            <p>Phone: <%= donateData.user.phoneno %></p>
+            <form action="/admin/donate-view" method="post">
+                <input type="hidden" name="id" value="<%= donateData.id %>">
+
+                <label for="isDone">Status:</label>
+                <select name="isDone" id="isDone">
+                    <option value="Not done" <%= donateData.isDone === 'Not done' ? 'selected' : '' %>>Not done</option>
+                    <option value="verifying" <%= donateData.isDone === 'verifying' ? 'selected' : '' %>>verifying</option>
+                    <option value="done" <%= donateData.isDone === 'done' ? 'selected' : '' %>>done</option>
+                </select><br>
+<button type="submit">Update</button>
+            </form>
+        <% } else { %>
+            <p>User data not available.</p>
+        <% } %>
+    <% } else { %>
+        <p>No donation data available.</p>
+    <% } %>
+</body>
+</html>
+ 

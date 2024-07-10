@@ -35,6 +35,9 @@
                 <a href="#about">
                     <li>About</li>
                 </a>
+                <a href="#Donate">
+                    <li>Donate</li>
+                </a>
             </ul>
         </nav>
     </header>
@@ -86,7 +89,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Donation</th>
                     <th>Username</th>
                     <th>Email</th>
                     <th>Phone</th>
@@ -99,7 +102,7 @@
                 <% users.forEach(user=> { %>
                     <tr>
                         <td>
-                            <%= user.id %>
+                            <%= user.Donate_Amount %>
                         </td>
                         <td>
                             <%= user.name %>
@@ -297,6 +300,46 @@
             <button class="sub-btn" type="submit">Save Changes</button>
         </form>
     </section>
+
+
+
+    <section id="Donate" class="container">
+        <h2>Donate Data</h2>
+        <% if (!donate || donate.length === 0) { %>
+          <p>No data found</p>
+        <% } else { %>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>User email </th>
+                <th>View & Verify</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% donate.forEach(item => { %>
+                <tr>
+                  <td><%= item._id %></td>
+                  <td><%= item.amount %></td>
+                  <td><%= item.isDone %></td>
+                  <td><%= item.user.email %></td>
+                  <td>
+                    <% if (!(item.isDone==='done')) { %>
+                        <a class="update-btn" href="/admin/donate-view/<%= item._id %>">View</a>
+
+                   <% } %>
+                    </td>
+                  <td><a class="delete-btn" href="/admin/donate-delete/<%= item._id %>">Delete</a></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } %>
+      </section>
+      
 
 </body>
 

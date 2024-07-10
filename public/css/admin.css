@@ -1,9 +1,60 @@
        
-* {
-    margin: 0;
-    padding: 0;
 
-}
+         * {
+            margin: 0;
+            padding: 0;
+            background:black;
+            color:lightseagreen;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding-top: 200px;
+        }
+        p{
+            font-size: 30px;
+            margin: 20px 0;
+        }
+        h1{
+            font-size: 60px;
+            background: transparent;
+        }
+
+        form{
+            /* background: #5c2424; */
+            font-size: 20px;
+            display: flex;
+flex-wrap: wrap;         
+   align-items: center;
+   justify-content: center;
+   gap: 20px;
+        }
+
+        label{
+            color: green;
+            font-size: 30px;
+        }
+        select{
+            font-size: 20px;
+            width: 100%;
+        }
+        button{
+            background: gray;
+            color: black;
+            font-size: 25px;
+            height: 50px;
+            width:fit-content;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        button:hover{
+            color: black;
+            background: rgb(79, 79, 159);
+        }
 
 table {
     width: 100%;
@@ -18,7 +69,7 @@ td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #012622;
 }
 
 .update-btn {
@@ -98,14 +149,17 @@ header {
 
     width: 100%;
     text-align: center;
-    background: var(255, 0, 0, 0.5);
+    background: #012622;
 
-    backdrop-filter: blur(20px);
+    /* backdrop-filter: blur(20px); */
 
 }
-
+nav{
+    background: transparent;
+}
 nav ul {
-
+    margin-top: 20px;
+background: transparent;
     list-style: none;
     display: flex;
     justify-content: center;
@@ -114,16 +168,20 @@ nav ul {
 nav li {
     margin: auto;
     padding: 0 10px;
+    background: transparent;
+
 }
 
 nav ul a {
+    background: transparent;
+
     text-decoration: none;
     color: red;
 }
 
 nav ul a:hover {
     text-decoration: underline;
-    color: rgb(106, 1, 1);
+    color: whitesmoke;
 }
 
 

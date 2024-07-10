@@ -7,7 +7,7 @@
         <% if (!qrImage) { %>
             <h2>Fill the form to Donate</h2>
 
-        <form action="/donate" method="POST">
+        <form action="/donate/user" method="POST">
             <% if (error_message) { %>
       
                 <div class="error_message">  <%= error_message %>  
@@ -18,10 +18,8 @@
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="number" name="phone" placeholder="Phone Number" required>
             <% }else{ %>
-                
-            <input type="text" name="name" placeholder="Name" value="<%=user.name%>" hidden>
-            <input type="email" name="email" placeholder="Email" value="<%=user.email%>" hidden >
-            <input type="number" name="phone" placeholder="Phone Number" value="<%=user.phoneno%>" hidden >
+                <input type="hidden" name="id" value="<%= user.id %>">
+
                 <% } %>
             
             <input type="number" name="amount" placeholder="Amount" required>
@@ -35,8 +33,9 @@
 
             <img src=<%=qrImage%> alt="qr image for payment">
             <form class="qr-form" action="/donate/thanks-donate" method="get">
+                <input type="hidden" name="id" value="<%user.id= user.id %>">
                 <button type="submit" >Done</button>
-
+ 
             </form>
         <% } %>
 

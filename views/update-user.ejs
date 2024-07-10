@@ -1,7 +1,7 @@
 <!-- update-form.ejs -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,10 @@
         <input type="email" name="email" id="email" value="<%= user.email %>"><br>
         <label for="phone">Phone:</label>
         <input type="text" name="phone" id="phone" value="<%= user.phoneno %>"><br>
+
+        <label for="donate">Donated Amount:</label>
+        <input type="number" name="donate" id="donate" value="<%= user.Donate_Amount %>"><br>
+
         <label for="position">Position:</label>
         <select name="position" id="position">
             <option value="member" <%= user.position === 'member' ? 'selected' : '' %>>Member</option>

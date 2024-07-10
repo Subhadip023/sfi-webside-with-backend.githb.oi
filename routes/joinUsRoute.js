@@ -115,3 +115,4 @@ router.get("/verify", (req, res) => {
   res.render("verify_otp.ejs", { error_message: null,email:userdata.email});
 });
 export default router;
+ 
