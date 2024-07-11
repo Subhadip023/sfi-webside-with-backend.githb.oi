@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
       notificationIds.push(Element.id)
     })
 
-    console.log(notificationIds)
     res.render('index.ejs', {
       homeData,notifications:notificationTitels,notificationIds:notificationIds
     });

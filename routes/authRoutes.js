@@ -15,7 +15,7 @@ router.get("/login", (req, res) => {
 
 router.post("/login", passport.authenticate('local', {
   successRedirect: '/admin',
-  failureRedirect: '/login',
+  failureRedirect: `/login?message=${encodeURIComponent('email or password wrong !')}`,
 }));
 
 

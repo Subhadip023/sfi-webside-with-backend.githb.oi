@@ -45,7 +45,7 @@ app.use(express.static("public"));
 
 app.use(
   session({
-    secret: "sfi-aliah",
+    secret: process.env.secret,
     resave: false,
     saveUninitialized: false,
   })

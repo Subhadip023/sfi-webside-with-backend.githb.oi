@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", async(req, res) => {
 try {
       const gallery =await galleryModel.find();
-console.log(gallery.banner)
+// console.log(gallery.banner)
       res.render("Gallery.ejs",{images:gallery});
   
 } catch (error) {

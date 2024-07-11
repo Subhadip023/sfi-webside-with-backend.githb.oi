@@ -348,7 +348,7 @@ router.post(
 );
 
 router.post("/admin/nen-data/delete", isAuthenticated, async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { id } = req.body;
   try {
     const nen = await nenModel.findByIdAndDelete(id);
@@ -371,7 +371,7 @@ router.post(
   isAuthenticated,
   upload.single("gallary_image"),
   async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
       // Check if a file was uploaded
       if (!req.file) {
