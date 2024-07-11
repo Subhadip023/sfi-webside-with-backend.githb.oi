@@ -1,10 +1,13 @@
 <%- include("partials/header.ejs") %>
 
-<div class="banner">
-    <img src="./images/banner01.jpg" alt="Banner Image" />
-</div>
+
 
 <div class="container">
+
+    <div class="banner">
+        <img src="./images/banner01.jpg" alt="Banner Image" />
+    </div>
+
     <div class="notification_home">
         <!-- Add notifications content here -->
     </div>
@@ -23,9 +26,16 @@
 
 <script>
   const notificationCount = <%=notifications.length%>;
+  const notificationIdsCount = <%=notificationIds.length%>;
   let notificationTitle = []
+  let ids = []
+
     <% notifications.forEach((title) => { %>
       notificationTitle.push("<%= title %>")
+      <% });%>
+    
+      <% notificationIds.forEach((id) => { %>
+      ids.push("<%= id %>")
       <% });%>
 
 //   console.log(notificationTitle)

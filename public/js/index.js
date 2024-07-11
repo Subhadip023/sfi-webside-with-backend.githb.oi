@@ -76,7 +76,7 @@ elements.forEach(element => {
   if (notificationCount != 0) {
     let i = 0;
     const intervalId = setInterval(function () {
-      showNotification(notificationTitle[i]);
+      showNotification(notificationTitle[i],ids[i]);
       if (i === notificationCount - 1) {
         clearInterval(intervalId);
       }
@@ -97,7 +97,7 @@ function showNotification(Notification_title,id) {
   hn.classList.add('hn');
   hn.innerHTML = ` 
 
-  <img src="/images/sfi-aliah-log.jpg" alt="">
+  <img src="/images/sfi-aliah-log.jpg" alt="sfi logo">
 
 ${Notification_title}
 <a href="/notification/Details/${id}"><svg

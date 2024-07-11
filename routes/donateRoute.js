@@ -20,13 +20,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/user", isAuthenticated, (req, res) => {
-  res.render("donateUser.ejs", {
-    user: req.user,
-    qrImage: false,
-    error_message: null,
-  });
-});
+
 
 router.post("/", async (req, res) => {
   let { name, email, phone, amount } = req.body;

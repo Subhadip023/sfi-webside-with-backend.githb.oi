@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 
     console.log(notificationIds)
     res.render('index.ejs', {
-      homeData,notifications:notificationTitels
+      homeData,notifications:notificationTitels,notificationIds:notificationIds
     });
   } catch (error) {
     console.error(error);

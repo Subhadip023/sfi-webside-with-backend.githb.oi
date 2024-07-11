@@ -1,9 +1,10 @@
 <%- include("partials/header.ejs") %>
 
-<div class="Notificationcontaner">
+<div class="Notificationcontaner container">
     <% if (notifications && notifications.length > 0) { %>
 
     <% notifications.forEach(notification => { %>
+        
         <div class="notification">
         <div class="notificationTitle"><a href="/notification/Details/<%=notification.id%>"><%= notification.title %></a></div>
         <div class="notificationContent">

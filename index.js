@@ -36,13 +36,13 @@ const port = 5000;
 
 
 // Create SQLite database connection
-const db = new sqlite3.Database("sfi-dataBase.db");
 // const upload = multer({ storage: storage });
 app.use(express.json());  // For JSON data
 
 app.use(bodyParser.urlencoded({ extended: true }));
 // Middleware to serve static files
 app.use(express.static("public"));
+
 app.use(
   session({
     secret: "sfi-aliah",
@@ -102,13 +102,13 @@ export { about_data };
 
 
 passport.use(new LocalStrategy(
-  async function(username, password, done) {
+  async function(email, password, done) {
     try {
-      const user = await User.findOne({ name: username });
+      const user = await User.findOne({ email: email });
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { message: 'Incorrect email.' });
       }
-      const passwordMatch = await bcrypt.compare(password, user.password);
+      const passwordMatch =  bcrypt.compare(password, user.password);
       if (!passwordMatch) {
         return done(null, false, { message: 'Incorrect password.' });
       }
