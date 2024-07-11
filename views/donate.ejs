@@ -10,26 +10,19 @@
             <form action="/donate" method="POST">
                 <% if (error_message) { %>
           
-                    <div class="error_message">  <%= error_message %>  
+                    <div class="error_message"> 
+                        <p> <%= error_message %></p>  
                     </div>
                 <% }  %>
-                <% if (!user.isMember) { %>
-                    <input type="text" name="name" placeholder="Name" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="number" name="phone" placeholder="Phone Number" required>
-                <% }else{ %>
                     
-                <input type="text" name="name" placeholder="Name" value="<%=user.name%>" hidden>
-                <input type="email" name="email" placeholder="Email" value="<%=user.email%>" hidden >
-                <input type="number" name="phone" placeholder="Phone Number" value="<%=user.phoneno%>" hidden >
-                    <% } %>
-                
-                <input type="number" name="amount" placeholder="Amount" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="number" name="amount" placeholder="Amount" required>
+                    
+                    <p>Are you Not a member? <a href="/joinUs">Sign Up</a></p>
                 <button type="submit">Donate</button>
             </form>
-            <% if (!user.isMember) { %>
-                <p>Are you a member? <a href="/donate/login">Login</a></p>
-            <% } %>
+           
             <% }else{ %>
                 <h2>Scan the QR to pay</h2>
     

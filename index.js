@@ -108,7 +108,7 @@ passport.use(new LocalStrategy(
       if (!user) {
         return done(null, false, { message: 'Incorrect email.' });
       }
-      const passwordMatch =  bcrypt.compare(password, user.password);
+      const passwordMatch =  await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
         return done(null, false, { message: 'Incorrect password.' });
       }

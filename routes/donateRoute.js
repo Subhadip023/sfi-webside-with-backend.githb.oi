@@ -5,6 +5,9 @@ import dotenv from "dotenv";
 import qr from "qrcode";
 import Donate from "../models/donateModel.js";
 import User from "../models/usersModel.js";
+import bcrypt from "bcrypt";
+
+     
 
 dotenv.config();
 
@@ -23,37 +26,27 @@ router.get("/", (req, res) => {
 
 
 router.post("/", async (req, res) => {
-  let { name, email, phone, amount } = req.body;
+  let { password, email, amount } = req.body;
   amount = Number(amount).toFixed(2);
-  // console.log(req.body);
   try {
     let user = await User.findOne({ email: email });
-    // console.log(user);
-    if (user) {
-      if (!user.position === "donater") {
-        return res.render("donate.ejs", {
-          qrImage: false,
-          user: false,
-          error_message: `This Email Id is Used Please LogIn to donate`,
-        });
-      } 
-    } else {
-      user = await User.create({
-        name: name,
-        email: email,
-        phoneno: phone,
-        Donate_Amount: 0.00,
-        position: "donater",
-      });
+    if (!user) {
+ return res.render("donate.ejs", {
+      qrImage: false,
+      user: false,
+      error_message: `can't find a user of email ${email}.      `,
+    });    
+  }
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
-      if (!user) {
-        return res.render("donate.ejs", {
-          qrImage: false,
-          user: false,
-          error_message: `Unknown Error Can't Donate Now Try again`,
-        });
-      }
+    if (!passwordMatch) {
+      return res.render("donate.ejs", {
+        qrImage: false,
+        user: false,
+        error_message: `Password not matched. Please enter write password `,
+      }); 
     }
+
 
     const upiPaymentLink = `upi://pay?pa=${process.env.PAYMENT_UPI}&pn=Subhadip%20Chakraborty&am=${amount}&cu=INR&aid=uGICAgID146_9bw`;
 
@@ -67,7 +60,11 @@ router.post("/", async (req, res) => {
     donateData={id:donate.id,userEmail:email}
 
     if (!donate) {
-      console.log("donateData not saved");
+      return res.render("donate.ejs", {
+        qrImage: false,
+        user: false,
+        error_message: `Internal server error. Sorry !`,
+      }); 
     }
 
     res.render("donate.ejs", {
@@ -77,49 +74,17 @@ router.post("/", async (req, res) => {
     });
   } catch (err) {
     console.error("Error generating QR code:", err);
-    res.status(500).send("Failed to generate QR code");
-  }
-});
-
-
-router.post("/user",  async(req, res) => {
-  let { id, amount } = req.body;
-  amount = Number(amount).toFixed(2);
-  // console.log(req.body);
-  try {
-    const user=await User.findById(id);
-    if (!user) {
-      res.send(404).json({message:'Internal Server Error '})
-    }
-    const upiPaymentLink = `upi://pay?pa=${process.env.PAYMENT_UPI}&pn=Subhadip%20Chakraborty&am=${amount}&cu=INR&aid=uGICAgID146_9bw`;
-
-    // Generate QR code as a data URL
-    const qrCodeDataURL = await qr.toDataURL(upiPaymentLink);
-
-    const donate = await Donate.create({
-      amount: amount,
-      user: user._id,
-    });
-    donateData={id:donate.id,userEmail:user.email}
-
-    if (!donate) {
-      console.log("donateData not saved");
-    }
-
+    // res.status(500).send("Failed to generate QR code");
     res.render("donate.ejs", {
       qrImage: qrCodeDataURL,
       user: false,
-      error_message: null,
+      error_message: `Failed to generate QR code`,
     });
-
-  } catch (error) {
-    console.log(error)
   }
 });
-router.get("/login", (req, res) => {
-  const { message } = req.query;
-  res.render("donate_login.ejs", { message: message });
-});
+
+
+
 
 router.post(
   "/login",
@@ -130,8 +95,7 @@ router.post(
 );
 
 router.get("/thanks-donate", async (req, res) => {
-//  console.log(req.body);
-//  console.log(donateData);
+
  try {
   const donate=await Donate.findByIdAndUpdate((donateData.id),{isDone:"verifying"});
   if (!donate) {
