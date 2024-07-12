@@ -82,7 +82,7 @@
       min-height: 70vh;
       height: fit-content;
       flex-direction: column;
-      background: blue;
+      /* background: blue; */
 
     }
 
@@ -97,12 +97,10 @@
       height: 300px;
       /* width: 320px; */
       float: left;
-      opacity: 0;
       /* Initially set opacity to 0 */
       /* transition: opacity 3s ease; */
       border-radius: 50px;
-      transition: box-shadow 1s linear, opacity 3s ease;
-      /* Apply transition effect to box-shadow property */
+      
     }
 
     .quotes img:hover {
@@ -289,7 +287,7 @@
       overflow: hidden;
     }
 
-    .container .notificationTitle a {
+   .notificationTitle a {
       text-decoration: none;
       color: red;
     }
@@ -574,8 +572,8 @@
 
     .container {
       opacity: 0;
-      transition: opacity 3s ease;
-      /* height: 100vh; */
+      transition: all 3s ease;
+      
     }
 
     .donate-container {
@@ -738,8 +736,8 @@
         max-width: 42vw;
         min-width: fit-content;
         position: fixed;
-        top: 17vw;
-        right: 1vw;
+        top: 20vw;
+        right: 3vw;
         border: 1px solid rgba(255, 255, 255, 0.592);
         border-radius: 20px;
         z-index: 9999;
@@ -904,9 +902,11 @@
         /* text-align: justify; */
         overflow: auto;
       }
-.notification{
-  width: 90%;
-}
+
+      .notification {
+        width: 90%;
+      }
+
       .notificationTitle {
         width: 100%;
         height: fit-content;
@@ -997,7 +997,7 @@
 
         width: 40px;
         height: 40px;
-        
+
       }
 
       .joinLinks a svg:hover {
@@ -1013,9 +1013,9 @@
         text-align: center;
         border-radius: 15px;
         transition: all 2s linear;
-      animation: scaleChange 4s ease-in-out 1s 2;
-/* animation: name duration timing-function delay iteration-count direction fill-mode;    */
-   }
+        animation: scaleChange 4s ease-in-out 1s 2;
+        /* animation: name duration timing-function delay iteration-count direction fill-mode;    */
+      }
 
       .joinus .heading {
         width: 100%;
@@ -1032,10 +1032,86 @@
         margin: 20px 0;
         font-size: 25px;
         /* background: #0000008f; */
-        
+
         color: red;
-        
+
       }
+
+
+      .donate-container {
+      /* background: grey; */
+      padding: 20px 0;
+      height: fit-content;
+      width: 80vw;
+      margin: 100px auto;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      background-size:contain;
+      background-repeat: no-repeat;
+    }
+
+    .donate-container h1 {
+      width: 100vw;
+      text-align: center;
+    }
+
+    .qr-image {
+      display: none;
+      background: #000;
+      height: 80vh;
+      width: 35vw;
+    }
+
+    .donate-form {
+      /* background: blueviolet; */
+      height: 80vh;
+      width: 90vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      /* transition: all 5s ease-in-out; */
+    }
+
+    .donate-form form {
+      margin-top: 20px;
+    }
+
+    .donate-form h2 {
+      text-decoration: none;
+    }
+
+    .donate-form p {
+      margin: 10px auto;
+      background: white;
+      text-align: center;
+    }
+
+    /* .donate-form a p{
+      width: 100%;
+      margin: auto;
+    } */
+
+    .donate-form button {
+      background: green;
+    }
+
+    .qr-form button {
+      width: 200px;
+    }
+
+
+    .donate-form button:hover {
+      background: rgb(83, 187, 83);
+      color: #7b7a7a;
+
+    }
+
+
+
 
 
 
