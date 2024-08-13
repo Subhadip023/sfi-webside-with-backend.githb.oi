@@ -15,14 +15,14 @@ export async function convert_to_hash_s10(password) {
     let transporter = nodemailer.createTransport({
         service: 'Gmail', // you can replace this with your email service
         auth: {
-            user: 'gyaanhub8@gmail.com', // your email address
-            pass: 'raat wrnu vxix pgff' // your email password
+            user: 'studentsfederationofindiaau@gmail.com', // your email address
+            pass: 'raat wrnu vxfgfix pgff' // your email password
         }
     });
 
     // Define email content
     let mailOptions = {
-        from: 'gyaanhub8@gmail.com', // sender address
+        from: 'studentsfederationofindiaau@gmail.com', // sender address
         to: 'subhadip240420@gmail.com', // list of receivers
         subject: 'Test Email', // Subject line
         text: 'Hello, this is a test email.', // plain text body
@@ -42,7 +42,7 @@ export async function convert_to_hash_s10(password) {
 export let transporter = nodemailer.createTransport({
     service: 'Gmail', // you can replace this with your email service
     auth: {
-        user: 'gyaanhub8@gmail.com', // your email address
+        user: 'studentsfederationofindiaau@gmail.com', // your email address
         pass: process.env.EMAIL_APP_PASSWORD // your email password
     }
 });

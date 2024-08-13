@@ -467,7 +467,7 @@ router.post("/admin/donate-view",isAuthenticated, async (req, res) => {
       });
 
       const mailOptions = { 
-        from: "gyaanhub8@gmail.com",
+        from: "studentsfederationofindiaau@gmail.com",
         to: user.email,
         subject: "Donation Confirmation | SFI Aliah",
         text: `Hello, ${user.name},

@@ -35,10 +35,8 @@ const port = 5000;
 
 // Create SQLite database connection
 // const upload = multer({ storage: storage });
-app.use(express.json());  // For JSON data
-
+app.use(express.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
-// Middleware to serve static files
 app.use(express.static("public"));
 
 app.use(
