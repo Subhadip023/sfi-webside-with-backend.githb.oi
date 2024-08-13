@@ -9,10 +9,10 @@ const notification_home = document.querySelector('.notification_home');
 
 // functions 
 
-const showLoader=()=>{
-  document.querySelector('.loader').style.display = 'flex';
-    document.querySelector('.container').style.opacity = '0';
-}
+// function showLoader(){
+//   document.querySelector('.loader').style.display = 'flex';
+//     document.querySelector('.container').style.opacity = '0';
+// }
 
 // show notification function for home page
 function showNotification(Notification_title,id) {
@@ -104,7 +104,7 @@ dropdrowen.addEventListener('click', function () {
 });
 window.onload = function () {
 
-showLoader();
+// showLoader();
 
   if (notificationCount != 0) {
     let i = 0;
